@@ -26,7 +26,7 @@ namespace Bookmaker.Controllers
                     Title = travel.Title,
                     TravelType = travel.TravelType,
                     PricesCount = travel.Prices.Count(),
-                    PartiesCount = travel.Parties.Count()
+                    SectionsCount = travel.Sections.Count()
                 }).ToList();
 
             return View(travels);

@@ -11,7 +11,7 @@ namespace Bookmaker.Models
         Sejour = 2
     }
 
-    public enum PartieType : int
+    public enum SectionType : int
     {
         Titre = 1,
         Presentation = 2,
@@ -57,17 +57,17 @@ namespace Bookmaker.Models
         public string Notes { get; set; }
 
         // Description des parties du voyage, morceau par morceau
-        public virtual ICollection<Partie> Parties { get; set; }
+        public virtual ICollection<Section> Sections { get; set; }
 
         // Tarifs du voyage
         public virtual ICollection<Price> Prices { get; set; }
     }
 
-    public class Partie
+    public class Section
     {
         // Identifiant automatique de la partie
         [Key]
-        public int PartieID { get; set; }
+        public int SectionID { get; set; }
 
         // Référence du voyage auquel correspond cette partie
         [Display(Name = "Voyage")]
@@ -81,12 +81,12 @@ namespace Bookmaker.Models
         // Type de la partie (introduction, sous-titre, menu, tarif...)
         [Required(ErrorMessage = "L'information «Type de contenu» est obligatoire")]
         [Display(Name = "Type de contenu")]
-        public PartieType TypePartie
+        public SectionType TypeSection
         {
-            get { return (PartieType)PartieType; }
-            set { PartieType = (int)value; }
+            get { return (SectionType)SectionType; }
+            set { SectionType = (int)value; }
         }
-        public int PartieType { get; set; }
+        public int SectionType { get; set; }
 
         // Texte pour le contenu de la partie
         [Required(ErrorMessage = "L'information «Contenu» est obligatoire")]
@@ -150,7 +150,7 @@ namespace Bookmaker.Models
     {
         public DbSet<Travel> Travels { get; set; }
         public DbSet<Price> Prices { get; set; }
-        public DbSet<Partie> Parties { get; set; }
+        public DbSet<Section> Sections { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

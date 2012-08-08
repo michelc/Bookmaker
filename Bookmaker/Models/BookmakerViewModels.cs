@@ -12,7 +12,7 @@ namespace Bookmaker.Models
         public string Title { get; set; }
         public int TravelType { get; set; }
         public int PricesCount { get; set; }
-        public int PartiesCount { get; set; }
+        public int SectionsCount { get; set; }
 
         public TravelType TypeTravel
         {
