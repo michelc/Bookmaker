@@ -77,9 +77,9 @@ namespace Bookmaker.Controllers
 
         public ViewResult Edit(int id)
         {
-            ViewBag.TravelType = db.Enums<TravelType>();
             var travel = db.Travels.Find(id);
 
+            ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
         }
 

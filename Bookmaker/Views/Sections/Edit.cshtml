@@ -1,0 +1,28 @@
+﻿@model Bookmaker.Models.Section
+
+@{
+    ViewBag.Title = "Modifier une partie";
+}
+
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset class="sixteen columns">
+        <legend>Modification partie «&nbsp;@Model.Travel.Title&nbsp;»</legend>
+
+        @Html.HiddenFor(model => model.SectionID)
+        @Html.Partial("_Editor", Model)
+
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Enregistrer" />
+            @Html.ActionCancel()
+        </p>
+    </fieldset>
+}
+
+@section JavaScript
+{
+    @Html.Partial("_FormScripts")
+}

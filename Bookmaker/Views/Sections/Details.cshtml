@@ -1,0 +1,13 @@
+﻿@model Bookmaker.Models.Section
+
+@{
+    ViewBag.Title = "Afficher une partie";
+}
+
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
+
+<fieldset class="sixteen columns">
+    <legend>Partie «&nbsp;@Model.Travel.Title&nbsp;»</legend>
+
+    @Html.Partial("_Display", Model)
+</fieldset>

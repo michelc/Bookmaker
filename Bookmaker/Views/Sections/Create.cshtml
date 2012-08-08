@@ -1,0 +1,27 @@
+﻿@model Bookmaker.Models.Section
+
+@{
+    ViewBag.Title = "Créer une partie";
+}
+
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset class="sixteen columns">
+        <legend>Nouvelle partie «&nbsp;@Model.Travel.Title&nbsp;»</legend>
+
+        @Html.Partial("_Editor", Model)
+
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Enregistrer" />
+            @Html.ActionLink("Annuler", "Details", "Travels", new { id = Model.TravelID }, null)
+        </p>
+    </fieldset>
+}
+
+@section JavaScript
+{
+    @Html.Partial("_FormScripts")
+}

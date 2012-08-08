@@ -1,0 +1,22 @@
+﻿@model Bookmaker.Models.Section
+
+@{
+    ViewBag.Title = "Supprimer une partie";
+}
+
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
+
+<fieldset>
+    <legend>Suppression partie «&nbsp;@Model.Travel.Title&nbsp;» ?</legend>
+
+    @Html.Partial("_Display", Model)
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Ok pour supprimer !" />
+            @Html.ActionCancel()
+        </p>
+    }
+</fieldset>
