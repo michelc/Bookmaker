@@ -1,0 +1,33 @@
+﻿@model Bookmaker.Models.Voyage
+
+<div class="editor-label five columns">
+    @Html.CaptionFor(model => model.Position)
+</div>
+<div class="editor-field eleven columns">
+    @Html.EditorFor(model => model.Position)
+    @Html.ValidationMessageFor(model => model.Position)
+</div>
+
+<div class="editor-label five columns">
+    @Html.CaptionFor(model => model.Title)
+</div>
+<div class="editor-field eleven columns">
+    @Html.EditorFor(model => model.Title)
+    @Html.ValidationMessageFor(model => model.Title)
+</div>
+
+<div class="editor-label five columns">
+    @Html.CaptionFor(model => model.TypeVoyage)
+</div>
+<div class="editor-field eleven columns">
+    @Html.DropDownListFor(model => Model.TypeVoyage, (SelectList)ViewBag.VoyageType, string.Empty)
+    @Html.ValidationMessageFor(model => model.TypeVoyage)
+</div>
+
+<div class="editor-label five columns">
+    @Html.CaptionFor(model => model.Notes)
+</div>
+<div class="editor-field eleven columns">
+    @Html.EditorFor(model => model.Notes)
+    @Html.ValidationMessageFor(model => model.Notes)
+</div>

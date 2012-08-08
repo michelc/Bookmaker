@@ -1,0 +1,22 @@
+﻿@model Bookmaker.Models.Voyage
+
+@{
+    ViewBag.Title = "Supprimer un voyage";
+}
+
+<h2 class="crud">@Html.ActionCrud("Voyages")</h2>
+
+<fieldset>
+    <legend>Supprimer «&nbsp;@Model.Title&nbsp;» ?</legend>
+
+    @Html.Partial("_Display", Model)
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Ok pour supprimer !" />
+            @Html.ActionCancel()
+        </p>
+    }
+</fieldset>

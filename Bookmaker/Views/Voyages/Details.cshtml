@@ -1,0 +1,13 @@
+﻿@model Bookmaker.Models.Voyage
+
+@{
+    ViewBag.Title = "Afficher un voyage";
+}
+
+<h2 class="crud">@Html.ActionCrud("Voyages")</h2>
+
+<fieldset class="sixteen columns">
+    <legend>@Model.Title</legend>
+
+    @Html.Partial("_Display", Model)
+</fieldset>

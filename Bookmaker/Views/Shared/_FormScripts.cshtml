@@ -1,0 +1,21 @@
+﻿<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script>
+    if (typeof jQuery.fn.validate === "undefined") {
+        document.write(unescape("%3Cscript src='@Url.Content("~/Scripts/jquery.validate.min.js")'%3E%3C/script%3E"));
+    }
+</script>
+<script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    if (typeof jQuery.validator.unobtrusive === "undefined") {
+        document.write(unescape("%3Cscript src='@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")'%3E%3C/script%3E"));
+    }
+</script>
+<script>
+    $(document).ready(function () {
+
+        /* Donne le focus au premier champ du formulaire */
+        /* --------------------------------------------- */
+        $(":input:visible:enabled:first").focus();
+
+    });
+</script>

@@ -1,0 +1,391 @@
+﻿/* Utilisation de ma police de prédilection */
+body,
+h1, h2, h3, h4, h5, h6
+{
+    font-family: "Century Gothic", "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+}
+
+/* Positionne le lien d'authentification en haut à droite */
+#logindisplay
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* Changement du jeu de couleurs */
+h1 { color: #d2691e; } /* chocolat */
+h2 { color: #888888; } /* gris */
+h3 { color: #39b449; } /* vert */
+
+/* Repasse les liens en bleu */
+a,
+a:visited
+{
+    color: #00f;
+}
+a:hover,
+a:focus
+{
+    color: #88f;
+}
+
+/* Menu des actions CRUD */
+h2.crud
+{
+    font-size: smaller;
+    font-variant: small-caps;
+}
+
+
+/* #Tables
+================================================== */
+
+/* Par défaut les tables occupent toute la largeur de la page */
+table
+{
+    width: 100%;
+}
+
+/* Aération des cellules */
+thead th,
+tbody td,
+tfoot th
+{
+    border: 1px dotted #aaa;
+    padding: 0.5em;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Redéfini les couleurs de l'en-tête et du pied des tables */
+thead tr th,
+tfoot tr th
+{
+    background-color: #d2691e;  /* chocolat */
+    color: #fff;
+}
+
+/* Alterne la couleur de fond des lignes d'une table */
+tbody tr:nth-child(odd)
+{
+    background-color: #f9f9f9; /* idem Twitter Bootstrap */
+}
+
+/* Ajoute un effet lors du survol d'une ligne */
+tbody tr:hover
+{
+    background-color: #fcfec5; /* jaune postit de Msdn */
+}
+
+
+/* #Icons
+================================================== */
+
+a.icon,
+a.edit,
+a.delete
+{
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 24px;
+    padding-left: 30px;
+}
+
+a.edit
+{
+    background-image: url(icons/edit.png);
+}
+
+a.delete
+{
+    background-image: url(icons/delete.png);
+}
+
+table a.icon,
+table a.edit,
+table a.delete
+{
+    padding-left: 0;
+    text-indent: 100px;
+    max-width: 24px;
+    overflow: hidden;
+    margin: -3px 0;
+}
+
+
+/* #Buttons
+================================================== */
+
+button,
+input[type="submit"],
+input[type="button"]
+{
+    border: 0 none;
+    background-color: #39b449;
+    color: #fff;
+    cursor: pointer;
+    font-size: 110%;
+    line-height: normal;
+    outline: 0;
+    margin: 20px 20px 0 0;
+    padding: 10px 15px;
+}
+
+input[type="submit"]
+{
+    background-color: #4b8df7;
+    font-weight: bold;
+}
+
+button:focus,
+input[type="button"]:focus,
+button:hover,
+input[type="button"]:hover
+{
+    background-color: #35a644; /* #39b449 -10% luminosité */
+}
+
+input[type="submit"]:focus,
+input[type="submit"]:hover
+{
+    background-color: #4582e5; /* #4b8df7 -10% luminosité */
+}
+
+
+/* #Forms
+================================================== */
+
+/* Suppression marges horizontales (dûes à .columns) sur les <fieldset> */
+fieldset
+{
+    margin: 0 !important;
+}
+
+/* Suppression marges latérales (dûes aux nested .columns) */
+/* (!important est nécessaire car .columns est défini après) */
+.display-label,
+.editor-label
+{
+    margin-left: 0 !important;
+    clear: left;
+}
+.display-field,
+.editor-field
+{
+    margin-right: 0 !important;
+}
+
+/* Style des <legend> inspiré du style des <h3> */
+legend
+{
+    border: 0;
+    color: #39b449;
+    font-family: "Century Gothic", "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 34px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Bidouille pour émuler un border et margin bottom sur les <legend> sous Chrome */
+legend:after
+{
+    border-top: 2px solid #39b449;
+    clear: both;
+    content: "\0020";
+    display: block;
+    height: 15px;
+    width: 100%;
+}
+
+/* Cadrage à droite pour la dernière colonne des <legend> */
+legend span.omega
+{
+    text-align: right;
+}
+
+/* Augmente la lisibilité des zones de saisie */
+input[type="email"],
+input[type="password"],
+input[type="phone"],
+input[type="text"],
+input[type="url"],
+select,
+textarea
+{
+    background-color: #fff;
+    border: 1px dotted #85b1de;
+    color: #000;
+    font-family: Arial, "Liberation Sans", FreeSans, sans-serif;
+    font-size: 110%;
+    letter-spacing: 1px;
+    outline: 0;
+    padding: 4px;
+    margin: 2px;
+}
+
+/* Mise en évidence des labels associés aux zones de saisie obligatoires */
+label.is_required
+{
+    color: black;
+}
+label.is_required span
+{
+    color: #d2691e;  /* chocolat */
+    font-weight: bold;
+    margin-left: 0.5em;
+}
+
+/* Mise en évidence de la zone de saisie en cours */
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="phone"]:focus,
+input[type="text"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus
+{
+    /* box-shadow: #08f 0 0 7px; */
+    background-color: #fcfec5; /* jaune postit de Msdn */
+    border: 1px solid #d2691e;  /* chocolat */
+}
+
+/* Mise en évidence des messages d'erreurs de saisie */
+.field-validation-error
+{
+    color: #d2691e;  /* chocolat */
+}
+
+/* Mise en évidence des zones d'affichage par rapport aux simples labels */
+.display-field
+{
+    background-color: #fafafa;
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    color: #000;
+    font-family: Arial, "Liberation Sans", FreeSans, sans-serif;
+    font-size: 110%;
+    letter-spacing: 1px;
+    margin: 5px 0;
+    min-height: 2.1em;
+    padding: 4px 4px;
+}
+
+/* Espacement et alignement verticaux des blocs de saisie */
+.display-label, 
+.editor-label
+{
+    padding: 10px 0 0 0;
+}
+.editor-field
+{
+    padding: 5px 0;
+}
+
+
+/* Formulaires sont en horizontal par défaut avec saisies de largeurs variables */
+.display-label, 
+.editor-label 
+{
+    text-align: right;
+}
+input[type="phone"]
+{
+    width: 200px;
+}
+input[type="password"],
+input[type="text"],
+select
+{
+    width: 300px;
+}
+input[type="email"],
+input[type="url"],
+textarea
+{
+    width: 600px;
+}
+textarea
+{
+    height: 7em;
+}
+
+input[type="text"].inputshort
+{
+    width: 100px;
+}
+input[type="text"].inputmedium
+{
+    width: 400px;
+}
+input[type="text"].inputbig
+{
+    width: 600px;
+}
+
+
+/* Formulaires passent en vertical pour les petites largeurs */
+@media only screen and (max-width: 767px)
+{
+    .display-label, 
+    .editor-label 
+    {
+        text-align: left !important;
+    }
+    
+    input[type="email"],
+    input[type="password"],
+    input[type="phone"],
+    input[type="text"],
+    input[type="url"],
+    select,
+    textarea
+    {
+        width: 96% !important;
+    }
+}
+
+
+/* Message flash suite à une action réussie */
+.flash {
+  background-color: #cfc;
+  border-top: 1px solid #060;
+  border-bottom: 4px solid #060;
+  color: #393;
+  padding: 6px;
+  text-align: center;
+}
+
+
+/* #Condense l'affichage pour les petites largeurs
+================================================== */
+
+@media only screen and (max-width: 767px)
+{
+    .display-field
+    {
+        margin-top: -5px !important;
+    }
+
+    .editor-field 
+    {
+        margin-top: -11px !important;
+    }
+
+	h3 { font-size: 21px; line-height: 30px; margin-bottom: 4px; }
+	h4 { font-size: 17px; line-height: 24px; margin-bottom: 0px; }
+
+    legend
+    {
+        font-size: 21px;
+        line-height: 30px;
+    }
+    legend:after
+    {
+        height: 10px;
+    }
+}

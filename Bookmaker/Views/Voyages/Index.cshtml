@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Bookmaker.Models.VoyageIndex>
+
+@{
+    ViewBag.Title = "Tous les voyages";
+}
+
+<h2 class="crud">@Html.ActionCrud("Voyages")</h2>
+
+<table>
+<thead>
+    <tr>
+        <th></th>
+        <th>
+            N°
+        </th>
+        <th>
+            Voyage
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Parties
+        </th>
+        <th>
+            Tarifs
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.VoyageID }, new { @class = "edit" })
+        </td>
+        <td>
+			@item.Position
+        </td>
+        <td>
+			@Html.ActionLink(@item.Title, "Details", new { id = item.VoyageID })
+        </td>
+        <td>
+			@item.TypeVoyage.ToString()
+        </td>
+        <td>
+			@item.PartiesCount
+        </td>
+        <td>
+			@item.TarifsCount
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.VoyageID }, new { @class = "delete" })
+        </td>
+    </tr>
+}
+</tbody>
+</table>

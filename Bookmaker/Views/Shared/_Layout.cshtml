@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="fr"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="fr"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="fr"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="fr"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Bookmaker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="@Url.Content("~/Content/skeleton/stylesheets/base.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/skeleton/stylesheets/skeleton.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/skeleton/stylesheets/layout.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/style.css")">
+    <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")"></script>
+</head>
+<body>
+    @Html.Flash()
+    <div class="container">
+        <header class="sixteen columns">
+            <div id="title">
+                <h1>Bookmaker</h1>
+            </div>
+            <nav>
+                <ul id="menu" class="tabs">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Voyages", "Index", "Voyages")</li>
+                    <li>@Html.ActionLink("A propos", "About", "Home")</li>
+                </ul>
+            </nav>
+        </header>
+        <section id="main" class="sixteen columns">
+            @RenderBody()
+        </section>
+        <footer class="sixteen columns">
+        </footer>
+    </div>
+
+<!-- <Javascript.Section> -->
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
+<script>
+    if (typeof jQuery === "undefined") {
+        document.write(unescape("%3Cscript src='@Url.Content("~/Scripts/jquery-1.7.2.min.js")'%3E%3C/script%3E"));
+    }
+</script>
+@StackExchange.Profiling.MiniProfiler.RenderIncludes()
+<script src="@Url.Content("~/Content/skeleton/javascripts/tabs.js")"></script>
+@RenderSection("Javascript", required: false)
+<!-- </Javascript.Section> -->
+
+</body>
+</html>

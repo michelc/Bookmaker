@@ -1,0 +1,27 @@
+﻿@model Bookmaker.Models.Voyage
+
+@{
+    ViewBag.Title = "Créer un voyage";
+}
+
+<h2 class="crud">@Html.ActionCrud("Voyages")</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset class="sixteen columns">
+        <legend>Nouveau voyage</legend>
+
+        @Html.Partial("_Editor", Model)
+
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Enregistrer" />
+            @Html.ActionCancel()
+        </p>
+    </fieldset>
+}
+
+@section JavaScript
+{
+    @Html.Partial("_FormScripts")
+}

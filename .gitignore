@@ -1,0 +1,15 @@
+﻿*resharper.user
+[Aa]pp_[Dd]ata/
+[Dd]ebug/
+[Rr]elease/
+build/
+[Bb]in/
+[Oo]bj/
+[Tt]est[Rr]esults/
+*.suo
+*.cache
+_ReSharper.*/
+*.user
+deploy
+deploy/*
+packages/

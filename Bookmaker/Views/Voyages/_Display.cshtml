@@ -1,0 +1,29 @@
+﻿@model Bookmaker.Models.Voyage
+
+<div class="display-label five columns">
+    @Html.LabelFor(model => model.Position)
+</div>
+<div class="display-field eleven columns">
+    @Html.DisplayFor(model => model.Position)
+</div>
+
+<div class="display-label five columns">
+    @Html.LabelFor(model => model.Title)
+</div>
+<div class="display-field eleven columns">
+    @Html.DisplayFor(model => model.Title)
+</div>
+
+<div class="display-label five columns">
+    @Html.LabelFor(model => model.TypeVoyage)
+</div>
+<div class="display-field eleven columns">
+    @Html.DisplayTextFor(model => model.TypeVoyage).ToString()
+</div>
+
+<div class="display-label five columns">
+    @Html.LabelFor(model => model.Notes)
+</div>
+<div class="display-field eleven columns">
+    @Html.DisplayFor(model => model.Notes)
+</div>
