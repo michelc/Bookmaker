@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Linq;
 using System.Web.Mvc;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
@@ -30,6 +31,9 @@ namespace Bookmaker.Controllers
                 Travel = db.Travels.Find(ParentID)
             };
 
+            // Initialise la position à la prochaine disponible
+            section.Position = section.Travel.Sections.Count() + 1;
+
             ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
         }
@@ -42,6 +46,12 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
+                section.Content = SectionHelper.ContentFormat(section.Content);
+                if (section.TypeSection == SectionType.Titre)
+                {
+                    section.Content = SectionHelper.TitleFormat(section.Content);
+                }
+
                 db.Sections.Add(section);
                 db.SaveChanges();
 
@@ -74,6 +84,12 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
+                section.Content = SectionHelper.ContentFormat(section.Content);
+                if (section.TypeSection == SectionType.Titre)
+                {
+                    section.Content = SectionHelper.TitleFormat(section.Content);
+                }
+
                 db.Entry(section).State = EntityState.Modified;
                 db.SaveChanges();
 
