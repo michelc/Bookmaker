@@ -35,13 +35,13 @@ namespace Bookmaker.Models
         public int Position { get; set; }
 
         // Titre du voyage
-        [Required(ErrorMessage = "L'information «Titre du voyage» est obligatoire")]
+        [Required]
         [Display(Name = "Titre")]
         [StringLength(100)]
         public string Title { get; set; }
 
         // Type du voyage : journée ou séjour
-        [Required(ErrorMessage = "L'information «Type du voyage» est obligatoire")]
+        [Required]
         [Display(Name = "Type de voyage")]
         public TravelType TypeTravel
         {
@@ -79,7 +79,7 @@ namespace Bookmaker.Models
         public int Position { get; set; }
 
         // Type de la partie (introduction, sous-titre, menu, tarif...)
-        [Required(ErrorMessage = "L'information «Type de contenu» est obligatoire")]
+        [Required]
         [Display(Name = "Type de contenu")]
         public SectionType TypeSection
         {
@@ -89,7 +89,7 @@ namespace Bookmaker.Models
         public int SectionType { get; set; }
 
         // Texte pour le contenu de la partie
-        [Required(ErrorMessage = "L'information «Contenu» est obligatoire")]
+        [Required]
         [Display(Name = "Contenu")]
         [Column(TypeName = "ntext")]
         [DataType(DataType.MultilineText)]
@@ -108,13 +108,13 @@ namespace Bookmaker.Models
         public virtual Travel Travel { get; set; }
 
         // Année du tarif
-        [Required(ErrorMessage = "L'information «Année du tarif» est obligatoire")]
+        [Required]
         [Display(Name = "Année")]
         [StringLength(20)]
         public string Year { get; set; }
 
         // Libellé pour décrire le tarif
-        [Required(ErrorMessage = "L'information «Titre du tarif» est obligatoire")]
+        [Required]
         [Display(Name = "Titre")]
         [StringLength(50)]
         public string Title { get; set; }
