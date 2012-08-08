@@ -25,7 +25,7 @@ namespace Bookmaker.Controllers
                     Position = voyage.Position,
                     Title = voyage.Title,
                     VoyageType = voyage.VoyageType,
-                    TarifsCount = voyage.Tarifs.Count(),
+                    PricesCount = voyage.Prices.Count(),
                     PartiesCount = voyage.Parties.Count()
                 }).ToList();
 

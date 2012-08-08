@@ -60,7 +60,7 @@ namespace Bookmaker.Models
         public virtual ICollection<Partie> Parties { get; set; }
 
         // Tarifs du voyage (au moins 1)
-        public virtual ICollection<Tarif> Tarifs { get; set; }
+        public virtual ICollection<Price> Prices { get; set; }
     }
 
     public class Partie
@@ -96,22 +96,16 @@ namespace Bookmaker.Models
         public string Content { get; set; }
     }
 
-    public class Tarif
+    public class Price
     {
         // Identifiant automatique du tarif
         [Key]
-        public int TarifID { get; set; }
+        public int PriceID { get; set; }
 
         // Référence du voyage auquel correspond le tarif
         [Display(Name = "Voyage")]
         public int VoyageID { get; set; }
         public virtual Voyage Voyage { get; set; }
-
-        // Libellé pour décrire le tarif
-        [Required(ErrorMessage = "L'information «Titre du tarif» est obligatoire")]
-        [Display(Name = "Titre")]
-        [StringLength(50)]
-        public string Title { get; set; }
 
         // Année du tarif
         [Required(ErrorMessage = "L'information «Année du tarif» est obligatoire")]
@@ -119,25 +113,31 @@ namespace Bookmaker.Models
         [StringLength(20)]
         public string Year { get; set; }
 
+        // Libellé pour décrire le tarif
+        [Required(ErrorMessage = "L'information «Titre du tarif» est obligatoire")]
+        [Display(Name = "Titre")]
+        [StringLength(50)]
+        public string Title { get; set; }
+
         // Prix du voyage pour un groupe de 30 à 34 personnes
         [Display(Name = "Tarif 30 à 34 personnes")]
-        public float Prix1 { get; set; }
+        public float Price1 { get; set; }
 
         // Prix du voyage pour un groupe de 35 à 39 personnes
         [Display(Name = "Tarif 35 à 39 personnes")]
-        public float Prix2 { get; set; }
+        public float Price2 { get; set; }
 
         // Prix du voyage pour un groupe de 40 à 44 personnes
         [Display(Name = "Tarif 40 à 44 personnes")]
-        public float Prix3 { get; set; }
+        public float Price3 { get; set; }
 
         // Prix du voyage pour un groupe de 45 à 49 personnes
         [Display(Name = "Tarif 45 à 49 personnes")]
-        public float Prix4 { get; set; }
+        public float Price4 { get; set; }
 
         // Prix du voyage pour un groupe de 50 à 55 personnes
         [Display(Name = "Tarif 50 à 55 personnes")]
-        public float Prix5 { get; set; }
+        public float Price5 { get; set; }
 
         // Commentaire sur ce tarif
         [Display(Name = "Remarques")]
@@ -149,7 +149,7 @@ namespace Bookmaker.Models
     public class BookmakerContext : DbContext
     {
         public DbSet<Voyage> Voyages { get; set; }
-        public DbSet<Tarif> Tarifs { get; set; }
+        public DbSet<Price> Prices { get; set; }
         public DbSet<Partie> Parties { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

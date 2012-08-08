@@ -1,0 +1,73 @@
+﻿@model Bookmaker.Models.Voyage
+
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.VoyageID)</h2>
+
+<table>
+<thead>
+    <tr>
+        <th></th>
+        <th>
+            Année
+        </th>
+        <th>
+            Tarif
+        </th>
+        <th>
+            30 à 34
+        </th>
+        <th>
+            35 à 39
+        </th>
+        <th>
+            40 à 44
+        </th>
+        <th>
+            45 à 49
+        </th>
+        <th>
+            50 à 55
+        </th>
+        <th>
+            Notes
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+@foreach (var item in Model.Prices)
+{
+    <tr>
+        <td>
+            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.PriceID }, new { @class = "edit" })
+        </td>
+        <td>
+            @Html.ActionLink(@item.Year, "Details", "Prices", new { id = item.PriceID }, null)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price5)
+        </td>
+        <td>
+            @(string.IsNullOrEmpty(item.Notes) ? "" : "Oui")
+        </td>
+        <td>
+            @Html.ActionLink("Supprimer", "Delete", "Prices", new { id = item.PriceID }, new { @class = "delete" })
+        </td>
+    </tr>
+}
+</tbody>
+</table>

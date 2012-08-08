@@ -33,7 +33,7 @@ a:focus
 /* Menu des actions CRUD */
 h2.crud
 {
-    font-size: smaller;
+    font-size: 90%;
     font-variant: small-caps;
 }
 

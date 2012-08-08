@@ -1,0 +1,13 @@
+﻿@model Bookmaker.Models.Price
+
+@{
+    ViewBag.Title = "Afficher un tarif";
+}
+
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.VoyageID)</h2>
+
+<fieldset class="sixteen columns">
+    <legend>Tarif «&nbsp;@Model.Voyage.Title&nbsp;»</legend>
+
+    @Html.Partial("_Display", Model)
+</fieldset>

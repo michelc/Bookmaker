@@ -137,5 +137,96 @@ namespace Bookmaker.Helpers
 
             return new MvcHtmlString(html);
         }
+
+        public static MvcHtmlString ActionChildcrud(this HtmlHelper helper, string title, string child_controller, int parent_id = -1)
+        {
+            var current_controller = helper.ViewContext.RouteData.Values["controller"].ToString().ToLower();
+            var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
+
+            var parent_controller = "voyages";
+
+            var html = "";
+
+            // Si on n'est pas sur la page Details du parent
+            if ((current_action != "details") || (current_controller != parent_controller))
+            {
+                // Alors, il faut un lien vers la page Details du parent
+                html += helper.ActionLink(title, "Details", parent_controller, new { id = parent_id.ToString() }, null).ToString();
+            }
+            else
+            {
+                // Sinon, il n'y a pas besoin d'un lien vers la page Details du parent
+                html += title;
+            }
+
+            // Si on n'est pas sur la page Create
+            html += " / ";
+            if (current_action != "create")
+            {
+                // Alors, il faut un lien vers la page Create
+                html += helper.ActionLink("Créer", "Create", child_controller, new { ParentID = parent_id.ToString() }, null).ToString();
+            }
+            else
+            {
+                // Sinon, il n'y a pas besoin d'un lien vers la page Create
+                html += "Créer";
+            }
+
+            // Si on a un identifiant de fiche
+            var id = helper.ViewContext.RouteData.Values["id"];
+            if (current_action == "details")
+            {
+                if (current_controller != child_controller.ToLower())
+                {
+                    id = null;
+                }
+            }
+            if (id != null)
+            {
+                // Alors, il faut générer les autres liens CRUD
+
+                // Si on n'est pas sur la page Details
+                html += " / ";
+                if (current_action != "details")
+                {
+                    // Alors, il faut un lien vers la page Details
+                    html += helper.ActionLink("Afficher", "Details", new { id = id.ToString() }).ToString();
+                }
+                else
+                {
+                    // Sinon, il n'y a pas besoin d'un lien vers la page Details
+                    html += "Afficher";
+                }
+
+                // Si on n'est pas sur la page Edit
+                html += " / ";
+                if (current_action != "edit")
+                {
+                    // Alors, il faut un lien vers la page Edit
+                    html += helper.ActionLink("Modifier", "Edit", new { id = id.ToString() }).ToString();
+                }
+                else
+                {
+                    // Sinon, il n'y a pas besoin d'un lien vers la page Edit
+                    html += "Modifier";
+                }
+
+                // Si on n'est pas sur la page Delete
+                html += " / ";
+                if (current_action != "delete")
+                {
+                    // Alors, il faut un lien vers la page Delete
+                    html += helper.ActionLink("Supprimer", "Delete", new { id = id.ToString() }).ToString();
+                }
+                else
+                {
+                    // Sinon, il n'y a pas besoin d'un lien vers la page Delete
+                    html += "Supprimer";
+                }
+
+            }
+
+            return new MvcHtmlString(html);
+        }
     }
 }

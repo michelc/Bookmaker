@@ -1,13 +1,13 @@
-﻿@model Bookmaker.Models.Voyage
+﻿@model Bookmaker.Models.Price
 
 @{
-    ViewBag.Title = "Supprimer un voyage";
+    ViewBag.Title = "Supprimer un tarif";
 }
 
-<h2 class="crud">@Html.ActionCrud("Voyages")</h2>
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.VoyageID)</h2>
 
 <fieldset>
-    <legend>Suppression «&nbsp;@Model.Title&nbsp;» ?</legend>
+    <legend>Suppression tarif «&nbsp;@Model.Voyage.Title&nbsp;» ?</legend>
 
     @Html.Partial("_Display", Model)
 

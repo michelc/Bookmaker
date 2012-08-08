@@ -1,23 +1,22 @@
-﻿@model Bookmaker.Models.Voyage
+﻿@model Bookmaker.Models.Price
 
 @{
-    ViewBag.Title = "Modifier un voyage";
+    ViewBag.Title = "Créer un tarif";
 }
 
-<h2 class="crud">@Html.ActionCrud("Voyages")</h2>
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.VoyageID)</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <fieldset class="sixteen columns">
-        <legend>Modification @Model.Title</legend>
+        <legend>Nouveau tarif «&nbsp;@Model.Voyage.Title&nbsp;»</legend>
 
-        @Html.HiddenFor(model => model.VoyageID)
         @Html.Partial("_Editor", Model)
 
         <p class="offset-by-five eleven columns alpha">
             <input type="submit" value="Enregistrer" />
-            @Html.ActionCancel()
+            @Html.ActionLink("Annuler", "Details", "Voyages", new { id = Model.VoyageID }, null)
         </p>
     </fieldset>
 }
