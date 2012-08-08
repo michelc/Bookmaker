@@ -5,7 +5,7 @@ using System.Data.Entity.Migrations;
 
 namespace Bookmaker.Models
 {
-    public enum VoyageType : int
+    public enum TravelType : int
     {
         Journee = 1,
         Sejour = 2
@@ -23,12 +23,12 @@ namespace Bookmaker.Models
         TarifNotes = 8,
         TexteNotes = 9
     }
-    
-    public class Voyage
+
+    public class Travel
     {
         // dentifiant automatique du voyage
         [Key]
-        public int VoyageID { get; set; }
+        public int TravelID { get; set; }
 
         // Position (ordre) du voyage
         [Display(Name = "Position")]
@@ -43,12 +43,12 @@ namespace Bookmaker.Models
         // Type du voyage : journée ou séjour
         [Required(ErrorMessage = "L'information «Type du voyage» est obligatoire")]
         [Display(Name = "Type de voyage")]
-        public VoyageType TypeVoyage
+        public TravelType TypeTravel
         {
-            get { return (VoyageType)VoyageType; }
-            set { VoyageType = (int)value; }
+            get { return (TravelType)TravelType; }
+            set { TravelType = (int)value; }
         }
-        public int VoyageType { get; set; }
+        public int TravelType { get; set; }
 
         // Commentaire sur ce voyage
         [Display(Name = "Remarques")]
@@ -59,7 +59,7 @@ namespace Bookmaker.Models
         // Description des parties du voyage, morceau par morceau
         public virtual ICollection<Partie> Parties { get; set; }
 
-        // Tarifs du voyage (au moins 1)
+        // Tarifs du voyage
         public virtual ICollection<Price> Prices { get; set; }
     }
 
@@ -71,8 +71,8 @@ namespace Bookmaker.Models
 
         // Référence du voyage auquel correspond cette partie
         [Display(Name = "Voyage")]
-        public int VoyageID { get; set; }
-        public virtual Voyage Voyage { get; set; }
+        public int TravelID { get; set; }
+        public virtual Travel Travel { get; set; }
 
         // Position (ordre) de cette partie dans le voyage
         [Display(Name = "Position")]
@@ -104,8 +104,8 @@ namespace Bookmaker.Models
 
         // Référence du voyage auquel correspond le tarif
         [Display(Name = "Voyage")]
-        public int VoyageID { get; set; }
-        public virtual Voyage Voyage { get; set; }
+        public int TravelID { get; set; }
+        public virtual Travel Travel { get; set; }
 
         // Année du tarif
         [Required(ErrorMessage = "L'information «Année du tarif» est obligatoire")]
@@ -148,7 +148,7 @@ namespace Bookmaker.Models
 
     public class BookmakerContext : DbContext
     {
-        public DbSet<Voyage> Voyages { get; set; }
+        public DbSet<Travel> Travels { get; set; }
         public DbSet<Price> Prices { get; set; }
         public DbSet<Partie> Parties { get; set; }
 

@@ -4,10 +4,10 @@
     ViewBag.Title = "Supprimer un tarif";
 }
 
-<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.VoyageID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.TravelID)</h2>
 
 <fieldset>
-    <legend>Suppression tarif «&nbsp;@Model.Voyage.Title&nbsp;» ?</legend>
+    <legend>Suppression tarif «&nbsp;@Model.Travel.Title&nbsp;» ?</legend>
 
     @Html.Partial("_Display", Model)
 

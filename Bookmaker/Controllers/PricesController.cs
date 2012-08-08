@@ -26,8 +26,8 @@ namespace Bookmaker.Controllers
         {
             var price = new Price
             {
-                VoyageID = ParentID,
-                Voyage = db.Voyages.Find(ParentID)
+                TravelID = ParentID,
+                Travel = db.Travels.Find(ParentID)
             };
 
             return View(price);
@@ -45,10 +45,10 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("Le tarif {0}/{1} a été créé", price.Year, price.Title));
-                return RedirectToAction("Details", "Voyages", new { id = price.VoyageID }); 
+                return RedirectToAction("Details", "Travels", new { id = price.TravelID }); 
             }
 
-            price.Voyage = db.Voyages.Find(price.VoyageID);
+            price.Travel = db.Travels.Find(price.TravelID);
             return View(price);
         }
 
@@ -58,7 +58,7 @@ namespace Bookmaker.Controllers
         public ActionResult Edit(int id)
         {
             var price = db.Prices.Find(id);
-            price.Voyage = db.Voyages.Find(price.VoyageID);
+            price.Travel = db.Travels.Find(price.TravelID);
 
             return View(price);
         }
@@ -75,10 +75,10 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("Le tarif {0}/{1} a été modifié", price.Year, price.Title));
-                return RedirectToAction("Details", "Voyages", new { id = price.VoyageID });
+                return RedirectToAction("Details", "Travels", new { id = price.TravelID });
             }
 
-            price.Voyage = db.Voyages.Find(price.VoyageID);
+            price.Travel = db.Travels.Find(price.TravelID);
             return View(price);
         }
 
@@ -103,7 +103,7 @@ namespace Bookmaker.Controllers
             db.SaveChanges();
 
             this.Flash(string.Format("Le tarif {0}/{1} a été supprimé", price.Year, price.Title));
-            return RedirectToAction("Details", "Voyages", new { id = price.VoyageID });
+            return RedirectToAction("Details", "Travels", new { id = price.TravelID });
         }
 
         protected override void Dispose(bool disposing)

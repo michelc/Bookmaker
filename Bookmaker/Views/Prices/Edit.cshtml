@@ -4,13 +4,13 @@
     ViewBag.Title = "Modifier un tarif";
 }
 
-<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.VoyageID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.TravelID)</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <fieldset class="sixteen columns">
-        <legend>Modification tarif «&nbsp;@Model.Voyage.Title&nbsp;»</legend>
+        <legend>Modification tarif «&nbsp;@Model.Travel.Title&nbsp;»</legend>
 
         @Html.HiddenFor(model => model.PriceID)
         @Html.Partial("_Editor", Model)

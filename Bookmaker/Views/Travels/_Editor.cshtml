@@ -1,4 +1,4 @@
-﻿@model Bookmaker.Models.Voyage
+﻿@model Bookmaker.Models.Travel
 
 <div class="editor-label five columns">
     @Html.CaptionFor(model => model.Position)
@@ -17,11 +17,11 @@
 </div>
 
 <div class="editor-label five columns">
-    @Html.CaptionFor(model => model.TypeVoyage)
+    @Html.CaptionFor(model => model.TypeTravel)
 </div>
 <div class="editor-field eleven columns">
-    @Html.DropDownListFor(model => Model.TypeVoyage, (SelectList)ViewBag.VoyageType, string.Empty)
-    @Html.ValidationMessageFor(model => model.TypeVoyage)
+    @Html.DropDownListFor(model => Model.TypeTravel, (SelectList)ViewBag.TravelType, string.Empty)
+    @Html.ValidationMessageFor(model => model.TypeTravel)
 </div>
 
 <div class="editor-label five columns">

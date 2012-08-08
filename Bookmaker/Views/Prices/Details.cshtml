@@ -4,10 +4,10 @@
     ViewBag.Title = "Afficher un tarif";
 }
 
-<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.VoyageID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.TravelID)</h2>
 
 <fieldset class="sixteen columns">
-    <legend>Tarif «&nbsp;@Model.Voyage.Title&nbsp;»</legend>
+    <legend>Tarif «&nbsp;@Model.Travel.Title&nbsp;»</legend>
 
     @Html.Partial("_Display", Model)
 </fieldset>

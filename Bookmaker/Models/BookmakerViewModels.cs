@@ -5,25 +5,25 @@ namespace Bookmaker.Models
     /// <summary>
     /// Classe pour afficher la liste des voyages dans la vue Index
     /// </summary>
-    public class VoyageIndex
+    public class TravelIndex
     {
-        public int VoyageID { get; set; }
+        public int TravelID { get; set; }
         public int Position { get; set; }
         public string Title { get; set; }
-        public int VoyageType { get; set; }
+        public int TravelType { get; set; }
         public int PricesCount { get; set; }
         public int PartiesCount { get; set; }
 
-        public VoyageType TypeVoyage
+        public TravelType TypeTravel
         {
-            get { return (VoyageType)VoyageType; }
-            set { VoyageType = (int)value; }
+            get { return (TravelType)TravelType; }
+            set { TravelType = (int)value; }
         }
     }
 
-    public class VoyageImport
+    public class TravelImport
     {
-        public Voyage Voyage { get; set; }
+        public Travel Travel { get; set; }
 
         [Display(Name = "Contenu complet")]
         [DataType(DataType.MultilineText)]

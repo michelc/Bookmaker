@@ -143,7 +143,7 @@ namespace Bookmaker.Helpers
             var current_controller = helper.ViewContext.RouteData.Values["controller"].ToString().ToLower();
             var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
 
-            var parent_controller = "voyages";
+            var parent_controller = "travels";
 
             var html = "";
 

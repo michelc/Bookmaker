@@ -75,7 +75,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
-    <Compile Include="Controllers\VoyagesController.cs" />
+    <Compile Include="Controllers\TravelsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,28 +184,28 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Voyages\Index.cshtml" />
+    <Content Include="Views\Travels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Voyages\Details.cshtml" />
+    <Content Include="Views\Travels\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Voyages\_Display.cshtml" />
+    <Content Include="Views\Travels\_Display.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Voyages\Create.cshtml" />
+    <Content Include="Views\Travels\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_FormScripts.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Voyages\_Editor.cshtml" />
+    <Content Include="Views\Travels\_Editor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Voyages\Edit.cshtml" />
+    <Content Include="Views\Travels\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Voyages\Delete.cshtml" />
+    <Content Include="Views\Travels\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Prices\Index.cshtml" />
