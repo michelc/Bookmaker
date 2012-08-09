@@ -127,7 +127,7 @@ namespace Bookmaker.Helpers
             return title;
         }
 
-        private static bool StartsWithDay(string title)
+        public static bool StartsWithDay(string title)
         {
             title = title.ToLower();
             var day = match(@"^(jour \d : )", title);
@@ -136,7 +136,7 @@ namespace Bookmaker.Helpers
             return !string.IsNullOrEmpty(day);
         }
 
-        private static bool StartsWithHour(string title)
+        public static bool StartsWithHour(string title)
         {
             title = title.ToLower();
             var hour = match(@"^(\d\dh\d\d : )", title);

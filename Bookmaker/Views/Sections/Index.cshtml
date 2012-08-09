@@ -2,15 +2,12 @@
 
 <h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
 
-<table>
+<table class="sections">
 <thead>
     <tr>
         <th></th>
         <th>
-            Position
-        </th>
-        <th>
-            Type
+            N°
         </th>
         <th>
             Contenu
@@ -29,10 +26,7 @@
             @item.Position
         </td>
         <td>
-            @item.TypeSection
-        </td>
-        <td>
-            @item.Content
+            @item.ContentAsHtml()
         </td>
         <td>
             @Html.ActionLink("Supprimer", "Delete", "Sections", new { id = item.SectionID }, new { @class = "delete" })

@@ -85,6 +85,7 @@
     <Compile Include="Helpers\FlashHelper.cs" />
     <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\InputHelper.cs" />
+    <Compile Include="Helpers\SectionHelper.cs" />
     <Compile Include="Models\BookmakerModels.cs" />
     <Compile Include="Models\BookmakerViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

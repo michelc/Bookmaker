@@ -389,3 +389,52 @@ input[type="text"].inputbig
         height: 10px;
     }
 }
+
+
+/* #Styles spécifiques pour Bookmaker
+================================================== */
+
+/* Les titres des sections sont moins grands */
+.sections h3
+{
+    font-size: 17px;
+}
+/* Avec mise en évidence des horaires */
+.sections h3 span
+{
+    color: red;
+    display: inline-block;
+    width: 100px;
+}
+
+/* Les paragraphes de présentation sont en italique */
+.sections p.intro
+{
+    font-style: italic;
+}
+
+/* Les menus sont en italique et décalés */
+.sections p.menu
+{
+    margin-left: 20px;
+    text-indent: -20px;
+    font-style: italic;
+}
+/* Avec mise en évidence des titres et séparateurs */
+.sections p.menu strong
+{
+    color: red;
+}
+
+/* Les paragraphes sont recentrés */
+.sections p
+{
+    margin: 5px 0;
+    padding: 0;
+}
+
+/* Agrandit la textbox de saisie d'une section */
+#Content
+{
+    height: 15em;
+}
