@@ -50,10 +50,10 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
-                section.Content = SectionHelper.ContentFormat(section.Content);
+                section.Content = InputHelper.ContentFormat(section.Content);
                 if (section.TypeSection == SectionType.Titre)
                 {
-                    section.Content = SectionHelper.TitleFormat(section.Content);
+                    section.Content = InputHelper.TitleFormat(section.Content);
                 }
 
                 db.Sections.Add(section);
@@ -88,10 +88,10 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
-                section.Content = SectionHelper.ContentFormat(section.Content);
+                section.Content = InputHelper.ContentFormat(section.Content);
                 if (section.TypeSection == SectionType.Titre)
                 {
-                    section.Content = SectionHelper.TitleFormat(section.Content);
+                    section.Content = InputHelper.TitleFormat(section.Content);
                 }
 
                 db.Entry(section).State = EntityState.Modified;

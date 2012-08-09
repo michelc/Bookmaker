@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Bookmaker.Helpers
 {
-    public static class SectionHelper
+    public static class InputHelper
     {
         public static string ContentFormat(string content)
         {
