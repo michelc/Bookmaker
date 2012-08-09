@@ -16,6 +16,7 @@ namespace Bookmaker.Controllers
         public ViewResult Details(int id)
         {
             var section = db.Sections.Find(id);
+            section.Travel = db.Travels.Find(section.TravelID);
 
             return View(section);
         }
@@ -111,6 +112,7 @@ namespace Bookmaker.Controllers
         public ActionResult Delete(int id)
         {
             var section = db.Sections.Find(id);
+            section.Travel = db.Travels.Find(section.TravelID);
 
             return View(section);
         }

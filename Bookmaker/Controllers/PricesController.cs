@@ -15,6 +15,7 @@ namespace Bookmaker.Controllers
         public ViewResult Details(int id)
         {
             var price = db.Prices.Find(id);
+            price.Travel = db.Travels.Find(price.TravelID);
 
             return View(price);
         }
@@ -45,7 +46,7 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("Le tarif {0}/{1} a été créé", price.Year, price.Title));
-                return RedirectToAction("Details", "Travels", new { id = price.TravelID }); 
+                return RedirectToAction("Details", "Travels", new { id = price.TravelID });
             }
 
             price.Travel = db.Travels.Find(price.TravelID);
@@ -88,6 +89,7 @@ namespace Bookmaker.Controllers
         public ActionResult Delete(int id)
         {
             var price = db.Prices.Find(id);
+            price.Travel = db.Travels.Find(price.TravelID);
 
             return View(price);
         }
