@@ -55,6 +55,12 @@ namespace Bookmaker.Controllers
                 {
                     section.Content = InputHelper.TitleFormat(section.Content);
                 }
+                if (section.TypeSection == SectionType.Menu)
+                {
+                    // A la création, gère un copier / coller depuis ancienne brochure
+                    // où le tiret long sert de séparateur entre les plats
+                    section.Content = section.Content.Replace(" – ", "\r\n"); ;
+                }
 
                 db.Sections.Add(section);
                 db.SaveChanges();

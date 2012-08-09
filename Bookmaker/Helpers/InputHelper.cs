@@ -24,8 +24,14 @@ namespace Bookmaker.Helpers
 
         private static string CheckText(string text)
         {
+            // Points de suspension
+            text = text.Replace("...", "…");
+
             // Jolie apostrophe
             text = text.Replace("'", "’");
+
+            // Apostrophe suite à copié/collé depuis PDF
+            text = text.Replace("‟", "’");
 
             // Jolis guillemets
             var open = text.IndexOf('"');
@@ -51,8 +57,8 @@ namespace Bookmaker.Helpers
                 text = text.Replace(temp, " " + temp);
             }
 
-            // Espaces après double-ponctuation, guillemets, virgule, point et parenthèse fermante
-            foreach (var car in "?;:!«»,.)".ToCharArray())
+            // Espaces après double-ponctuation, guillemets, virgule, point, points et parenthèse fermante
+            foreach (var car in "?;:!«»,.…)".ToCharArray())
             {
                 var temp = car.ToString();
                 text = text.Replace(temp, temp + " ");
@@ -64,14 +70,14 @@ namespace Bookmaker.Helpers
                 text = text.Replace("  ", " ");
             }
 
-            // Pas d'espace avant virgule, point et parenthèse fermante
-            foreach (var car in ",.)".ToCharArray())
+            // Pas d'espace avant virgule, point, points et parenthèse fermante
+            foreach (var car in ",.…)".ToCharArray())
             {
                 var temp = car.ToString();
                 text = text.Replace(" " + temp, temp);
             }
 
-            // Triple exclamation
+            // Triple exclamation (suite à espace avant double-ponctuation)
             text = text.Replace(" ! ! !", " !!!");
 
             // Quart

@@ -17,11 +17,7 @@ namespace Bookmaker.Models
         Presentation = 2,
         Texte = 3,
         Menu = 4,
-        MenuLong = 5,
-        Image = 6,
-        Tarif = 7,
-        TarifNotes = 8,
-        TexteNotes = 9
+        Image = 5
     }
 
     public class Travel
