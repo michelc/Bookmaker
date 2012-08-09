@@ -50,7 +50,9 @@ namespace Bookmaker.Controllers
             var travel = new Travel();
 
             // Initialise la position à la prochaine disponible
-            travel.Position = db.Travels.Count() + 1;
+            travel.Position = (from t in db.Travels
+                               orderby t.Position descending
+                               select t.Position).FirstOrDefault() + 1;
 
             ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);

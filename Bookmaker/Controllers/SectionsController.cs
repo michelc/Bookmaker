@@ -32,7 +32,10 @@ namespace Bookmaker.Controllers
             };
 
             // Initialise la position à la prochaine disponible
-            section.Position = section.Travel.Sections.Count() + 1;
+            section.Position = (from s in db.Sections
+                                where s.TravelID == ParentID
+                                orderby s.Position descending
+                                select s.Position).FirstOrDefault() + 1;
 
             ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
