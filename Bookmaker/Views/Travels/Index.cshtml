@@ -64,20 +64,25 @@
         $(document).ready(function () {
             $("tbody").sortable({
                 axis: "y",
+                containment: "tbody",
                 cursor: "move",
                 handle: ".handle",
-                stop: function (e, ui) {
+                update: function (e, ui) {
                     $.ajax({
                         url: '@Url.Action("Sort", "Travels")',
-                        type: 'POST',
+                        type: "POST",
                         cache: false,
-                        contentType: 'application/json',
+                        contentType: "application/json",
                         data: JSON.stringify({
                             from: ui.item.children(".handle").data("pos"),
                             to: ui.item.index()
                         }),
                         success: function (result) {
                             alert(result);
+                            $(".handle").each(function (index) {
+                                $(this).text(index + 1);
+                                $(this).data("pos", index);
+                            });
                         }
                     });
                 }
