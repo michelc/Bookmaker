@@ -88,6 +88,7 @@
     <Compile Include="Helpers\SectionHelper.cs" />
     <Compile Include="Models\BookmakerModels.cs" />
     <Compile Include="Models\BookmakerViewModels.cs" />
+    <Compile Include="Models\ImportExport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

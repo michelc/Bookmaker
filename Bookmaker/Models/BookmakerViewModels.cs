@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Bookmaker.Models
+﻿namespace Bookmaker.Models
 {
     /// <summary>
     /// Classe pour afficher la liste des voyages dans la vue Index
@@ -19,14 +17,5 @@ namespace Bookmaker.Models
             get { return (TravelType)TravelType; }
             set { TravelType = (int)value; }
         }
-    }
-
-    public class TravelImport
-    {
-        public Travel Travel { get; set; }
-
-        [Display(Name = "Contenu complet")]
-        [DataType(DataType.MultilineText)]
-        public string Contenu { get; set; }
     }
 }

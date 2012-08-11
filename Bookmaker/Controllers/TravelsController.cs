@@ -1,5 +1,7 @@
 ﻿using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
@@ -130,6 +132,58 @@ namespace Bookmaker.Controllers
             db.SaveChanges();
 
             this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
+            return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /Travels/JsonExport
+
+        public ContentResult JsonExport()
+        {
+            // Retrouve tous les voyages
+            var travels = db
+                .Travels
+                .Include(t => t.Sections)
+                .Include(t => t.Prices)
+                .OrderBy(t => t.Position)
+                .ThenBy(t => t.Title);
+
+            // Transforme les données au format Json
+            var json = ImportExport.JsonExport(travels);
+
+            // Sauvegarde les données au format Json
+            // (quand on est sur http://localhost/)
+            if (Request.Url.IsLoopback)
+            {
+                var file = Server.MapPath("~/App_Data/json_db.txt");
+                System.IO.File.WriteAllText(file, json);
+            }
+
+            // Renvoie les données au format Json
+            return Content(json, "application/json", Encoding.Default);
+        }
+
+        //
+        // GET: /Travels/JsonImport
+
+        public ActionResult JsonImport()
+        {
+            // Vide les tables actuelles
+            db.TruncateTable("Prices", "PriceID");
+            db.TruncateTable("Sections", "SectionID");
+            db.TruncateTable("Travels", "TravelID");
+
+            // Charge les données à importer
+            var file = Server.MapPath("~/App_Data/json_db.txt");
+            var json = System.IO.File.ReadAllText(file);
+
+            // Importe les données
+            var travels = ImportExport.JsonImport(json);
+
+            // Insère les données importées dans la base de données
+            travels.ForEach(t => db.Travels.Add(t));
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
