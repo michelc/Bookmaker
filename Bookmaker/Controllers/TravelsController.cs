@@ -40,35 +40,42 @@ namespace Bookmaker.Controllers
         [HttpPost]
         public JsonResult Sort(int from, int to)
         {
-            // Les positions démarrent à 1
-            // (alors que les index jQuery commencent à 0)
-            from++;
-            to++;
+            var result = "Le nouvel ordre de tri s'est mal enregistré";
 
-            var sql = string.Empty;
-
-            // Met de côté l'élément à la position de départ
-            sql = string.Format("UPDATE Travels SET Position = 0 WHERE Position = {0}", from);
-            db.Database.ExecuteSqlCommand(sql);
-
-            if (from < to)
+            try
             {
-                // Ramène d'un rang tous les élements entre le départ et l'arrivée
-                sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Position BETWEEN {0} AND {1}", from, to);
-                db.Database.ExecuteSqlCommand(sql);
-            }
-            else
-            {
-                // Repousse d'un rang tous les élements entre l'arrivée et le départ
-                sql = string.Format("UPDATE Travels SET Position = Position + 1 WHERE Position BETWEEN {0} AND {1}", to, from);
-                db.Database.ExecuteSqlCommand(sql);
-            }
+                // Les positions démarrent à 1
+                // (alors que les index jQuery commencent à 0)
+                from++;
+                to++;
 
-            // Déplace l'élément mis de coté à la position d'arrivée
-            sql = string.Format("UPDATE Travels SET Position = {0} WHERE Position = 0", to);
-            db.Database.ExecuteSqlCommand(sql);
+                var sql = string.Empty;
 
-            var result = string.Format("Déplacé voyage de {0}° position vers la {1}°", from + 1, to + 1);
+                // Met de côté l'élément à la position de départ
+                sql = string.Format("UPDATE Travels SET Position = 0 WHERE Position = {0}", from);
+                db.Database.ExecuteSqlCommand(sql);
+
+                if (from < to)
+                {
+                    // Ramène d'un rang tous les élements entre le départ et l'arrivée
+                    sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Position BETWEEN {0} AND {1}", from, to);
+                    db.Database.ExecuteSqlCommand(sql);
+                }
+                else
+                {
+                    // Repousse d'un rang tous les élements entre l'arrivée et le départ
+                    sql = string.Format("UPDATE Travels SET Position = Position + 1 WHERE Position BETWEEN {0} AND {1}", to, from);
+                    db.Database.ExecuteSqlCommand(sql);
+                }
+
+                // Déplace l'élément mis de coté à la position d'arrivée
+                sql = string.Format("UPDATE Travels SET Position = {0} WHERE Position = 0", to);
+                db.Database.ExecuteSqlCommand(sql);
+
+                // Tout va bien
+                result = string.Empty;
+            } catch {}
+
             return Json(result);
         }
 
