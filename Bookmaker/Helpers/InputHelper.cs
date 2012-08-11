@@ -19,6 +19,12 @@ namespace Bookmaker.Helpers
                 }
             }
 
+            // Supprime le dernier retour à la ligne
+            if (text.Length > 1)
+            {
+                text.Length = text.Length - 2;
+            }
+
             return text.ToString();
         }
 
