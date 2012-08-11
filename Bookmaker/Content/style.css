@@ -449,3 +449,9 @@ input[type="text"].inputbig
 {
     height: 15em;
 }
+
+/* Signale les zones permettant de drag & drop */
+.handle
+{
+    cursor: move;
+}

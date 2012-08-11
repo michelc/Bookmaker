@@ -34,20 +34,20 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.TravelID }, new { @class = "edit" })
         </td>
-        <td>
-			@item.Position
+        <td class="handle" data-pos="@(item.Position - 1)">
+            @item.Position
         </td>
         <td>
-			@Html.ActionLink(@item.Title, "Details", new { id = item.TravelID })
+            @Html.ActionLink(@item.Title, "Details", new { id = item.TravelID })
         </td>
         <td>
-			@item.TypeTravel
+            @item.TypeTravel
         </td>
         <td>
-			@item.SectionsCount
+            @item.SectionsCount
         </td>
         <td>
-			@item.PricesCount
+            @item.PricesCount
         </td>
         <td>
             @Html.ActionLink("Delete", "Delete", new { id = item.TravelID }, new { @class = "delete" })
@@ -56,3 +56,33 @@
 }
 </tbody>
 </table>
+
+@section JavaScript
+{
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.22.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+            $("tbody").sortable({
+                axis: "y",
+                cursor: "move",
+                handle: ".handle",
+                stop: function (e, ui) {
+                    $.ajax({
+                        url: '@Url.Action("Sort", "Travels")',
+                        type: 'POST',
+                        cache: false,
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            from: ui.item.children(".handle").data("pos"),
+                            to: ui.item.index()
+                        }),
+                        success: function (result) {
+                            alert(result);
+                        }
+                    });
+                }
+            });
+            $("tbody").disableSelection();
+        });
+    </script>
+}

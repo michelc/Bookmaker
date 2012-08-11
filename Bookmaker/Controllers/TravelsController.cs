@@ -35,6 +35,17 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // POST: /Travels/Sort?from=5&to=10
+
+        [HttpPost]
+        public JsonResult Sort(int from, int to)
+        {
+            var result = string.Format("TODO : déplacer voyage de {0}° position vers la {1}°", from + 1, to + 1);
+
+            return Json(result);
+        }
+
+        //
         // GET: /Travels/Details/5
 
         public ViewResult Details(int id)
