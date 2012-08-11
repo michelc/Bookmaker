@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Web.Mvc;
 using Bookmaker.Models;
 
@@ -12,79 +13,156 @@ namespace Bookmaker.Helpers
             var content = section.Content;
             var lines = content.Replace("\r\n", "\r").Split('\r');
 
-            bool first_line = true;
-
             switch (section.TypeSection)
             {
                 case SectionType.Titre:
-                    // Sous-titre
-                    if (InputHelper.StartsWithDay(content))
-                    {
-                        var span = content.IndexOf(" : ");
-                        content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);
-                    }
-                    if (InputHelper.StartsWithHour(content))
-                    {
-                        var span = content.IndexOf(" : ");
-                        content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);
-                    }
-                    html.AppendFormat("<h3>{0}</h3>", CheckHtml(content));
+                    html = HtmlTitle(html, content);
                     break;
                 case SectionType.Presentation:
-                    // Introduction
-                    foreach (var line in lines)
-                    {
-                        if (!string.IsNullOrWhiteSpace(line))
-                        {
-                            html.AppendFormat("<p class='intro'>{0}</p>", CheckHtml(line));
-                        }
-                    }
+                    html = HtmlPresentation(html, lines);
                     break;
                 case SectionType.Menu:
-                    // Menu
-                    html.Append("<p class='menu'>");
-                    var separator = "";
-                    if (lines.Length > 0)
+                    if ((lines.Length > 0) && (lines[0].StartsWith("-*-")))
                     {
-                        if (lines[0].Trim().EndsWith(":"))
-                        {
-                            html.AppendFormat("<strong>{0}</strong>", lines[0].Replace(":", "").Trim());
-                            separator = " : ";
-                        }
-                        else
-                        {
-                            first_line = false;
-                        }
-
-                        foreach (var line in lines)
-                        {
-                            if (first_line)
-                            {
-                                first_line = false;
-                            }
-                            else
-                            {
-                                if (!string.IsNullOrWhiteSpace(line))
-                                {
-                                    html.Append(separator);
-                                    separator = " <strong>&mdash;</strong> ";
-                                    var temp = CheckHtml(line).Replace(" ou ", " <strong>(</strong>ou<strong>)</strong> ");
-                                    html.Append(temp);
-                                }
-                            }
-                        }
+                        html = HtmlMenuBlock(html, lines);
                     }
-                    html.Append("</p>");
+                    else
+                    {
+                        html = HtmlMenuInline(html, lines);
+                    }
                     break;
                 default:
-                    foreach (var line in lines)
-                    {
-                        html.AppendFormat("<p>{0}</p>", line);
-                    }
+                    html = HtmlDefault(html, lines);
                     break;
             }
 
             return new MvcHtmlString(html.ToString());
+        }
+
+        private static StringBuilder HtmlTitle(StringBuilder html, string content)
+        {
+            if (InputHelper.StartsWithDay(content))
+            {
+                var span = content.IndexOf(" : ");
+                content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);
+            }
+            if (InputHelper.StartsWithHour(content))
+            {
+                var span = content.IndexOf(" : ");
+                content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);
+            }
+            html.AppendFormat("<h3>{0}</h3>", CheckHtml(content));
+
+            return html;
+        }
+
+        private static StringBuilder HtmlPresentation(StringBuilder html, string[] lines)
+        {
+            foreach (var line in lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    html.AppendFormat("<p class='intro'>{0}</p>", CheckHtml(line));
+                }
+            }
+
+            return html;
+        }
+
+        private static StringBuilder HtmlMenuInline(StringBuilder html, string[] lines)
+        {
+            bool first_line = true;
+
+            html.Append("<p class='menu'>");
+            var separator = "";
+            if (lines.Length > 0)
+            {
+                if (lines[0].Trim().EndsWith(":"))
+                {
+                    html.AppendFormat("<strong>{0}</strong>", lines[0].Replace(":", "").Trim());
+                    separator = " : ";
+                }
+                else
+                {
+                    first_line = false;
+                }
+
+                foreach (var line in lines)
+                {
+                    if (first_line)
+                    {
+                        first_line = false;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            html.Append(separator);
+                            separator = " <strong>&mdash;</strong> ";
+                            var temp = CheckHtml(line).Replace(" ou ", " <strong>(</strong>ou<strong>)</strong> ");
+                            html.Append(temp);
+                        }
+                    }
+                }
+            }
+            html.Append("</p>");
+
+            return html;
+        }
+
+        private static StringBuilder HtmlMenuBlock(StringBuilder html, string[] lines)
+        {
+            // Menu multi-lignes
+            bool first_line = true;
+
+            // Supprime la 1° ligne qui contient "-*-"
+            Array.Reverse(lines);
+            Array.Resize(ref lines, lines.Length - 1);
+            Array.Reverse(lines);
+
+            if (lines.Length > 0)
+            {
+                if (lines[0].Trim().EndsWith(":"))
+                {
+                    html.AppendFormat("<p class='menu'><strong>{0}</strong></p>", lines[0].Replace(":", "").Trim());
+                }
+                else
+                {
+                    first_line = false;
+                }
+
+                html.Append("<ul class='menu'>");
+                foreach (var line in lines)
+                {
+                    if (first_line)
+                    {
+                        first_line = false;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            html.AppendFormat("<li>{0}</li>", CheckHtml(line));
+                        }
+                    }
+                }
+                html.Append("</ul>");
+            }
+
+            return html;
+        }
+
+        private static StringBuilder HtmlDefault(StringBuilder html, string[] lines)
+        {
+            foreach (var line in lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    html.AppendFormat("<p>{0}</p>", CheckHtml(line));
+                }
+            }
+
+            return html;
         }
 
         private static string CheckHtml(string text)
