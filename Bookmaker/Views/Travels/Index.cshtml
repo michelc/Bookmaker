@@ -64,7 +64,7 @@
         $(document).ready(function () {
             $("tbody").sortable({
                 axis: "y",
-                containment: "tbody",
+                containment: "table",
                 cursor: "move",
                 handle: ".handle",
                 update: function (e, ui) {
@@ -87,7 +87,7 @@
                     });
                 }
             });
-            $("tbody").disableSelection();
+            $("tbody .handler").disableSelection();
         });
     </script>
 }
