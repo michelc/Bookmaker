@@ -172,9 +172,14 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+            // Supprime le voyage
             var travel = db.Travels.Find(id);
             db.Travels.Remove(travel);
             db.SaveChanges();
+
+            // Réordonne les voyages
+            var sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Position > {0}", travel.Position);
+            db.Database.ExecuteSqlCommand(sql);
 
             this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
             return RedirectToAction("Index");
