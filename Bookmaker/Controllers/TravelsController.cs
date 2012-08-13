@@ -97,9 +97,6 @@ namespace Bookmaker.Controllers
         {
             var travel = new Travel();
 
-            // Initialise la position à la prochaine disponible
-            travel.Position = db.Travels.Count() + 1;
-
             ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
         }
@@ -112,6 +109,9 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Initialise la position à la prochaine disponible
+                travel.Position = db.Travels.Count() + 1;
+                // enregistre le nouveau voyage
                 db.Travels.Add(travel);
                 db.SaveChanges();
 
