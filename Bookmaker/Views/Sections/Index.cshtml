@@ -22,7 +22,7 @@
         <td>
             @Html.ActionLink("Modifier", "Edit", "Sections", new { id = item.SectionID }, new { @class = "edit" })
         </td>
-        <td>
+        <td class="handle" data-pos="@(item.Position - 1)">
             @item.Position
         </td>
         <td>

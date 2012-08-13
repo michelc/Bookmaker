@@ -22,7 +22,53 @@ namespace Bookmaker.Controllers
         }
 
         //
-        // GET: /Sections/Create?int ParentID=5
+        // POST: /Sections/Sort?ParentID=1&from=5&to=10
+
+        [HttpPost]
+        public JsonResult Sort(int ParentID, int from, int to)
+        {
+            var result = "Le nouvel ordre de tri s'est mal enregistré";
+
+            try
+            {
+                // Les positions démarrent à 1
+                // (alors que les index jQuery commencent à 0)
+                from++;
+                to++;
+
+                var sql = string.Empty;
+
+                // Met de côté l'élément à la position de départ
+                sql = string.Format("UPDATE Sections SET Position = 0 WHERE TravelID = {0} AND Position = {1}", ParentID, from);
+                db.Database.ExecuteSqlCommand(sql);
+
+                if (from < to)
+                {
+                    // Ramène d'un rang tous les élements entre le départ et l'arrivée
+                    sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE TravelID = {0} AND Position BETWEEN {1} AND {2}", ParentID, from, to);
+                    db.Database.ExecuteSqlCommand(sql);
+                }
+                else
+                {
+                    // Repousse d'un rang tous les élements entre l'arrivée et le départ
+                    sql = string.Format("UPDATE Sections SET Position = Position + 1 WHERE TravelID = {0} AND Position BETWEEN {1} AND {2}", ParentID, to, from);
+                    db.Database.ExecuteSqlCommand(sql);
+                }
+
+                // Déplace l'élément mis de coté à la position d'arrivée
+                sql = string.Format("UPDATE Sections SET Position = {0} WHERE TravelID = {1} AND Position = 0", to, ParentID);
+                db.Database.ExecuteSqlCommand(sql);
+
+                // Tout va bien
+                result = string.Empty;
+            }
+            catch { }
+
+            return Json(result);
+        }
+
+        //
+        // GET: /Sections/Create?ParentID=5
 
         public ViewResult Create(int ParentID)
         {
@@ -31,12 +77,6 @@ namespace Bookmaker.Controllers
                 TravelID = ParentID,
                 Travel = db.Travels.Find(ParentID)
             };
-
-            // Initialise la position à la prochaine disponible
-            section.Position = (from s in db.Sections
-                                where s.TravelID == ParentID
-                                orderby s.Position descending
-                                select s.Position).FirstOrDefault() + 1;
 
             ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
@@ -50,6 +90,10 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Initialise la position à la prochaine disponible
+                section.Position = db.Sections.Where(s => s.TravelID == section.TravelID).Count() + 1;
+
+                // Reformate et contrôle le contenu saisi
                 section.Content = InputHelper.ContentFormat(section.Content);
                 if (section.TypeSection == SectionType.Titre)
                 {
@@ -62,6 +106,7 @@ namespace Bookmaker.Controllers
                     section.Content = section.Content.Replace(" – ", "\r\n"); ;
                 }
 
+                // Enregistre la nouvelle partie
                 db.Sections.Add(section);
                 db.SaveChanges();
 
@@ -129,9 +174,14 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+            // Supprime la partie du voyage
             var section = db.Sections.Find(id);
             db.Sections.Remove(section);
             db.SaveChanges();
+
+            // Réordonne les parties du voyages
+            var sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE TravelID = {0} AND Position > {1}", section.TravelID, section.Position);
+            db.Database.ExecuteSqlCommand(sql);
 
             this.Flash(string.Format("La partie {0} a été supprimé", section.Position));
             return RedirectToAction("Details", "Travels", new { id = section.TravelID });

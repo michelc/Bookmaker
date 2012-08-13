@@ -85,7 +85,7 @@ namespace Bookmaker.Controllers
         {
             var travel = db.Travels.Find(id);
             travel.Prices = travel.Prices.OrderBy(p => p.Year).ThenBy(p => p.Title).ThenBy(p => p.PriceID).ToList();
-            travel.Sections = travel.Sections.OrderBy(s => s.Position).ThenBy(s => s.SectionID).ToList();
+            travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
 
             return View(travel);
         }
@@ -111,7 +111,7 @@ namespace Bookmaker.Controllers
             {
                 // Initialise la position à la prochaine disponible
                 travel.Position = db.Travels.Count() + 1;
-                // enregistre le nouveau voyage
+                // Enregistre le nouveau voyage
                 db.Travels.Add(travel);
                 db.SaveChanges();
 
