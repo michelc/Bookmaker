@@ -20,7 +20,6 @@ namespace Bookmaker.Controllers
             var travels = db
                 .Travels
                 .OrderBy(travel => travel.Position)
-                .ThenBy(travel => travel.Title)
                 .Select(travel => new TravelIndex
                 {
                     TravelID = travel.TravelID,
@@ -99,9 +98,7 @@ namespace Bookmaker.Controllers
             var travel = new Travel();
 
             // Initialise la position à la prochaine disponible
-            travel.Position = (from t in db.Travels
-                               orderby t.Position descending
-                               select t.Position).FirstOrDefault() + 1;
+            travel.Position = db.Travels.Count() + 1;
 
             ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
@@ -195,8 +192,7 @@ namespace Bookmaker.Controllers
                 .Travels
                 .Include(t => t.Sections)
                 .Include(t => t.Prices)
-                .OrderBy(t => t.Position)
-                .ThenBy(t => t.Title);
+                .OrderBy(t => t.Position);
 
             // Transforme les données au format Json
             var json = ImportExport.JsonExport(travels);
