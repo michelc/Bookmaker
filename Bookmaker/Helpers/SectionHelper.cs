@@ -158,7 +158,14 @@ namespace Bookmaker.Helpers
             {
                 if (!string.IsNullOrWhiteSpace(line))
                 {
-                    html.AppendFormat("<p>{0}</p>", CheckHtml(line));
+                    if (line.StartsWith("= "))
+                    {
+                        html.AppendFormat("<h4>{0}</h4>", CheckHtml(line.Substring(2)));
+                    }
+                    else
+                    {
+                        html.AppendFormat("<p>{0}</p>", CheckHtml(line));
+                    }
                 }
             }
 
