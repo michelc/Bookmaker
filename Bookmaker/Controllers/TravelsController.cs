@@ -183,6 +183,34 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // GET: /Travels/Generate
+
+        public ContentResult Generate()
+        {
+            // Retrouve tous les voyages
+            var travels = db
+                .Travels
+                .Include(t => t.Sections)
+                .Include(t => t.Prices)
+                .OrderBy(t => t.Position);
+
+            // Génère la brochure au format Word
+            var templatePath = Server.MapPath("~/Content/Bookmaker.xml");
+            var word = QuickWord.Generate(travels, templatePath);
+
+            // Enregistre la brochure Word
+            // (quand on est sur http://localhost/)
+            if (Request.Url.IsLoopback)
+            {
+                var file = Server.MapPath("~/App_Data/Bookmaker.doc");
+                System.IO.File.WriteAllText(file, word);
+            }
+
+            // Renvoie la brochure au format Word
+            return Content(word, "application/msword", Encoding.UTF8);
+        }
+
+        //
         // GET: /Travels/JsonExport
 
         public ContentResult JsonExport()

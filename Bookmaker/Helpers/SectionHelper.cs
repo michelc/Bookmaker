@@ -80,7 +80,7 @@ namespace Bookmaker.Helpers
                 if (lines[0].Trim().EndsWith(":"))
                 {
                     html.AppendFormat("<strong>{0}</strong>", lines[0].Replace(":", "").Trim());
-                    separator = " : ";
+                    separator = "&nbsp;: ";
                 }
                 else
                 {
@@ -201,7 +201,7 @@ namespace Bookmaker.Helpers
             return html;
         }
 
-        private static string CheckHtml(string text)
+        public static string CheckHtml(string text)
         {
             text = text.Trim();
             if (text == "-")

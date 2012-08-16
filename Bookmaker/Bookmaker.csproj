@@ -89,9 +89,12 @@
     <Compile Include="Models\BookmakerModels.cs" />
     <Compile Include="Models\BookmakerViewModels.cs" />
     <Compile Include="Models\ImportExport.cs" />
+    <Compile Include="Models\QuickWord.cs" />
+    <Compile Include="Models\XmlWord2003.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bookmaker.xml" />
     <Content Include="Content\icons\delete.png" />
     <Content Include="Content\icons\edit.png" />
     <Content Include="Content\skeleton\javascripts\tabs.js" />
