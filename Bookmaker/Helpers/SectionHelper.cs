@@ -155,24 +155,41 @@ namespace Bookmaker.Helpers
         private static StringBuilder HtmlDefault(StringBuilder html, string[] lines)
         {
             bool in_list = false;
-            foreach (var line in lines)
+            foreach (var read_only in lines)
             {
-                if (!string.IsNullOrWhiteSpace(line))
+                if (!string.IsNullOrWhiteSpace(read_only))
                 {
+                    // ~~bla bla~~ => les mots sont mis en gras
+                    var line = read_only;
+                    var start = line.IndexOf("~~");
+                    while (start != -1)
+                    {
+                        var end = line.IndexOf("~~", start + 2 + 1);
+                        if (end == -1) break;
+
+                        line = line.Remove(end, 2).Insert(end, "</strong>");
+                        line = line.Remove(start, 2).Insert(start, "<strong>");
+
+                        start = line.IndexOf("~~");
+                    }
+
                     if (line.StartsWith("* "))
                     {
+                        // *(espace)bla bla bla bla => la ligne fait parti d'une liste
                         html.Append(in_list ? "" : "<ul>");
                         in_list = true;
                         html.AppendFormat("<li>{0}</li>", CheckHtml(line.Substring(2)));
                     }
                     else if (line.StartsWith("= "))
                     {
+                        // =(espace)bla bla bla bla => la ligne est un sous-titre
                         html.Append(in_list ? "</ul>" : "");
                         in_list = false;
                         html.AppendFormat("<h4>{0}</h4>", CheckHtml(line.Substring(2)));
                     }
                     else
                     {
+                        // la ligne est une ligne normale
                         html.Append(in_list ? "</ul>" : "");
                         in_list = false;
                         html.AppendFormat("<p>{0}</p>", CheckHtml(line));
@@ -180,7 +197,6 @@ namespace Bookmaker.Helpers
                 }
             }
             html.Append(in_list ? "</ul>" : "");
-            in_list = false;
 
             return html;
         }
