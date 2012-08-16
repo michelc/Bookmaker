@@ -19,11 +19,6 @@ namespace Bookmaker.Models
                 // Parties du voyages
                 foreach (var s in t.Sections.OrderBy(s => s.Position))
                 {
-                    if (s.TypeSection == SectionType.Menu)
-                    {
-                        // Les menus multi-lignes ne sont pas gérés pour l'instant
-                        s.Content = s.Content.Replace("-*-" + Environment.NewLine, "");
-                    }
                     html.Append(SectionHelper.ContentAsHtml(s));
                 }
 
@@ -86,6 +81,10 @@ namespace Bookmaker.Models
                     if (line.StartsWith("<p class='menu'>"))
                     {
                         word.Add("Menu", line.Substring(16));
+                    }
+                    else if (line.StartsWith("<p class='menubloc'>"))
+                    {
+                        word.Add("MenuBloc", line.Substring(20));
                     }
                     else if (line.StartsWith("<h1>"))
                     {

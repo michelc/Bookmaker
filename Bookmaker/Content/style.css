@@ -431,7 +431,7 @@ input[type="text"].inputbig
 }
 
 /* Les menus multi-lignes sont en liste et en italique */
-.sections ul.menu
+.sections p.menubloc
 {
     margin: 0;
     padding: 0;

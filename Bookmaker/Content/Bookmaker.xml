@@ -288,6 +288,28 @@
         <w:sz-cs w:val="24" />
       </w:rPr>
     </w:style>
+    <w:style w:type="paragraph" w:styleId="MenuBloc">
+      <w:name w:val="MenuBloc" />
+      <w:basedOn w:val="Normal" />
+      <w:link w:val="MenuBlocCar" />
+      <w:pPr>
+        <w:jc w:val="center" />
+      </w:pPr>
+      <w:rPr>
+        <wx:font wx:val="Century Gothic" />
+        <w:i />
+      </w:rPr>
+    </w:style>
+    <w:style w:type="character" w:styleId="MenuBlocCar">
+      <w:name w:val="MenuBloc Car" />
+      <w:basedOn w:val="Policepardfaut" />
+      <w:link w:val="MenuBloc" />
+      <w:rPr>
+        <w:rFonts w:ascii="Century Gothic" w:h-ansi="Century Gothic" />
+        <w:i />
+        <w:sz-cs w:val="24" />
+      </w:rPr>
+    </w:style>
     <w:style w:type="paragraph" w:styleId="Pieddepage">
       <w:name w:val="footer" />
       <wx:uiName wx:val="Pied de page" />

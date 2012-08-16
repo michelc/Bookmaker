@@ -22,7 +22,7 @@ namespace Bookmaker.Helpers
                     html = HtmlPresentation(html, lines);
                     break;
                 case SectionType.Menu:
-                    if ((lines.Length > 0) && (lines[0].StartsWith("-*-")))
+                    if ((lines.Length > 0) && (lines[0].StartsWith("#bloc")))
                     {
                         html = HtmlMenuBlock(html, lines);
                     }
@@ -113,40 +113,15 @@ namespace Bookmaker.Helpers
         private static StringBuilder HtmlMenuBlock(StringBuilder html, string[] lines)
         {
             // Menu multi-lignes
-            bool first_line = true;
-
-            // Supprime la 1° ligne qui contient "-*-"
-            Array.Reverse(lines);
-            Array.Resize(ref lines, lines.Length - 1);
-            Array.Reverse(lines);
-
-            if (lines.Length > 0)
+            foreach (var line in lines)
             {
-                if (lines[0].Trim().EndsWith(":"))
+                if (!line.StartsWith("#bloc"))
                 {
-                    html.AppendFormat("<p class='menu'><strong>{0}</strong></p>", lines[0].Replace(":", "").Trim());
-                }
-                else
-                {
-                    first_line = false;
-                }
-
-                html.Append("<ul class='menu'>");
-                foreach (var line in lines)
-                {
-                    if (first_line)
+                    if (!string.IsNullOrWhiteSpace(line))
                     {
-                        first_line = false;
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrWhiteSpace(line))
-                        {
-                            html.AppendFormat("<li>{0}</li>", CheckHtml(line));
-                        }
+                        html.AppendFormat("<p class='menubloc'>{0}</p>", CheckHtml(line));
                     }
                 }
-                html.Append("</ul>");
             }
 
             return html;
