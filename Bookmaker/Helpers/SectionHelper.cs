@@ -51,7 +51,7 @@ namespace Bookmaker.Helpers
                 var span = content.IndexOf(" : ");
                 content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);
             }
-            html.AppendFormat("<h3>{0}</h3>", CheckHtml(content));
+            html.AppendFormat("<h2>{0}</h2>", CheckHtml(content));
 
             return html;
         }
@@ -185,7 +185,7 @@ namespace Bookmaker.Helpers
                         // =(espace)bla bla bla bla => la ligne est un sous-titre
                         html.Append(in_list ? "</ul>" : "");
                         in_list = false;
-                        html.AppendFormat("<h4>{0}</h4>", CheckHtml(line.Substring(2)));
+                        html.AppendFormat("<h3>{0}</h3>", CheckHtml(line.Substring(2)));
                     }
                     else
                     {

@@ -276,7 +276,7 @@ textarea:focus
 }
 
 /* Espacement et alignement verticaux des blocs de saisie */
-.display-label, 
+.display-label,
 .editor-label
 {
     padding: 10px 0 0 0;
@@ -288,8 +288,8 @@ textarea:focus
 
 
 /* Formulaires sont en horizontal par défaut avec saisies de largeurs variables */
-.display-label, 
-.editor-label 
+.display-label,
+.editor-label
 {
     text-align: right;
 }
@@ -331,12 +331,12 @@ input[type="text"].inputbig
 /* Formulaires passent en vertical pour les petites largeurs */
 @media only screen and (max-width: 767px)
 {
-    .display-label, 
-    .editor-label 
+    .display-label,
+    .editor-label
     {
         text-align: left !important;
     }
-    
+
     input[type="email"],
     input[type="password"],
     input[type="phone"],
@@ -371,7 +371,7 @@ input[type="text"].inputbig
         margin-top: -5px !important;
     }
 
-    .editor-field 
+    .editor-field
     {
         margin-top: -11px !important;
     }
@@ -394,13 +394,17 @@ input[type="text"].inputbig
 /* #Styles spécifiques pour Bookmaker
 ================================================== */
 
-/* Les titres des sections sont moins grands */
+/* Les titres et sous-titres des sections sont moins grands */
+.sections h2
+{
+    font-size: 21px;
+}
 .sections h3
 {
     font-size: 17px;
 }
-/* Avec mise en évidence des horaires */
-.sections h3 span
+/* Avec mise en évidence des horaires dans les titres */
+.sections h2 span
 {
     color: red;
     display: inline-block;
