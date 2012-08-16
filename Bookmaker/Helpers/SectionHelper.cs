@@ -216,6 +216,8 @@ namespace Bookmaker.Helpers
             text = text.Replace(" !", "&nbsp;!");
             text = text.Replace(" - ", " &mdash; ");
 
+            text = text.Replace("hôtel **", "hôtel&nbsp;**");
+
             return text;
         }
     }
