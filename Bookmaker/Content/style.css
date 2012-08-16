@@ -31,9 +31,9 @@ a:focus
 }
 
 /* Menu des actions CRUD */
-h2.crud
+.crud
 {
-    font-size: 90%;
+    font-size: medium;
     font-variant: small-caps;
 }
 
@@ -50,6 +50,7 @@ table
 /* Aération des cellules */
 thead th,
 tbody td,
+tfoot td,
 tfoot th
 {
     border: 1px dotted #aaa;

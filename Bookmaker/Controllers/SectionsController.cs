@@ -70,13 +70,17 @@ namespace Bookmaker.Controllers
         //
         // GET: /Sections/Create?ParentID=5
 
-        public ViewResult Create(int ParentID)
+        public ViewResult Create(int ParentID, int SectionType = 0)
         {
             var section = new Section
             {
                 TravelID = ParentID,
                 Travel = db.Travels.Find(ParentID)
             };
+            if (SectionType != 0)
+            {
+                section.SectionType = SectionType;
+            }
 
             ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);

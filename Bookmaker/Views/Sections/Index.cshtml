@@ -34,4 +34,19 @@
     </tr>
 }
 </tbody>
+<tfoot>
+    <tr>
+        <td></td>
+        <td></td>
+        <td class='crud'>
+            Ajouter
+            / @Html.ActionLink("Titre", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 1 }, null)
+            / @Html.ActionLink("Présentation", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 2 }, null)
+            / @Html.ActionLink("Texte", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 3 }, null)
+            / @Html.ActionLink("Menu", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 4 }, null)
+            / @Html.ActionLink("Image", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 5 }, null)
+        </td>
+        <td></td>
+    </tr>
+</tfoot>
 </table>
