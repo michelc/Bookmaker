@@ -40,6 +40,7 @@ namespace Bookmaker.Helpers
             text = text.Replace("‟", "’");
 
             // Jolis guillemets
+            text = text.Replace("’’", "\"");
             var open = text.IndexOf('"');
             while (open != -1)
             {
