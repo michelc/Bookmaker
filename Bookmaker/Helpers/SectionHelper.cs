@@ -154,20 +154,33 @@ namespace Bookmaker.Helpers
 
         private static StringBuilder HtmlDefault(StringBuilder html, string[] lines)
         {
+            bool in_list = false;
             foreach (var line in lines)
             {
                 if (!string.IsNullOrWhiteSpace(line))
                 {
-                    if (line.StartsWith("= "))
+                    if (line.StartsWith("* "))
                     {
+                        html.Append(in_list ? "" : "<ul>");
+                        in_list = true;
+                        html.AppendFormat("<li>{0}</li>", CheckHtml(line.Substring(2)));
+                    }
+                    else if (line.StartsWith("= "))
+                    {
+                        html.Append(in_list ? "</ul>" : "");
+                        in_list = false;
                         html.AppendFormat("<h4>{0}</h4>", CheckHtml(line.Substring(2)));
                     }
                     else
                     {
+                        html.Append(in_list ? "</ul>" : "");
+                        in_list = false;
                         html.AppendFormat("<p>{0}</p>", CheckHtml(line));
                     }
                 }
             }
+            html.Append(in_list ? "</ul>" : "");
+            in_list = false;
 
             return html;
         }

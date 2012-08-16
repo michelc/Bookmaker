@@ -444,6 +444,19 @@ input[type="text"].inputbig
     padding: 0;
 }
 
+/* Les listes sont recentrées et affichée en tant que telles */
+.sections ul
+{
+    margin: 5px 0;
+    padding: 0 0 0 20px;
+    list-style-type: disc;
+}
+.sections li
+{
+    margin: 5px 0;
+    padding: 0;
+}
+
 /* Agrandit la textbox de saisie d'une section */
 #Content
 {
