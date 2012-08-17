@@ -1,0 +1,28 @@
+﻿@model Bookmaker.Models.Booklet
+
+@{
+    ViewBag.Title = "Modifier une brochure";
+}
+
+<h2 class="crud">@Html.ActionCrud("Brochures")</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset class="sixteen columns">
+        <legend>Modification @Model.Title</legend>
+
+        @Html.HiddenFor(model => model.Booklet_ID)
+        @Html.Partial("_Editor", Model)
+
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Enregistrer" />
+            @Html.ActionCancel()
+        </p>
+    </fieldset>
+}
+
+@section JavaScript
+{
+    @Html.Partial("_FormScripts")
+}

@@ -1,0 +1,13 @@
+﻿@model Bookmaker.Models.Booklet
+
+@{
+    ViewBag.Title = "Afficher une brochure";
+}
+
+<h2 class="crud">@Html.ActionCrud("Brochures")</h2>
+
+<fieldset class="sixteen columns">
+    <legend>@Model.Title</legend>
+
+    @Html.Partial("_Display", Model)
+</fieldset>

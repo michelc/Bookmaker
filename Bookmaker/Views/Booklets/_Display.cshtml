@@ -1,0 +1,22 @@
+﻿@model Bookmaker.Models.Booklet
+
+<div class="display-label five columns">
+    @Html.LabelFor(model => model.Title)
+</div>
+<div class="display-field eleven columns">
+    @Html.DisplayFor(model => model.Title)
+</div>
+
+<div class="display-label five columns">
+    @Html.LabelFor(model => model.Year)
+</div>
+<div class="display-field eleven columns">
+    @Html.DisplayTextFor(model => model.Year)
+</div>
+
+<div class="display-label five columns">
+    @Html.LabelFor(model => model.Notes)
+</div>
+<div class="display-field eleven columns">
+    @Html.DisplayFor(model => model.Notes)
+</div>

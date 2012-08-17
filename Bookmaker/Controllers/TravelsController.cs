@@ -1,7 +1,5 @@
 ﻿using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
@@ -84,7 +82,7 @@ namespace Bookmaker.Controllers
         public ViewResult Details(int id)
         {
             var travel = db.Travels.Find(id);
-            travel.Prices = travel.Prices.OrderBy(p => p.Year).ThenBy(p => p.Title).ThenBy(p => p.Price_ID).ToList();
+            travel.Prices = travel.Prices.OrderBy(p => p.Title).ThenBy(p => p.Price_ID).ToList();
             travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
 
             return View(travel);
@@ -96,6 +94,8 @@ namespace Bookmaker.Controllers
         public ViewResult Create()
         {
             var travel = new Travel();
+
+            travel.Booklet_ID = 1; // (pour l'instant)
 
             ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
@@ -179,85 +179,6 @@ namespace Bookmaker.Controllers
             db.ExecuteSql(sql);
 
             this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
-            return RedirectToAction("Index");
-        }
-
-        //
-        // GET: /Travels/Generate
-
-        public ContentResult Generate()
-        {
-            // Retrouve tous les voyages
-            var travels = db
-                .Travels
-                .Include(t => t.Sections)
-                .Include(t => t.Prices)
-                .OrderBy(t => t.Position);
-
-            // Génère la brochure au format Word
-            var templatePath = Server.MapPath("~/Content/Bookmaker.xml");
-            var word = QuickWord.Generate(travels, templatePath);
-
-            // Enregistre la brochure Word
-            // (quand on est sur http://localhost/)
-            if (Request.Url.IsLoopback)
-            {
-                var file = Server.MapPath("~/App_Data/Bookmaker.doc");
-                System.IO.File.WriteAllText(file, word);
-            }
-
-            // Renvoie la brochure au format Word
-            return Content(word, "application/msword", Encoding.UTF8);
-        }
-
-        //
-        // GET: /Travels/JsonExport
-
-        public ContentResult JsonExport()
-        {
-            // Retrouve tous les voyages
-            var travels = db
-                .Travels
-                .Include(t => t.Sections)
-                .Include(t => t.Prices)
-                .OrderBy(t => t.Position);
-
-            // Transforme les données au format Json
-            var json = ImportExport.JsonExport(travels);
-
-            // Sauvegarde les données au format Json
-            // (quand on est sur http://localhost/)
-            if (Request.Url.IsLoopback)
-            {
-                var file = Server.MapPath("~/App_Data/json_db.txt");
-                System.IO.File.WriteAllText(file, json);
-            }
-
-            // Renvoie les données au format Json
-            return Content(json, "application/json", Encoding.Default);
-        }
-
-        //
-        // GET: /Travels/JsonImport
-
-        public ActionResult JsonImport()
-        {
-            // Vide les tables actuelles
-            db.TruncateTable("Prices", "Price_ID");
-            db.TruncateTable("Sections", "Section_ID");
-            db.TruncateTable("Travels", "Travel_ID");
-
-            // Charge les données à importer
-            var file = Server.MapPath("~/App_Data/json_db.txt");
-            var json = System.IO.File.ReadAllText(file);
-
-            // Importe les données
-            var travels = ImportExport.JsonImport(json);
-
-            // Insère les données importées dans la base de données
-            travels.ForEach(t => db.Travels.Add(t));
-            db.SaveChanges();
-
             return RedirectToAction("Index");
         }
 

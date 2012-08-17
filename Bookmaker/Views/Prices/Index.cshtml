@@ -7,9 +7,6 @@
     <tr>
         <th></th>
         <th>
-            Année
-        </th>
-        <th>
             Tarif
         </th>
         <th>
@@ -41,10 +38,7 @@
             @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID }, new { @class = "edit" })
         </td>
         <td>
-            @Html.ActionLink(@item.Year, "Details", "Prices", new { id = item.Price_ID }, null)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @Html.ActionLink(@item.Title, "Details", "Prices", new { id = item.Price_ID }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price1)

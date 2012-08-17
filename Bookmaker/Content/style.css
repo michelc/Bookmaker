@@ -483,3 +483,9 @@ input[type="text"].inputbig
     text-align: center;
     width: 28px;
 }
+
+/* Icone pour générer la brochure au format Word */
+a.doc_file
+{
+    background-image: url(icons/doc_file.png);
+}

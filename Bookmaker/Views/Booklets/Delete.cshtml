@@ -1,0 +1,22 @@
+﻿@model Bookmaker.Models.Booklet
+
+@{
+    ViewBag.Title = "Supprimer une brochure";
+}
+
+<h2 class="crud">@Html.ActionCrud("Brochures")</h2>
+
+<fieldset>
+    <legend>Suppression «&nbsp;@Model.Title&nbsp;» ?</legend>
+
+    @Html.Partial("_Display", Model)
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Ok pour supprimer !" />
+            @Html.ActionCancel()
+        </p>
+    }
+</fieldset>

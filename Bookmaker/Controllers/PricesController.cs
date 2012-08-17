@@ -45,7 +45,7 @@ namespace Bookmaker.Controllers
                 db.Prices.Add(price);
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le tarif {0}/{1} a été créé", price.Year, price.Title));
+                this.Flash(string.Format("Le tarif {0} a été créé", price.Title));
                 return RedirectToAction("Details", "Travels", new { id = price.Travel_ID });
             }
 
@@ -75,7 +75,7 @@ namespace Bookmaker.Controllers
                 db.Entry(price).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le tarif {0}/{1} a été modifié", price.Year, price.Title));
+                this.Flash(string.Format("Le tarif {0} a été modifié", price.Title));
                 return RedirectToAction("Details", "Travels", new { id = price.Travel_ID });
             }
 
@@ -104,7 +104,7 @@ namespace Bookmaker.Controllers
             db.Prices.Remove(price);
             db.SaveChanges();
 
-            this.Flash(string.Format("Le tarif {0}/{1} a été supprimé", price.Year, price.Title));
+            this.Flash(string.Format("Le tarif {0} a été supprimé", price.Title));
             return RedirectToAction("Details", "Travels", new { id = price.Travel_ID });
         }
 

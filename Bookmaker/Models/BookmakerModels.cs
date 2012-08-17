@@ -20,11 +20,44 @@ namespace Bookmaker.Models
         Image = 5
     }
 
+    public class Booklet
+    {
+        // Identifiant automatique de la brochure
+        [Key]
+        public int Booklet_ID { get; set; }
+
+        // Titre de la brochure
+        [Required]
+        [Display(Name = "Titre")]
+        [StringLength(100)]
+        public string Title { get; set; }
+
+        // Année de la brochure
+        [Required]
+        [Display(Name = "Année")]
+        [StringLength(20)]
+        public string Year { get; set; }
+
+        // Commentaires sur cette brochure
+        [Display(Name = "Remarques")]
+        [Column(TypeName = "ntext")]
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
+
+        // Voyages de la brochure
+        public virtual ICollection<Travel> Travels { get; set; }
+    }
+
     public class Travel
     {
-        // dentifiant automatique du voyage
+        // Identifiant automatique du voyage
         [Key]
         public int Travel_ID { get; set; }
+
+        // Référence de la brochure dont fait parti le voyage
+        [Display(Name = "Brochure")]
+        public int Booklet_ID { get; set; }
+        public virtual Booklet Booklet { get; set; }
 
         // Position (ordre) du voyage
         [Display(Name = "Position")]
@@ -46,7 +79,7 @@ namespace Bookmaker.Models
         }
         public int TravelType { get; set; }
 
-        // Commentaire sur ce voyage
+        // Commentaires sur ce voyage
         [Display(Name = "Remarques")]
         [Column(TypeName = "ntext")]
         [DataType(DataType.MultilineText)]
@@ -103,12 +136,6 @@ namespace Bookmaker.Models
         public int Travel_ID { get; set; }
         public virtual Travel Travel { get; set; }
 
-        // Année du tarif
-        [Required]
-        [Display(Name = "Année")]
-        [StringLength(20)]
-        public string Year { get; set; }
-
         // Libellé pour décrire le tarif
         [Required]
         [Display(Name = "Titre")]
@@ -135,7 +162,7 @@ namespace Bookmaker.Models
         [Display(Name = "Tarif 50 à 55 personnes")]
         public float Price5 { get; set; }
 
-        // Commentaire sur ce tarif
+        // Commentaires sur ce tarif
         [Display(Name = "Remarques")]
         [Column(TypeName = "ntext")]
         [DataType(DataType.MultilineText)]
@@ -144,6 +171,7 @@ namespace Bookmaker.Models
 
     public class BookmakerContext : DbContext
     {
+        public DbSet<Booklet> Booklets { get; set; }
         public DbSet<Travel> Travels { get; set; }
         public DbSet<Price> Prices { get; set; }
         public DbSet<Section> Sections { get; set; }
