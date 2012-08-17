@@ -419,12 +419,6 @@ input[type="text"].inputbig
     width: 100px;
 }
 
-/* Les paragraphes de présentation sont en italique */
-.sections p.intro
-{
-    font-style: italic;
-}
-
 /* Les menus sont en italique et décalés */
 .sections p.menu
 {
@@ -439,7 +433,7 @@ input[type="text"].inputbig
 }
 
 /* Les menus multi-lignes sont en liste et en italique */
-.sections p.menubloc
+.sections p.menucentre
 {
     margin: 0;
     padding: 0;

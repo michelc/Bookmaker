@@ -14,9 +14,9 @@ namespace Bookmaker.Models
     public enum SectionType : int
     {
         Titre = 1,
-        Presentation = 2,
-        Texte = 3,
-        Menu = 4,
+        Texte = 2,
+        Menu = 3,
+        Menu_Centre = 4,
         Image = 5
     }
 

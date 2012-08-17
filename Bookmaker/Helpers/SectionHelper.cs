@@ -18,18 +18,11 @@ namespace Bookmaker.Helpers
                 case SectionType.Titre:
                     html = HtmlTitle(html, content);
                     break;
-                case SectionType.Presentation:
-                    html = HtmlPresentation(html, lines);
-                    break;
                 case SectionType.Menu:
-                    if ((lines.Length > 0) && (lines[0].StartsWith("#bloc")))
-                    {
-                        html = HtmlMenuBlock(html, lines);
-                    }
-                    else
-                    {
-                        html = HtmlMenuInline(html, lines);
-                    }
+                    html = HtmlMenuInline(html, lines);
+                    break;
+                case SectionType.Menu_Centre:
+                    html = HtmlMenuBlock(html, lines);
                     break;
                 default:
                     html = HtmlDefault(html, lines);
@@ -52,19 +45,6 @@ namespace Bookmaker.Helpers
                 content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);
             }
             html.AppendFormat("<h2>{0}</h2>", CheckHtml(content));
-
-            return html;
-        }
-
-        private static StringBuilder HtmlPresentation(StringBuilder html, string[] lines)
-        {
-            foreach (var line in lines)
-            {
-                if (!string.IsNullOrWhiteSpace(line))
-                {
-                    html.AppendFormat("<p class='intro'>{0}</p>", CheckHtml(line));
-                }
-            }
 
             return html;
         }
@@ -115,12 +95,9 @@ namespace Bookmaker.Helpers
             // Menu multi-lignes
             foreach (var line in lines)
             {
-                if (!line.StartsWith("#bloc"))
+                if (!string.IsNullOrWhiteSpace(line))
                 {
-                    if (!string.IsNullOrWhiteSpace(line))
-                    {
-                        html.AppendFormat("<p class='menubloc'>{0}</p>", CheckHtml(line));
-                    }
+                    html.AppendFormat("<p class='menucentre'>{0}</p>", CheckHtml(line));
                 }
             }
 

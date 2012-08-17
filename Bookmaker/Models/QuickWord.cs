@@ -61,9 +61,6 @@ namespace Bookmaker.Models
             html.Replace("<li>", "<p>* ");
             html.Replace("</li>", "</p>");
 
-            // Le style présentation n'est pas géré pour l'instant
-            html.Replace("<p class='intro'>", "<p>");
-
             // Découpe le document HTML en un tableau de lignes HTML
             html.Replace("</p>", "\n");
             html.Replace("</h1>", "\n");
@@ -82,9 +79,9 @@ namespace Bookmaker.Models
                     {
                         word.Add("Menu", line.Substring(16));
                     }
-                    else if (line.StartsWith("<p class='menubloc'>"))
+                    else if (line.StartsWith("<p class='menucentre'>"))
                     {
-                        word.Add("MenuBloc", line.Substring(20));
+                        word.Add("MenuCentre", line.Substring(22));
                     }
                     else if (line.StartsWith("<h1>"))
                     {

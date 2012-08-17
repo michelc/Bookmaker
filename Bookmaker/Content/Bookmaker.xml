@@ -58,12 +58,14 @@
     </w:font>
   </w:fonts>
   <w:styles>
+    <w:versionOfBuiltInStylenames w:val="7" />
     <w:style w:type="paragraph" w:default="on" w:styleId="Normal">
       <w:name w:val="Normal" />
       <w:pPr>
         <w:spacing w:before="120" w:after="120" w:line="276" w:line-rule="auto" />
       </w:pPr>
       <w:rPr>
+        <w:rFonts w:ascii="Century Gothic" w:h-ansi="Century Gothic" />
         <wx:font wx:val="Century Gothic" />
         <w:sz-cs w:val="24" />
         <w:lang w:val="FR" w:fareast="FR" w:bidi="AR-SA" />
@@ -288,10 +290,11 @@
         <w:sz-cs w:val="24" />
       </w:rPr>
     </w:style>
-    <w:style w:type="paragraph" w:styleId="MenuBloc">
-      <w:name w:val="MenuBloc" />
+    <w:style w:type="paragraph" w:styleId="MenuCentre">
+      <w:name w:val="MenuCentre" />
+      <wx:uiName wx:val="Menu Centré" />
       <w:basedOn w:val="Normal" />
-      <w:link w:val="MenuBlocCar" />
+      <w:link w:val="MenuCentreCar" />
       <w:pPr>
         <w:jc w:val="center" />
       </w:pPr>
@@ -300,10 +303,10 @@
         <w:i />
       </w:rPr>
     </w:style>
-    <w:style w:type="character" w:styleId="MenuBlocCar">
-      <w:name w:val="MenuBloc Car" />
+    <w:style w:type="character" w:styleId="MenuCentreCar">
+      <w:name w:val="MenuCentre Car" />
       <w:basedOn w:val="Policepardfaut" />
-      <w:link w:val="MenuBloc" />
+      <w:link w:val="MenuCentre" />
       <w:rPr>
         <w:rFonts w:ascii="Century Gothic" w:h-ansi="Century Gothic" />
         <w:i />
@@ -336,7 +339,7 @@
     </w:style>
   </w:styles>
   <w:shapeDefaults>
-    <o:shapedefaults v:ext="edit" spidmax="17410" />
+    <o:shapedefaults v:ext="edit" spidmax="20482" />
     <o:shapelayout v:ext="edit">
       <o:idmap v:ext="edit" data="1" />
     </o:shapelayout>
@@ -346,8 +349,6 @@
     <w:zoom w:percent="130" />
     <w:doNotEmbedSystemFonts />
     <w:proofState w:spelling="clean" w:grammar="clean" />
-    <w:stylePaneFormatFilter w:val="1221" />
-    <w:documentProtection w:enforcement="on" w:unprotectPassword="00000000" />
     <w:defaultTabStop w:val="708" />
     <w:hyphenationZone w:val="425" />
     <w:drawingGridHorizontalSpacing w:val="110" />
@@ -422,7 +423,7 @@
             <w:pStyle w:val="Pieddepage" />
           </w:pPr>
           <w:r>
-            <w:t>Arsac-Tourisme – Groupes 2013</w:t>
+            <w:t>Arsac-Tourisme – Groupes 2012</w:t>
           </w:r>
           <w:r>
             <w:tab />
