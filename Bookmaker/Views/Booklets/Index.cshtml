@@ -30,16 +30,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Booklet_ID }, new { @class = "edit" })
+            @Html.ActionLink("Edit", "Edit", new { root_id = item.Booklet_ID, id = item.Booklet_ID }, new { @class = "edit" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Year)
         </td>
         <td>
-            @Html.ActionLink(@item.Title, "Details", new { id = item.Booklet_ID })
+            @Html.ActionLink(@item.Title, "Details", new { root_id = item.Booklet_ID, id = item.Booklet_ID })
         </td>
         <td>
-            @Html.ActionLink("Generate", "Generate", new { id = item.Booklet_ID }, new { @class = "icon doc_file" })
+            @Html.ActionLink("Generate", "Generate", new { root_id = item.Booklet_ID, id = item.Booklet_ID }, new { @class = "icon doc_file" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TravelsCount1)
@@ -48,7 +48,7 @@
             @Html.DisplayFor(modelItem => item.TravelsCount2)
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { id = item.Booklet_ID }, new { @class = "delete" })
+            @Html.ActionLink("Delete", "Delete", new { root_id = item.Booklet_ID, id = item.Booklet_ID }, new { @class = "delete" })
         </td>
     </tr>
 }

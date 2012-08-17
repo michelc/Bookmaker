@@ -13,10 +13,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/
 
-        public ViewResult Index()
+        public ViewResult Index(int Root_ID)
         {
             var travels = db
                 .Travels
+                .Where(travel => travel.Booklet_ID == Root_ID)
                 .OrderBy(travel => travel.Position)
                 .Select(travel => new TravelIndex
                 {
@@ -91,11 +92,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Create
 
-        public ViewResult Create()
+        public ViewResult Create(int Root_ID)
         {
             var travel = new Travel();
 
-            travel.Booklet_ID = 1; // (pour l'instant)
+            travel.Booklet_ID = Root_ID;
 
             ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);

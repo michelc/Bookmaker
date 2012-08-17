@@ -23,8 +23,8 @@ namespace Bookmaker
 
             routes.MapRouteLowercase(
                 "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                "{root_id}/{controller}/{action}/{id}", // URL with parameters
+                new { root_id = 1, controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
