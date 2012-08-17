@@ -32,13 +32,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.TravelID }, new { @class = "edit" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Travel_ID }, new { @class = "edit" })
         </td>
         <td class="handle" data-pos="@(item.Position - 1)">
             @item.Position
         </td>
         <td>
-            @Html.ActionLink(@item.Title, "Details", new { id = item.TravelID })
+            @Html.ActionLink(@item.Title, "Details", new { id = item.Travel_ID })
         </td>
         <td>
             @item.TypeTravel
@@ -50,7 +50,7 @@
             @item.PricesCount
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { id = item.TravelID }, new { @class = "delete" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.Travel_ID }, new { @class = "delete" })
         </td>
     </tr>
 }

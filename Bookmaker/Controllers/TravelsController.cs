@@ -22,7 +22,7 @@ namespace Bookmaker.Controllers
                 .OrderBy(travel => travel.Position)
                 .Select(travel => new TravelIndex
                 {
-                    TravelID = travel.TravelID,
+                    Travel_ID = travel.Travel_ID,
                     Position = travel.Position,
                     Title = travel.Title,
                     TravelType = travel.TravelType,
@@ -84,7 +84,7 @@ namespace Bookmaker.Controllers
         public ViewResult Details(int id)
         {
             var travel = db.Travels.Find(id);
-            travel.Prices = travel.Prices.OrderBy(p => p.Year).ThenBy(p => p.Title).ThenBy(p => p.PriceID).ToList();
+            travel.Prices = travel.Prices.OrderBy(p => p.Year).ThenBy(p => p.Title).ThenBy(p => p.Price_ID).ToList();
             travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
 
             return View(travel);
@@ -116,7 +116,7 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("Le voyage {0} a été créé", travel.Title));
-                return RedirectToAction("Details", new { id = travel.TravelID });
+                return RedirectToAction("Details", new { id = travel.Travel_ID });
             }
 
             ViewBag.TravelType = db.Enums<TravelType>();
@@ -146,7 +146,7 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("Le voyage {0} a été modifié", travel.Title));
-                return RedirectToAction("Details", new { id = travel.TravelID });
+                return RedirectToAction("Details", new { id = travel.Travel_ID });
             }
 
             ViewBag.TravelType = db.Enums<TravelType>();
@@ -243,9 +243,9 @@ namespace Bookmaker.Controllers
         public ActionResult JsonImport()
         {
             // Vide les tables actuelles
-            db.TruncateTable("Prices", "PriceID");
-            db.TruncateTable("Sections", "SectionID");
-            db.TruncateTable("Travels", "TravelID");
+            db.TruncateTable("Prices", "Price_ID");
+            db.TruncateTable("Sections", "Section_ID");
+            db.TruncateTable("Travels", "Travel_ID");
 
             // Charge les données à importer
             var file = Server.MapPath("~/App_Data/json_db.txt");

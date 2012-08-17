@@ -16,16 +16,16 @@ namespace Bookmaker.Controllers
         public ViewResult Details(int id)
         {
             var section = db.Sections.Find(id);
-            section.Travel = db.Travels.Find(section.TravelID);
+            section.Travel = db.Travels.Find(section.Travel_ID);
 
             return View(section);
         }
 
         //
-        // POST: /Sections/Sort?ParentID=1&from=5&to=10
+        // POST: /Sections/Sort?Parent_ID=1&from=5&to=10
 
         [HttpPost]
-        public JsonResult Sort(int ParentID, int from, int to)
+        public JsonResult Sort(int Parent_ID, int from, int to)
         {
             var result = "Le nouvel ordre de tri s'est mal enregistré";
 
@@ -39,24 +39,24 @@ namespace Bookmaker.Controllers
                 var sql = string.Empty;
 
                 // Met de côté l'élément à la position de départ
-                sql = string.Format("UPDATE Sections SET Position = 0 WHERE TravelID = {0} AND Position = {1}", ParentID, from);
+                sql = string.Format("UPDATE Sections SET Position = 0 WHERE Travel_ID = {0} AND Position = {1}", Parent_ID, from);
                 db.ExecuteSql(sql);
 
                 if (from < to)
                 {
                     // Ramène d'un rang tous les élements entre le départ et l'arrivée
-                    sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE TravelID = {0} AND Position BETWEEN {1} AND {2}", ParentID, from, to);
+                    sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE Travel_ID = {0} AND Position BETWEEN {1} AND {2}", Parent_ID, from, to);
                     db.ExecuteSql(sql);
                 }
                 else
                 {
                     // Repousse d'un rang tous les élements entre l'arrivée et le départ
-                    sql = string.Format("UPDATE Sections SET Position = Position + 1 WHERE TravelID = {0} AND Position BETWEEN {1} AND {2}", ParentID, to, from);
+                    sql = string.Format("UPDATE Sections SET Position = Position + 1 WHERE Travel_ID = {0} AND Position BETWEEN {1} AND {2}", Parent_ID, to, from);
                     db.ExecuteSql(sql);
                 }
 
                 // Déplace l'élément mis de coté à la position d'arrivée
-                sql = string.Format("UPDATE Sections SET Position = {0} WHERE TravelID = {1} AND Position = 0", to, ParentID);
+                sql = string.Format("UPDATE Sections SET Position = {0} WHERE Travel_ID = {1} AND Position = 0", to, Parent_ID);
                 db.ExecuteSql(sql);
 
                 // Tout va bien
@@ -68,14 +68,14 @@ namespace Bookmaker.Controllers
         }
 
         //
-        // GET: /Sections/Create?ParentID=5
+        // GET: /Sections/Create?Parent_ID=5
 
-        public ViewResult Create(int ParentID, int SectionType = 0)
+        public ViewResult Create(int Parent_ID, int SectionType = 0)
         {
             var section = new Section
             {
-                TravelID = ParentID,
-                Travel = db.Travels.Find(ParentID)
+                Travel_ID = Parent_ID,
+                Travel = db.Travels.Find(Parent_ID)
             };
             if (SectionType != 0)
             {
@@ -95,7 +95,7 @@ namespace Bookmaker.Controllers
             if (ModelState.IsValid)
             {
                 // Initialise la position à la prochaine disponible
-                section.Position = db.Sections.Where(s => s.TravelID == section.TravelID).Count() + 1;
+                section.Position = db.Sections.Where(s => s.Travel_ID == section.Travel_ID).Count() + 1;
 
                 // Reformate et contrôle le contenu saisi
                 section.Content = InputHelper.ContentFormat(section.Content);
@@ -115,10 +115,10 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("La partie {0} a été créé", section.Position));
-                return RedirectToAction("Details", "Travels", new { id = section.TravelID });
+                return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
             }
 
-            section.Travel = db.Travels.Find(section.TravelID);
+            section.Travel = db.Travels.Find(section.Travel_ID);
             ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
         }
@@ -129,7 +129,7 @@ namespace Bookmaker.Controllers
         public ActionResult Edit(int id)
         {
             var section = db.Sections.Find(id);
-            section.Travel = db.Travels.Find(section.TravelID);
+            section.Travel = db.Travels.Find(section.Travel_ID);
 
             ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
@@ -153,10 +153,10 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("La partie {0} a été modifié", section.Position));
-                return RedirectToAction("Details", "Travels", new { id = section.TravelID });
+                return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
             }
 
-            section.Travel = db.Travels.Find(section.TravelID);
+            section.Travel = db.Travels.Find(section.Travel_ID);
             ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
         }
@@ -167,7 +167,7 @@ namespace Bookmaker.Controllers
         public ActionResult Delete(int id)
         {
             var section = db.Sections.Find(id);
-            section.Travel = db.Travels.Find(section.TravelID);
+            section.Travel = db.Travels.Find(section.Travel_ID);
 
             return View(section);
         }
@@ -184,11 +184,11 @@ namespace Bookmaker.Controllers
             db.SaveChanges();
 
             // Réordonne les parties du voyages
-            var sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE TravelID = {0} AND Position > {1}", section.TravelID, section.Position);
+            var sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE Travel_ID = {0} AND Position > {1}", section.Travel_ID, section.Position);
             db.ExecuteSql(sql);
 
             this.Flash(string.Format("La partie {0} a été supprimé", section.Position));
-            return RedirectToAction("Details", "Travels", new { id = section.TravelID });
+            return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
         }
 
         protected override void Dispose(bool disposing)

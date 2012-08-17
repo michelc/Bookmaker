@@ -4,7 +4,7 @@
     ViewBag.Title = "Créer une partie";
 }
 
-<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.Travel_ID)</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -16,7 +16,7 @@
 
         <p class="offset-by-five eleven columns alpha">
             <input type="submit" value="Enregistrer" />
-            @Html.ActionLink("Annuler", "Details", "Travels", new { id = Model.TravelID }, null)
+            @Html.ActionLink("Annuler", "Details", "Travels", new { id = Model.Travel_ID }, null)
         </p>
     </fieldset>
 }

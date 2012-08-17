@@ -4,7 +4,7 @@
     ViewBag.Title = "Modifier une partie";
 }
 
-<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.Travel_ID)</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -12,7 +12,7 @@
     <fieldset class="sixteen columns">
         <legend>Modification partie «&nbsp;@Model.Travel.Title&nbsp;»</legend>
 
-        @Html.HiddenFor(model => model.SectionID)
+        @Html.HiddenFor(model => model.Section_ID)
         @Html.Partial("_Editor", Model)
 
         <p class="offset-by-five eleven columns alpha">

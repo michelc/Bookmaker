@@ -5,7 +5,7 @@
     /// </summary>
     public class TravelIndex
     {
-        public int TravelID { get; set; }
+        public int Travel_ID { get; set; }
         public int Position { get; set; }
         public string Title { get; set; }
         public int TravelType { get; set; }

@@ -24,7 +24,7 @@ namespace Bookmaker.Models
     {
         // dentifiant automatique du voyage
         [Key]
-        public int TravelID { get; set; }
+        public int Travel_ID { get; set; }
 
         // Position (ordre) du voyage
         [Display(Name = "Position")]
@@ -63,11 +63,11 @@ namespace Bookmaker.Models
     {
         // Identifiant automatique de la partie
         [Key]
-        public int SectionID { get; set; }
+        public int Section_ID { get; set; }
 
         // Référence du voyage auquel correspond cette partie
         [Display(Name = "Voyage")]
-        public int TravelID { get; set; }
+        public int Travel_ID { get; set; }
         public virtual Travel Travel { get; set; }
 
         // Position (ordre) de cette partie dans le voyage
@@ -96,11 +96,11 @@ namespace Bookmaker.Models
     {
         // Identifiant automatique du tarif
         [Key]
-        public int PriceID { get; set; }
+        public int Price_ID { get; set; }
 
         // Référence du voyage auquel correspond le tarif
         [Display(Name = "Voyage")]
-        public int TravelID { get; set; }
+        public int Travel_ID { get; set; }
         public virtual Travel Travel { get; set; }
 
         // Année du tarif

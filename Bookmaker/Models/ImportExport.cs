@@ -42,7 +42,7 @@ namespace Bookmaker.Models
             foreach (var t in travels)
             {
                 var prices = (from p in t.Prices
-                              orderby p.Year ascending, p.Title ascending, p.PriceID ascending
+                              orderby p.Year ascending, p.Title ascending, p.Price_ID ascending
                               select new JsonPrice
                               {
                                   Title = p.Title,
@@ -58,7 +58,7 @@ namespace Bookmaker.Models
                 // 
                 // => 
                 var sections = (from s in t.Sections
-                                orderby s.Position ascending, s.SectionID ascending
+                                orderby s.Position ascending, s.Section_ID ascending
                                 select new JsonSection
                                 {
                                     SectionType = s.TypeSection.ToString(),

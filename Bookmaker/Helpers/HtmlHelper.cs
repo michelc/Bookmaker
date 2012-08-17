@@ -164,7 +164,7 @@ namespace Bookmaker.Helpers
             if (current_action != "create")
             {
                 // Alors, il faut un lien vers la page Create
-                html += helper.ActionLink("Créer", "Create", child_controller, new { ParentID = parent_id.ToString() }, null).ToString();
+                html += helper.ActionLink("Créer", "Create", child_controller, new { Parent_ID = parent_id.ToString() }, null).ToString();
             }
             else
             {

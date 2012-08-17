@@ -1,6 +1,6 @@
 ﻿@model Bookmaker.Models.Travel
 
-<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.TravelID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.Travel_ID)</h2>
 
 <table class="sections">
 <thead>
@@ -20,7 +20,7 @@
 {
     <tr>
         <td>
-            @Html.ActionLink("Modifier", "Edit", "Sections", new { id = item.SectionID }, new { @class = "edit" })
+            @Html.ActionLink("Modifier", "Edit", "Sections", new { id = item.Section_ID }, new { @class = "edit" })
         </td>
         <td class="handle" data-pos="@(item.Position - 1)">
             @item.Position
@@ -29,7 +29,7 @@
             @item.ContentAsHtml()
         </td>
         <td>
-            @Html.ActionLink("Supprimer", "Delete", "Sections", new { id = item.SectionID }, new { @class = "delete" })
+            @Html.ActionLink("Supprimer", "Delete", "Sections", new { id = item.Section_ID }, new { @class = "delete" })
         </td>
     </tr>
 }
@@ -40,11 +40,11 @@
         <td></td>
         <td class='crud'>
             Ajouter
-            / @Html.ActionLink("Titre", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 1 }, null)
-            / @Html.ActionLink("Présentation", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 2 }, null)
-            / @Html.ActionLink("Texte", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 3 }, null)
-            / @Html.ActionLink("Menu", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 4 }, null)
-            / @Html.ActionLink("Image", "Create", "Sections", new { ParentID = Model.TravelID, SectionType = 5 }, null)
+            / @Html.ActionLink("Titre", "Create", "Sections", new { Parent_ID = Model.Travel_ID, SectionType = 1 }, null)
+            / @Html.ActionLink("Présentation", "Create", "Sections", new { Parent_ID = Model.Travel_ID, SectionType = 2 }, null)
+            / @Html.ActionLink("Texte", "Create", "Sections", new { Parent_ID = Model.Travel_ID, SectionType = 3 }, null)
+            / @Html.ActionLink("Menu", "Create", "Sections", new { Parent_ID = Model.Travel_ID, SectionType = 4 }, null)
+            / @Html.ActionLink("Image", "Create", "Sections", new { Parent_ID = Model.Travel_ID, SectionType = 5 }, null)
         </td>
         <td></td>
     </tr>

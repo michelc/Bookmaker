@@ -1,6 +1,6 @@
 ﻿@model Bookmaker.Models.Travel
 
-<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.TravelID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.Travel_ID)</h2>
 
 <table>
 <thead>
@@ -38,10 +38,10 @@
 {
     <tr>
         <td>
-            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.PriceID }, new { @class = "edit" })
+            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID }, new { @class = "edit" })
         </td>
         <td>
-            @Html.ActionLink(@item.Year, "Details", "Prices", new { id = item.PriceID }, null)
+            @Html.ActionLink(@item.Year, "Details", "Prices", new { id = item.Price_ID }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -65,7 +65,7 @@
             @(string.IsNullOrEmpty(item.Notes) ? "" : "Oui")
         </td>
         <td>
-            @Html.ActionLink("Supprimer", "Delete", "Prices", new { id = item.PriceID }, new { @class = "delete" })
+            @Html.ActionLink("Supprimer", "Delete", "Prices", new { id = item.Price_ID }, new { @class = "delete" })
         </td>
     </tr>
 }
