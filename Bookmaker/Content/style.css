@@ -30,6 +30,13 @@ a:focus
     color: #88f;
 }
 
+/* Centre le texte du pied de page */
+footer
+{
+    margin: 20px 0 10px 0;
+	text-align: center;
+}
+
 /* Menu des actions CRUD */
 .crud
 {
@@ -473,4 +480,6 @@ input[type="text"].inputbig
 {
     background-color: #eee;
     cursor: move;
+    text-align: center;
+    width: 28px;
 }
