@@ -79,7 +79,7 @@ namespace Bookmaker.Controllers
                 db.Sections.Add(section);
                 db.SaveChanges();
 
-                this.Flash(string.Format("La partie {0} a été créé", section.Position));
+                this.Flash(string.Format("La partie n° {0} a été créée", section.Position));
                 return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
             }
 
@@ -94,6 +94,7 @@ namespace Bookmaker.Controllers
         public ActionResult Edit(int id)
         {
             var section = db.Sections.Find(id);
+            section.Content = section.Content.Replace("« ", "\"").Replace(" »", "\"");
             section.Travel = db.Travels.Find(section.Travel_ID);
 
             ViewBag.SectionType = db.Enums<SectionType>();
@@ -117,7 +118,7 @@ namespace Bookmaker.Controllers
                 db.Entry(section).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("La partie {0} a été modifié", section.Position));
+                this.Flash(string.Format("La partie n° {0} a été modifiée", section.Position));
                 return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
             }
 
@@ -151,7 +152,7 @@ namespace Bookmaker.Controllers
             // Réordonne les parties du voyages
             db.RefillPositions("Sections", "Travel_ID", section.Travel_ID, section.Position);
 
-            this.Flash(string.Format("La partie {0} a été supprimé", section.Position));
+            this.Flash(string.Format("La partie n° {0} a été supprimée", section.Position));
             return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
         }
 
