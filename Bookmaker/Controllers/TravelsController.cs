@@ -38,41 +38,7 @@ namespace Bookmaker.Controllers
         [HttpPost]
         public JsonResult Sort(int Root_ID, int from, int to)
         {
-            var result = "Le nouvel ordre de tri s'est mal enregistré";
-
-            try
-            {
-                // Les positions démarrent à 1
-                // (alors que les index jQuery commencent à 0)
-                from++;
-                to++;
-
-                var sql = string.Empty;
-
-                // Met de côté l'élément à la position de départ
-                sql = string.Format("UPDATE Travels SET Position = 0 WHERE Booklet_ID = {0} AND Position = {1}", Root_ID, from);
-                db.ExecuteSql(sql);
-
-                if (from < to)
-                {
-                    // Ramène d'un rang tous les élements entre le départ et l'arrivée
-                    sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Booklet_ID = {0} AND Position BETWEEN {1} AND {2}", Root_ID, from, to);
-                    db.ExecuteSql(sql);
-                }
-                else
-                {
-                    // Repousse d'un rang tous les élements entre l'arrivée et le départ
-                    sql = string.Format("UPDATE Travels SET Position = Position + 1 WHERE Booklet_ID = {0} AND Position BETWEEN {1} AND {2}", Root_ID, to, from);
-                    db.ExecuteSql(sql);
-                }
-
-                // Déplace l'élément mis de coté à la position d'arrivée
-                sql = string.Format("UPDATE Travels SET Position = {0} WHERE Booklet_ID = {1} AND Position = 0", to, Root_ID);
-                db.ExecuteSql(sql);
-
-                // Tout va bien
-                result = string.Empty;
-            } catch {}
+            var result = db.SortPositions("Travels", "Booklet_ID", Root_ID, from, to);
 
             return Json(result);
         }
@@ -177,8 +143,7 @@ namespace Bookmaker.Controllers
             db.SaveChanges();
 
             // Réordonne les voyages
-            var sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Booklet_ID = {0} AND Position > {1}", travel.Booklet_ID, travel.Position);
-            db.ExecuteSql(sql);
+            db.RefillPositions("Travels", "Booklet_ID", travel.Booklet_ID, travel.Position);
 
             this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
             return RedirectToAction("Index");

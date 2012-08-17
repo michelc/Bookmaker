@@ -186,16 +186,64 @@ namespace Bookmaker.Models
             this.Database.ExecuteSqlCommand(sql);
         }
 
-        public void TruncateTable(string tableName, string idName)
+        public void RefillPositions(string tableName, string parentColumn, int parentId, int currentPosition)
+        {
+            var sql = string.Format("UPDATE {0} SET Position = Position - 1 WHERE {1} = {2} AND Position > {3}", tableName, parentColumn, parentId, currentPosition);
+            this.ExecuteSql(sql);
+        }
+
+        public string SortPositions(string tableName, string parentColumn, int parentId, int from, int to)
+        {
+            var result = "Le nouvel ordre de tri s'est mal enregistré";
+
+            try
+            {
+                // Les positions démarrent à 1
+                // (alors que les index jQuery commencent à 0)
+                from++;
+                to++;
+
+                var sql = string.Empty;
+
+                // Met de côté l'élément à la position de départ
+                sql = string.Format("UPDATE {0} SET Position = 0 WHERE {1} = {2} AND Position = {3}", tableName, parentColumn, parentId, from);
+                this.ExecuteSql(sql);
+
+                if (from < to)
+                {
+                    // Ramène d'un rang tous les élements entre le départ et l'arrivée
+                    sql = string.Format("UPDATE {0} SET Position = Position - 1 WHERE {1} = {2} AND Position BETWEEN {3} AND {4}", tableName, parentColumn, parentId, from, to);
+                    this.ExecuteSql(sql);
+                }
+                else
+                {
+                    // Repousse d'un rang tous les élements entre l'arrivée et le départ
+                    sql = string.Format("UPDATE {0} SET Position = Position + 1 WHERE {1} = {2} AND Position BETWEEN {3} AND {4}", tableName, parentColumn, parentId, to, from);
+                    this.ExecuteSql(sql);
+                }
+
+                // Déplace l'élément mis de coté à la position d'arrivée
+                sql = string.Format("UPDATE {0} SET Position = {3} WHERE {1} = {2} AND Position = 0", tableName, parentColumn, parentId, to);
+                this.ExecuteSql(sql);
+
+                // Tout va bien
+                result = string.Empty;
+            }
+            catch { }
+
+            return result;
+        }
+
+        public void TruncateTable(string tableName, string idColumn)
         {
             // Vide la table
-            this.ExecuteSql(string.Format("DELETE FROM {0} WHERE {1} IS NOT NULL", tableName, idName));
+            this.ExecuteSql(string.Format("DELETE FROM {0} WHERE {1} IS NOT NULL", tableName, idColumn));
 
             // Réinitialise la numérotation automatique
             try
             {
                 // SQL Server CE
-                this.ExecuteSql(string.Format("ALTER TABLE {0} ALTER COLUMN {1} IDENTITY (1, 1)", tableName, idName));
+                this.ExecuteSql(string.Format("ALTER TABLE {0} ALTER COLUMN {1} IDENTITY (1, 1)", tableName, idColumn));
             }
             catch { }
             try
