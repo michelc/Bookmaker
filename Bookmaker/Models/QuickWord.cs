@@ -55,14 +55,13 @@ namespace Bookmaker.Models
             html.Replace("<strong>)</strong>", "");
             html.Replace(" <strong>&mdash;</strong> ", " &mdash; ");
 
-            // Les listes ne sont pas gérées pour l'instant
+            // Les marques de début et fin liste ne sont pas utiles
             html.Replace("<ul>", "");
             html.Replace("</ul>", "");
-            html.Replace("<li>", "<p>* ");
-            html.Replace("</li>", "</p>");
 
             // Découpe le document HTML en un tableau de lignes HTML
             html.Replace("</p>", "\n");
+            html.Replace("</li>", "\n");
             html.Replace("</h1>", "\n");
             html.Replace("</h2>", "\n");
             html.Replace("</h3>", "\n");
@@ -82,6 +81,10 @@ namespace Bookmaker.Models
                     else if (line.StartsWith("<p class='menucentre'>"))
                     {
                         word.Add("MenuCentre", line.Substring(22));
+                    }
+                    else if (line.StartsWith("<li>"))
+                    {
+                        word.Add("Paragraphedeliste", line.Substring(4));
                     }
                     else if (line.StartsWith("<h1>"))
                     {

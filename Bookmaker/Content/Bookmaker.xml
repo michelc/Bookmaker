@@ -56,7 +56,36 @@
       <w:pitch w:val="variable" />
       <w:sig w:usb-0="00000287" w:usb-1="00000000" w:usb-2="00000000" w:usb-3="00000000" w:csb-0="0000009F" w:csb-1="00000000" />
     </w:font>
+    <w:font w:name="Symbol">
+      <w:panose-1 w:val="05050102010706020507" />
+      <w:charset w:val="02" />
+      <w:family w:val="Roman" />
+      <w:pitch w:val="variable" />
+      <w:sig w:usb-0="00000000" w:usb-1="10000000" w:usb-2="00000000" w:usb-3="00000000" w:csb-0="80000000" w:csb-1="00000000" />
+    </w:font>
   </w:fonts>
+  <w:lists>
+    <w:listDef w:listDefId="15">
+      <w:lsid w:val="62DD7676" />
+      <w:plt w:val="HybridMultilevel" />
+      <w:tmpl w:val="97507FB4" />
+      <w:lvl w:ilvl="0" w:tplc="040C0001">
+        <w:start w:val="1" />
+        <w:nfc w:val="23" />
+        <w:lvlText w:val="" />
+        <w:lvlJc w:val="left" />
+        <w:pPr>
+          <w:ind w:left="720" w:hanging="360" />
+        </w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Symbol" w:h-ansi="Symbol" w:hint="default" />
+        </w:rPr>
+      </w:lvl>
+    </w:listDef>
+    <w:list w:ilfo="11">
+      <w:ilst w:val="15" />
+    </w:list>
+  </w:lists>
   <w:styles>
     <w:versionOfBuiltInStylenames w:val="7" />
     <w:style w:type="paragraph" w:default="on" w:styleId="Normal">
@@ -251,6 +280,12 @@
       <w:rPr>
         <wx:font wx:val="Century Gothic" />
       </w:rPr>
+      <w:listPr>
+          <w:ilvl w:val="0" />
+          <w:ilfo w:val="11" />
+          <wx:t wx:val="·" />
+          <wx:font wx:val="Symbol" />
+      </w:listPr>
     </w:style>
     <w:style w:type="character" w:styleId="Titre4Car">
       <w:name w:val="Titre 4 Car" />
