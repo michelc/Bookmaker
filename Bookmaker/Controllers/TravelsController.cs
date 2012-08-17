@@ -36,7 +36,7 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Sort?from=5&to=10
 
         [HttpPost]
-        public JsonResult Sort(int from, int to)
+        public JsonResult Sort(int Root_ID, int from, int to)
         {
             var result = "Le nouvel ordre de tri s'est mal enregistré";
 
@@ -50,24 +50,24 @@ namespace Bookmaker.Controllers
                 var sql = string.Empty;
 
                 // Met de côté l'élément à la position de départ
-                sql = string.Format("UPDATE Travels SET Position = 0 WHERE Position = {0}", from);
+                sql = string.Format("UPDATE Travels SET Position = 0 WHERE Booklet_ID = {0} AND Position = {1}", Root_ID, from);
                 db.ExecuteSql(sql);
 
                 if (from < to)
                 {
                     // Ramène d'un rang tous les élements entre le départ et l'arrivée
-                    sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Position BETWEEN {0} AND {1}", from, to);
+                    sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Booklet_ID = {0} AND Position BETWEEN {1} AND {2}", Root_ID, from, to);
                     db.ExecuteSql(sql);
                 }
                 else
                 {
                     // Repousse d'un rang tous les élements entre l'arrivée et le départ
-                    sql = string.Format("UPDATE Travels SET Position = Position + 1 WHERE Position BETWEEN {0} AND {1}", to, from);
+                    sql = string.Format("UPDATE Travels SET Position = Position + 1 WHERE Booklet_ID = {0} AND Position BETWEEN {1} AND {2}", Root_ID, to, from);
                     db.ExecuteSql(sql);
                 }
 
                 // Déplace l'élément mis de coté à la position d'arrivée
-                sql = string.Format("UPDATE Travels SET Position = {0} WHERE Position = 0", to);
+                sql = string.Format("UPDATE Travels SET Position = {0} WHERE Booklet_ID = {1} AND Position = 0", to, Root_ID);
                 db.ExecuteSql(sql);
 
                 // Tout va bien
@@ -111,7 +111,8 @@ namespace Bookmaker.Controllers
             if (ModelState.IsValid)
             {
                 // Initialise la position à la prochaine disponible
-                travel.Position = db.Travels.Count() + 1;
+                travel.Position = db.Travels.Where(t => t.Booklet_ID == travel.Booklet_ID).Count() + 1;
+
                 // Enregistre le nouveau voyage
                 db.Travels.Add(travel);
                 db.SaveChanges();
@@ -176,7 +177,7 @@ namespace Bookmaker.Controllers
             db.SaveChanges();
 
             // Réordonne les voyages
-            var sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Position > {0}", travel.Position);
+            var sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Booklet_ID = {0} AND Position > {1}", travel.Booklet_ID, travel.Position);
             db.ExecuteSql(sql);
 
             this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
