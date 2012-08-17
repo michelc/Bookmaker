@@ -40,24 +40,24 @@ namespace Bookmaker.Controllers
 
                 // Met de côté l'élément à la position de départ
                 sql = string.Format("UPDATE Sections SET Position = 0 WHERE TravelID = {0} AND Position = {1}", ParentID, from);
-                db.Database.ExecuteSqlCommand(sql);
+                db.ExecuteSql(sql);
 
                 if (from < to)
                 {
                     // Ramène d'un rang tous les élements entre le départ et l'arrivée
                     sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE TravelID = {0} AND Position BETWEEN {1} AND {2}", ParentID, from, to);
-                    db.Database.ExecuteSqlCommand(sql);
+                    db.ExecuteSql(sql);
                 }
                 else
                 {
                     // Repousse d'un rang tous les élements entre l'arrivée et le départ
                     sql = string.Format("UPDATE Sections SET Position = Position + 1 WHERE TravelID = {0} AND Position BETWEEN {1} AND {2}", ParentID, to, from);
-                    db.Database.ExecuteSqlCommand(sql);
+                    db.ExecuteSql(sql);
                 }
 
                 // Déplace l'élément mis de coté à la position d'arrivée
                 sql = string.Format("UPDATE Sections SET Position = {0} WHERE TravelID = {1} AND Position = 0", to, ParentID);
-                db.Database.ExecuteSqlCommand(sql);
+                db.ExecuteSql(sql);
 
                 // Tout va bien
                 result = string.Empty;
@@ -185,7 +185,7 @@ namespace Bookmaker.Controllers
 
             // Réordonne les parties du voyages
             var sql = string.Format("UPDATE Sections SET Position = Position - 1 WHERE TravelID = {0} AND Position > {1}", section.TravelID, section.Position);
-            db.Database.ExecuteSqlCommand(sql);
+            db.ExecuteSql(sql);
 
             this.Flash(string.Format("La partie {0} a été supprimé", section.Position));
             return RedirectToAction("Details", "Travels", new { id = section.TravelID });

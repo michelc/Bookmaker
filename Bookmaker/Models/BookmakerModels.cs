@@ -153,22 +153,27 @@ namespace Bookmaker.Models
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<BookmakerContext, Configuration>());
         }
 
+        public void ExecuteSql(string sql)
+        {
+            this.Database.ExecuteSqlCommand(sql);
+        }
+
         public void TruncateTable(string tableName, string idName)
         {
             // Vide la table
-            this.Database.ExecuteSqlCommand(string.Format("DELETE FROM {0} WHERE {1} IS NOT NULL", tableName, idName));
+            this.ExecuteSql(string.Format("DELETE FROM {0} WHERE {1} IS NOT NULL", tableName, idName));
 
             // Réinitialise la numérotation automatique
             try
             {
                 // SQL Server CE
-                this.Database.ExecuteSqlCommand(string.Format("ALTER TABLE {0} ALTER COLUMN {1} IDENTITY (1, 1)", tableName, idName));
+                this.ExecuteSql(string.Format("ALTER TABLE {0} ALTER COLUMN {1} IDENTITY (1, 1)", tableName, idName));
             }
             catch { }
             try
             {
                 // SQL Server pas CE
-                this.Database.ExecuteSqlCommand(string.Format("TRUNCATE TABLE {0}", tableName));
+                this.ExecuteSql(string.Format("TRUNCATE TABLE {0}", tableName));
             }
             catch { }
         }

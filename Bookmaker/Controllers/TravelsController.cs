@@ -52,24 +52,24 @@ namespace Bookmaker.Controllers
 
                 // Met de côté l'élément à la position de départ
                 sql = string.Format("UPDATE Travels SET Position = 0 WHERE Position = {0}", from);
-                db.Database.ExecuteSqlCommand(sql);
+                db.ExecuteSql(sql);
 
                 if (from < to)
                 {
                     // Ramène d'un rang tous les élements entre le départ et l'arrivée
                     sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Position BETWEEN {0} AND {1}", from, to);
-                    db.Database.ExecuteSqlCommand(sql);
+                    db.ExecuteSql(sql);
                 }
                 else
                 {
                     // Repousse d'un rang tous les élements entre l'arrivée et le départ
                     sql = string.Format("UPDATE Travels SET Position = Position + 1 WHERE Position BETWEEN {0} AND {1}", to, from);
-                    db.Database.ExecuteSqlCommand(sql);
+                    db.ExecuteSql(sql);
                 }
 
                 // Déplace l'élément mis de coté à la position d'arrivée
                 sql = string.Format("UPDATE Travels SET Position = {0} WHERE Position = 0", to);
-                db.Database.ExecuteSqlCommand(sql);
+                db.ExecuteSql(sql);
 
                 // Tout va bien
                 result = string.Empty;
@@ -176,7 +176,7 @@ namespace Bookmaker.Controllers
 
             // Réordonne les voyages
             var sql = string.Format("UPDATE Travels SET Position = Position - 1 WHERE Position > {0}", travel.Position);
-            db.Database.ExecuteSqlCommand(sql);
+            db.ExecuteSql(sql);
 
             this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
             return RedirectToAction("Index");
