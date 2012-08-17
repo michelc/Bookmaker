@@ -2,7 +2,7 @@
 
 <h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.Travel_ID)</h2>
 
-<table class="sections">
+<table class="sortable sections" data-url='@Url.Action("Sort", "Sections", new { Parent_ID = @Model.Travel_ID })'>
 <thead>
     <tr>
         <th></th>

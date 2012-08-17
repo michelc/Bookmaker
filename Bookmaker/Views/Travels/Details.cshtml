@@ -16,48 +16,7 @@
 
 @Html.Partial(@"../Sections/Index")
 
-
 @section JavaScript
 {
-    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.22.min.js")"></script>
-    <script>
-        $(document).ready(function () {
-            $(".sections tbody").sortable({
-                axis: "y",
-                containment: ".sections",
-                cursor: "move",
-                handle: ".handle",
-                helper: function (e, tr) {
-                    var $originals = tr.children();
-                    var $helper = tr.clone();
-                    $helper.children().each(function (index) {
-                        // Set helper cell sizes to match the original sizes
-                        $(this).width($originals.eq(index).width())
-                    });
-                    return $helper;
-                },
-                update: function (e, ui) {
-                    $.ajax({
-                        url: '@Url.Action("Sort", "Sections")',
-                        type: "POST",
-                        cache: false,
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            Parent_ID: @Model.Travel_ID,
-                            from: ui.item.children(".handle").data("pos"),
-                            to: ui.item.index()
-                        }),
-                        success: function (result) {
-                            if (result != "") alert(result);
-                            $(".handle").each(function (index) {
-                                $(this).text(index + 1);
-                                $(this).data("pos", index);
-                            });
-                        }
-                    });
-                }
-            });
-            $(".sections tbody .handler").disableSelection();
-        });
-    </script>
+    @Html.Partial("_SortScripts")
 }
