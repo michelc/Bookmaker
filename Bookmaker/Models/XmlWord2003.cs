@@ -48,17 +48,15 @@ namespace Bookmaker.Models
             }
 
             // Génère le "morceau" pour spécifier le contenu du paragraphe
-            // - Suppression des tirets longs (en attendant mieux)
-            Text = Text.Replace("&mdash;", "–");
-            // - Dans Word, un espace insécable est matérialisé par la simple existance d'un "morceau" <w:t> </w:t>
-            var nbsp = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:t> </w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:t>";
-            Text = Text.Replace("&nbsp;", nbsp);
+            // - Remplacement de quelques entités HTML
+            Text = Text.Replace("&mdash;", ((char)8211).ToString());
+            Text = Text.Replace("&nbsp;", ((char)160).ToString());
             // - Dans Word, un retour à la ligne est matérialisé par la présence d'un "morceau" <w:br/>
             var br = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:br/>\n\t</w:r>\n\t<w:r>\n\t\t<w:t>";
             Text = Text.Replace("<br>", br);
             // - Dans Word, une tabulation est matérialisée par la présence d'un "morceau" <w:tab/>
             var tab = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:tab/>\n\t</w:r>\n\t<w:r>\n\t\t<w:t>";
-            Text = Text.Replace("&tab;", tab);
+            Text = Text.Replace("<tab>", tab);
 
             // Compose le "morceau" pour définir le paragraphe avec son style éventuel
             string template = "\n<w:p>{{style}}"

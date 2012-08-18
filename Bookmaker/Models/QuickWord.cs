@@ -46,9 +46,9 @@ namespace Bookmaker.Models
             // Puis simplifie encore le document HTML obtenu
 
             // Le <span>Temps</span>Bla bla bla bla des titres
-            // devient Temps&tab;Bla bla bla bla;
+            // devient Temps<tab>Bla bla bla bla;
             html.Replace("<span>", "");
-            html.Replace("</span>", "&tab;");
+            html.Replace("</span>", "<tab>");
 
             // La mise en évidence des "(ou)" et &mdash; dans les menus disparait
             html.Replace("<strong>(</strong>", "");
