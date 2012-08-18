@@ -14,8 +14,15 @@ namespace Bookmaker.Helpers
             var flash = (string)helper.ViewContext.TempData["FlashKey"];
             if (flash == null) return null;
 
+            var css = "flash";
+            if (flash.StartsWith("!"))
+            {
+                flash = flash.Substring(1);
+                css = "flash_alert";
+            }
+
             var tag = new TagBuilder("div");
-            tag.AddCssClass("flash");
+            tag.AddCssClass(css);
             tag.InnerHtml = flash;
 
             return new MvcHtmlString(tag.ToString());

@@ -103,9 +103,15 @@ namespace Bookmaker.Controllers
         //
         // GET: /Booklets/Delete/5
 
-        public ViewResult Delete(int id)
+        public ActionResult Delete(int id)
         {
             var booklet = db.Booklets.Find(id);
+
+            if (booklet.Travels.Count > 0)
+            {
+                this.Flash("!Suppression interdite car la brochure contient des voyages");
+                return RedirectToAction("Details", new { id = booklet.Booklet_ID });
+            }
 
             return View(booklet);
         }

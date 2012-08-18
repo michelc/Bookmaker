@@ -368,6 +368,16 @@ input[type="text"].inputbig
   text-align: center;
 }
 
+/* Message flash suite à un un problème */
+.flash_alert {
+  background-color: #fcc;
+  border-top: 1px solid #600;
+  border-bottom: 4px solid #600;
+  color: #933;
+  padding: 6px;
+  text-align: center;
+}
+
 
 /* #Condense l'affichage pour les petites largeurs
 ================================================== */
