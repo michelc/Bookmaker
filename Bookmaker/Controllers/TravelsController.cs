@@ -128,6 +128,11 @@ namespace Bookmaker.Controllers
         {
             var travel = db.Travels.Find(id);
 
+            if (travel.Prices.Count + travel.Sections.Count > 0)
+            {
+                ViewBag.Warning = "Attention, ce voyage contient des tarifs et des parties qui seront perdues !";
+            }
+
             return View(travel);
         }
 

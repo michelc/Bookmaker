@@ -368,7 +368,7 @@ input[type="text"].inputbig
   text-align: center;
 }
 
-/* Message flash suite à un un problème */
+/* Message flash suite à un problème */
 .flash_alert {
   background-color: #fcc;
   border-top: 1px solid #600;
@@ -376,6 +376,12 @@ input[type="text"].inputbig
   color: #933;
   padding: 6px;
   text-align: center;
+}
+
+/* Affichage d'une information importante */
+.important {
+    color: #f00;
+    font-weight: bold;
 }
 
 
