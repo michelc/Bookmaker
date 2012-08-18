@@ -228,5 +228,15 @@ namespace Bookmaker.Helpers
 
             return new MvcHtmlString(html);
         }
+
+        public static MvcHtmlString BookletTitle(this HtmlHelper helper)
+        {
+            var root_id = helper.ViewContext.RouteData.Values["root_id"];
+            if (root_id == null) return null;
+
+            var title = string.Format("Brochure n° {0}", root_id);
+
+            return new MvcHtmlString(title);
+        }
     }
 }

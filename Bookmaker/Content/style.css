@@ -418,6 +418,13 @@ input[type="text"].inputbig
 /* #Styles spécifiques pour Bookmaker
 ================================================== */
 
+/* Le sous-titre est un peu plus petit que le titre */
+h1 em 
+{
+    color: #39b449; /* vert */
+    font-size: 24px;
+}
+
 /* Les titres et sous-titres des sections sont moins grands */
 .sections h2
 {
