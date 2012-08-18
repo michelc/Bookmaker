@@ -14,7 +14,13 @@ namespace Bookmaker.Models
             foreach (var t in travels)
             {
                 // Titre du voyage
-                html.AppendFormat("<h1>{0}</h1>", SectionHelper.CheckHtml(t.Title));
+                var title = SectionHelper.CheckHtml(t.Title);
+                var br = title.IndexOf("[br]");
+                if (br != -1)
+                {
+                    title = title.Insert(br + 4, "<small>") + "</small>";
+                }
+                html.AppendFormat("<h1>{0}</h1>", title);
 
                 // Parties du voyages
                 foreach (var s in t.Sections.OrderBy(s => s.Position))

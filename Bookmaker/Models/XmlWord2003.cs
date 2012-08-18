@@ -54,6 +54,7 @@ namespace Bookmaker.Models
             // - Dans Word, un retour à la ligne est matérialisé par la présence d'un "morceau" <w:br/>
             var br = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:br/>\n\t</w:r>\n\t<w:r>\n\t\t<w:t>";
             Text = Text.Replace("<br>", br);
+            Text = Text.Replace("[br]", br);
             // - Dans Word, une tabulation est matérialisée par la présence d'un "morceau" <w:tab/>
             var tab = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:tab/>\n\t</w:r>\n\t<w:r>\n\t\t<w:t>";
             Text = Text.Replace("<tab>", tab);
@@ -66,8 +67,11 @@ namespace Bookmaker.Models
                             + "\n</w:p>";
             var text = template.Replace("{{style}}", style).Replace("{{text}}", Text.Trim());
 
-            // Bidouille les <strong> ... </strong> en "morceaux" de gras
-            text = this.Boldify(text);
+            // Transforme les <strong> ... </strong> en "morceaux" de gras
+            text = this.Strongify(text);
+
+            // Transforme les <small> ... </small> en "morceaux" de police inférieure
+            text = this.Smallify(text);
 
             // Le "et" commercial doit être échappé en XML
             text = text.Replace(" & ", " &amp; ");
@@ -77,28 +81,47 @@ namespace Bookmaker.Models
         }
 
         /// <summary>
-        /// Bidouille pour transformer les <strong> ... </strong> en "morceaux" de gras
+        /// Transforme les <strong> ... </strong> en "morceaux" de gras
         /// </summary>
-        private string Boldify(string text)
+        private string Strongify(string text)
         {
-            var b_start = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:rPr><w:b/></w:rPr>\n\t\t<w:t>";
-            var b_end = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:t>";
+            var tags_strong = "<w:b/>";
+            return Xmlify(text, "<strong>", tags_strong);
+        }
 
-            int start = text.IndexOf("<strong>");
+        /// <summary>
+        /// Transforme les <small> ... </small> en "morceaux" de police inférieure
+        /// </summary>
+        private string Smallify(string text)
+        {
+            var tags_small = "<w:sz w:val=\"28\"/><w:szCs w:val=\"28\"/>";
+            return Xmlify(text, "<small>", tags_small);
+        }
+
+        /// <summary>
+        /// Bidouille pour transformer des tags HTML en tags XML Word 2003
+        /// </summary>
+        private string Xmlify(string text, string startTag, string xmlTag)
+        {
+            string endTag = startTag.Replace("<", "</");
+            var tags_start = string.Format("</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:rPr>{0}</w:rPr>\n\t\t<w:t>", xmlTag);
+            var tags_end = "</w:t>\n\t</w:r>\n\t<w:r>\n\t\t<w:t>";
+
+            int start = text.IndexOf(startTag);
             while (start != -1)
             {
-                int end = text.IndexOf("</strong>");
+                int end = text.IndexOf(endTag);
 
-                var html_tags = text.Substring(start, end - start + "</strong>".Length);
+                var html_tags = text.Substring(start, end - start + endTag.Length);
 
                 var word_tags = html_tags;
                 word_tags = word_tags.Replace("<w:r>", "<w:r>\n\t\t<w:rPr><w:b/></w:rPr>");
-                word_tags = word_tags.Replace("<strong>", b_start);
-                word_tags = word_tags.Replace("</strong>", b_end);
+                word_tags = word_tags.Replace(startTag, tags_start);
+                word_tags = word_tags.Replace(endTag, tags_end);
 
                 text = text.Replace(html_tags, word_tags);
 
-                start = text.IndexOf("<strong>");
+                start = text.IndexOf(startTag);
             }
 
             text = text.Replace("<w:r>\n\t\t<w:t></w:t>\n\t</w:r>\n\t", string.Empty);
