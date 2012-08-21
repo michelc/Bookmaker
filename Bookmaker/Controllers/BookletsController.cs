@@ -34,6 +34,19 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // GET: /5/Booklets/Title
+
+        [ChildActionOnly]
+        public ContentResult Title(int root_id)
+        {
+            var title = (from b in db.Booklets
+                         where b.Booklet_ID == root_id
+                         select b.Title).FirstOrDefault();
+
+            return Content(title);
+        }
+
+        //
         // GET: /Booklets/Details/5
 
         public ViewResult Details(int id)
