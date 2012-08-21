@@ -37,6 +37,7 @@ namespace Bookmaker.Controllers
         // GET: /5/Booklets/Title
 
         [ChildActionOnly]
+        [OutputCache(Duration = 60, VaryByParam = "root_id")]
         public ContentResult Title(int root_id)
         {
             var title = (from b in db.Booklets
