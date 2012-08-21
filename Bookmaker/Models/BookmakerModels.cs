@@ -192,9 +192,9 @@ namespace Bookmaker.Models
             this.ExecuteSql(sql);
         }
 
-        public string SortPositions(string tableName, string parentColumn, int parentId, int from, int to)
+        public bool SortPositions(string tableName, string parentColumn, int parentId, int from, int to)
         {
-            var result = "Le nouvel ordre de tri s'est mal enregistré";
+            var success = true;
 
             try
             {
@@ -225,13 +225,13 @@ namespace Bookmaker.Models
                 // Déplace l'élément mis de coté à la position d'arrivée
                 sql = string.Format("UPDATE {0} SET Position = {3} WHERE {1} = {2} AND Position = 0", tableName, parentColumn, parentId, to);
                 this.ExecuteSql(sql);
-
-                // Tout va bien
-                result = string.Empty;
             }
-            catch { }
+            catch
+            {
+                success = false;
+            }
 
-            return result;
+            return success;
         }
 
         public void TruncateTable(string tableName, string idColumn)

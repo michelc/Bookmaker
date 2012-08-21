@@ -38,9 +38,10 @@ namespace Bookmaker.Controllers
         [HttpPost]
         public JsonResult Sort(int Root_ID, int from, int to)
         {
-            var result = db.SortPositions("Travels", "Booklet_ID", Root_ID, from, to);
+            var success = db.SortPositions("Travels", "Booklet_ID", Root_ID, from, to);
 
-            return Json(result);
+            if (!success) Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+            return Json(success);
         }
 
         //

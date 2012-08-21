@@ -26,11 +26,13 @@
                         to: ui.item.index()
                     }),
                     success: function (result) {
-                        if (result != "") alert(result);
                         $(".handle").each(function (index) {
                             $(this).text(index + 1);
                             $(this).data("pos", index);
                         });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Impossible d'enregistrer le nouvel ordre de tri");
                     }
                 });
             }
