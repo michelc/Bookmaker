@@ -16,15 +16,16 @@
                 return $helper;
             },
             update: function (e, ui) {
+                var data = {
+                    from: ui.item.children(".handle").data("pos"),
+                    to: ui.item.index()
+                };
                 $.ajax({
                     url: $(".sortable").data("url"),
                     type: "POST",
                     cache: false,
                     contentType: "application/json",
-                    data: JSON.stringify({
-                        from: ui.item.children(".handle").data("pos"),
-                        to: ui.item.index()
-                    }),
+                    data: JSON.stringify(data),
                     success: function (result) {
                         $(".handle").each(function (index) {
                             $(this).text(index + 1);
@@ -33,6 +34,11 @@
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         alert("Impossible d'enregistrer le nouvel ordre de tri");
+                        if (data.from > data.to) data.from++;
+                        data.to++;
+                        var row = $(".sortable tr").eq(data.from);
+                        $(".sortable tr").eq(data.to).insertAfter(row);
+
                     }
                 });
             }
