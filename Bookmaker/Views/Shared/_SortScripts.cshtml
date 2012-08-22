@@ -17,6 +17,7 @@
             },
             update: function (e, ui) {
                 var data = {
+                    __RequestVerificationToken: $('@Html.AntiForgeryToken()').val(),
                     from: ui.item.children(".handle").data("pos"),
                     to: ui.item.index()
                 };
@@ -24,8 +25,7 @@
                     url: $(".sortable").data("url"),
                     type: "POST",
                     cache: false,
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
+                    data: data,
                     success: function (result) {
                         $(".handle").each(function (index) {
                             $(this).text(index + 1);
