@@ -34,7 +34,7 @@ a:focus
 footer
 {
     margin: 20px 0 10px 0;
-	text-align: center;
+    text-align: center;
 }
 
 /* Menu des actions CRUD */
@@ -400,8 +400,8 @@ input[type="text"].inputbig
         margin-top: -11px !important;
     }
 
-	h3 { font-size: 21px; line-height: 30px; margin-bottom: 4px; }
-	h4 { font-size: 17px; line-height: 24px; margin-bottom: 0px; }
+    h3 { font-size: 21px; line-height: 30px; margin-bottom: 4px; }
+    h4 { font-size: 17px; line-height: 24px; margin-bottom: 0px; }
 
     legend
     {
@@ -419,7 +419,7 @@ input[type="text"].inputbig
 ================================================== */
 
 /* Le sous-titre est un peu plus petit que le titre */
-h1 em 
+h1 em
 {
     color: #39b449; /* vert */
     font-size: 24px;
