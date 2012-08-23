@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Configuration;
 using System.Text;
 using System.Web.Mvc;
 using Bookmaker.Models;
@@ -19,10 +19,13 @@ namespace Bookmaker.Helpers
                     html = HtmlTitle(html, content);
                     break;
                 case SectionType.Menu:
-                    html = HtmlMenuInline(html, lines);
+                    html = HtmlMenu(html, lines);
                     break;
                 case SectionType.Menu_Centre:
-                    html = HtmlMenuBlock(html, lines);
+                    html = HtmlMenuCentre(html, lines);
+                    break;
+                case SectionType.Image:
+                    html = HtmlImage(html, content);
                     break;
                 default:
                     html = HtmlDefault(html, lines);
@@ -49,7 +52,7 @@ namespace Bookmaker.Helpers
             return html;
         }
 
-        private static StringBuilder HtmlMenuInline(StringBuilder html, string[] lines)
+        private static StringBuilder HtmlMenu(StringBuilder html, string[] lines)
         {
             bool first_line = true;
 
@@ -90,7 +93,7 @@ namespace Bookmaker.Helpers
             return html;
         }
 
-        private static StringBuilder HtmlMenuBlock(StringBuilder html, string[] lines)
+        private static StringBuilder HtmlMenuCentre(StringBuilder html, string[] lines)
         {
             // Menu multi-lignes
             foreach (var line in lines)
@@ -100,6 +103,29 @@ namespace Bookmaker.Helpers
                     html.AppendFormat("<p class='menucentre'>{0}</p>", CheckHtml(line));
                 }
             }
+
+            return html;
+        }
+
+        private static StringBuilder HtmlImage(StringBuilder html, string content)
+        {
+            string src = content;
+            if (src.StartsWith("("))
+            {
+                if (content.EndsWith(")"))
+                {
+                    var path = ConfigurationManager.AppSettings["ImagesPngPath"] ?? "";
+                    if (path == "*") path = "";
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        src = src.Substring(1, src.Length - 2);
+                        html.AppendFormat("<p><img src=\"{0}{1}.png\" /></p>", path, src);
+                        return html;
+                    }
+                }
+            }
+
+            html.AppendFormat("<p>{0}</p>", src);
 
             return html;
         }
