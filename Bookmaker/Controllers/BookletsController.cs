@@ -179,12 +179,28 @@ namespace Bookmaker.Controllers
 
         public ContentResult JsonExport()
         {
-            // Retrouve toutes les brochures
+            // Retrouve toutes les brochures classées par année
             var booklets = db
                 .Booklets
-                .Include(b => b.Travels)
                 .OrderBy(b => b.Year)
-                .ThenBy(b => b.Title);
+                .ThenBy(b => b.Title).ToList();
+
+            // Pour chaque brochure
+            foreach (var booklet in booklets)
+            {
+                // Retrouve tous les voyages classés par position
+                booklet.Travels = booklet.Travels.OrderBy(t => t.Position).ToList();
+
+                // Pour chaque voyage
+                foreach (var travel in booklet.Travels)
+                {
+                    // Retrouve tous les tarifs classés par titre
+                    travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
+
+                    // Retrouve toutes les parties classées par position
+                    travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
+                }
+            }
 
             // Transforme les données au format Json
             var json = ImportExport.JsonExport(booklets);

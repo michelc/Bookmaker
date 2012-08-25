@@ -50,7 +50,7 @@ namespace Bookmaker.Controllers
         public ViewResult Details(int id)
         {
             var travel = db.Travels.Find(id);
-            travel.Prices = travel.Prices.OrderBy(p => p.Title).ThenBy(p => p.Price_ID).ToList();
+            travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
             travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
 
             return View(travel);

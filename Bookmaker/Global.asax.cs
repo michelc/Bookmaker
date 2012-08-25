@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Bookmaker.Helpers;
+using Bookmaker.Models;
 using LowercaseRoutesMVC;
 using StackExchange.Profiling;
-using Bookmaker.Helpers;
 
 namespace Bookmaker
 {
@@ -40,6 +41,8 @@ namespace Bookmaker
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            AutoMapperConfiguration.Configure();
 
             MiniProfilerEF.Initialize(true);
         }

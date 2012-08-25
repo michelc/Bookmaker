@@ -43,57 +43,9 @@ namespace Bookmaker.Models
 
     public static class ImportExport
     {
-        public static string JsonExport(IQueryable<Booklet> booklets)
+        public static string JsonExport(IList<Booklet> booklets)
         {
-            var jsbooklets = new List<JsonBooklet>();
-
-            foreach (var b in booklets)
-            {
-                var booklet = new JsonBooklet
-                {
-                    Title = b.Title,
-                    Year = b.Year,
-                    Notes = b.Notes,
-                    Travels = new List<JsonTravel>()
-                };
-
-                foreach (var t in b.Travels)
-                {
-                    var prices = (from p in t.Prices
-                                  orderby p.Title ascending, p.Price_ID ascending
-                                  select new JsonPrice
-                                  {
-                                      Title = p.Title,
-                                      Price1 = p.Price1,
-                                      Price2 = p.Price2,
-                                      Price3 = p.Price3,
-                                      Price4 = p.Price4,
-                                      Price5 = p.Price5,
-                                      Notes = p.Notes
-                                  }).ToList();
-
-                    var sections = (from s in t.Sections
-                                    orderby s.Position ascending, s.Section_ID ascending
-                                    select new JsonSection
-                                    {
-                                        SectionType = s.TypeSection.ToString(),
-                                        Content = s.Content
-                                    }).ToList();
-
-                    var travel = new JsonTravel
-                    {
-                        Title = t.Title,
-                        TravelType = t.TypeTravel.ToString(),
-                        Notes = t.Notes,
-                        Prices = prices,
-                        Sections = sections
-                    };
-
-                    booklet.Travels.Add(travel);
-                }
-
-                jsbooklets.Add(booklet);
-            }
+            var jsbooklets = AutoMapper.Mapper.Map<IList<Booklet>, IList<JsonBooklet>>(booklets);
 
             var serializer = new JavaScriptSerializer();
             var json = serializer.Serialize(jsbooklets);
