@@ -57,6 +57,50 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // GET: /Travels/Copy/5
+
+        public ActionResult Copy(int id)
+        {
+            // Retrouve le voyage à copier
+            var travel = db.Travels.Find(id);
+            travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
+            travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
+
+            // Rattache ce voyage à une brochure fictive
+            var src_booklet = new Booklet
+            {
+                Travels = new System.Collections.Generic.List<Travel>()
+            };
+            src_booklet.Travels.Add(travel);
+
+            // Sérialise cette brochure fictive (en passant par une liste de brochure)
+            var src_booklets = new System.Collections.Generic.List<Booklet>();
+            src_booklets.Add(src_booklet);
+            var json = ImportExport.JsonExport(src_booklets);
+
+            // Désérialisation (bidouille pour faire une copie complète)
+            var dest_booklets = ImportExport.JsonImport(json);
+
+            // Retrouve la 1° (et seule) brochure (de la liste de brochure obtenue)
+            var dest_booklet = dest_booklets.First();
+
+            // Retrouve le 1° (et seul) voyage de cette brochure
+            var dest_travel = dest_booklet.Travels.First();
+
+            // Retrouve la brochure de destination (id codé en dur)
+            var destination = db.Booklets.Find(2);
+
+            // Lui ajoute le voyage copié
+            destination.Travels.Add(dest_travel);
+
+            // Sauvegarde !
+            db.SaveChanges();
+
+            this.Flash(string.Format("Le voyage {0} a été copié", dest_travel.Title));
+            return RedirectToAction("Details", new { root_id = 2, id = dest_travel.Travel_ID });
+        }
+
+        //
         // GET: /Travels/Create
 
         public ViewResult Create(int Root_ID)
