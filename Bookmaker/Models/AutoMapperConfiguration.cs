@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 
 namespace Bookmaker.Models
 {
@@ -6,6 +7,8 @@ namespace Bookmaker.Models
     {
         public static void Configure()
         {
+            // Entités vers ViewModels
+
             Mapper.CreateMap<Booklet, JsonBooklet>();
 
             Mapper.CreateMap<Travel, JsonTravel>()
@@ -15,6 +18,18 @@ namespace Bookmaker.Models
 
             Mapper.CreateMap<Section, JsonSection>()
                 .ForMember(dest => dest.SectionType, opt => opt.MapFrom(src => src.TypeSection));
+
+            // ViewModels vers entités
+
+            Mapper.CreateMap<JsonBooklet, Booklet>();
+
+            Mapper.CreateMap<JsonTravel, Travel>()
+                .ForMember(dest => dest.TravelType, opt => opt.MapFrom(src => Enum.Parse(typeof(TravelType), src.TravelType)));
+
+            Mapper.CreateMap<JsonPrice, Price>();
+
+            Mapper.CreateMap<JsonSection, Section>()
+                .ForMember(dest => dest.SectionType, opt => opt.MapFrom(src => Enum.Parse(typeof(SectionType), src.SectionType)));
         }
     }
 }
