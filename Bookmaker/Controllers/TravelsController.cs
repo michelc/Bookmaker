@@ -68,19 +68,21 @@ namespace Bookmaker.Controllers
 
             // Sérialisation / désérialisation
             var temp = AutoMapper.Mapper.Map<Travel, JsonTravel>(travel);
-            var dest_travel = AutoMapper.Mapper.Map<JsonTravel, Travel>(temp);
+            var copy = AutoMapper.Mapper.Map<JsonTravel, Travel>(temp);
 
             // Retrouve la brochure de destination (id codé en dur)
-            var destination = db.Booklets.Find(2);
+            int dest_id = 2;
+            var destination = db.Booklets.Find(dest_id);
 
-            // Lui ajoute le voyage copié
-            destination.Travels.Add(dest_travel);
+            // Lui ajoute le voyage copié en dernière position
+            copy.Position = db.Travels.Where(t => t.Booklet_ID == dest_id).Count() + 1;
+            destination.Travels.Add(copy);
 
             // Sauvegarde !
             db.SaveChanges();
 
-            this.Flash(string.Format("Le voyage {0} a été copié", dest_travel.Title));
-            return RedirectToAction("Details", new { root_id = 2, id = dest_travel.Travel_ID });
+            this.Flash(string.Format("Le voyage {0} a été copié", copy.Title));
+            return RedirectToAction("Details", new { root_id = dest_id, id = copy.Travel_ID });
         }
 
         //
