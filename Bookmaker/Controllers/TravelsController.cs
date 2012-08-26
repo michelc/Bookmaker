@@ -70,6 +70,10 @@ namespace Bookmaker.Controllers
             var temp = AutoMapper.Mapper.Map<Travel, JsonTravel>(travel);
             var copy = AutoMapper.Mapper.Map<JsonTravel, Travel>(temp);
 
+            // Positionne chaque partie du voyage
+            int position = 0;
+            copy.Sections.ToList().ForEach(s => s.Position = ++position);
+
             // Retrouve la brochure de destination (id codé en dur)
             int dest_id = 2;
             var destination = db.Booklets.Find(dest_id);
