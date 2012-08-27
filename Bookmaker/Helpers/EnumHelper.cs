@@ -13,5 +13,12 @@ namespace Bookmaker.Helpers
 
             return new SelectList(values, "Id", "Name");
         }
+
+        public static T ToEnum<T>(this string @string)
+        {
+            // http://matthewmanela.com/blog/i-finally-got-fed-up-with-enum-parse/
+            return (T)Enum.Parse(typeof(T), @string);
+        }
+
     }
 }
