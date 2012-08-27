@@ -138,6 +138,35 @@ namespace Bookmaker.Helpers
             return new MvcHtmlString(html);
         }
 
+        public static MvcHtmlString ActionCrudCopy(this HtmlHelper helper, string title)
+        {
+            var html = ActionCrud(helper, title).ToString();
+
+            var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
+            var id = helper.ViewContext.RouteData.Values["id"];
+
+            // Si on a un identifiant de fiche
+            if (id != null)
+            {
+                // Alors, il faut générer le lien Copy
+
+                // Si on n'est pas sur la page Copy
+                html += " / ";
+                if (current_action != "copy")
+                {
+                    // Alors, il faut un lien vers la page Copy
+                    html += helper.ActionLink("Copier", "Copy", new { id = id.ToString() }).ToString();
+                }
+                else
+                {
+                    // Sinon, il n'y a pas besoin d'un lien vers la page Copy
+                    html += "Copier";
+                }
+            }
+
+            return new MvcHtmlString(html);
+        }
+
         public static MvcHtmlString ActionChildcrud(this HtmlHelper helper, string title, string child_controller, int parent_id = -1)
         {
             var current_controller = helper.ViewContext.RouteData.Values["controller"].ToString().ToLower();
