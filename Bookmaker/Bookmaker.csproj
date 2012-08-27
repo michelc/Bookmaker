@@ -163,6 +163,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.8.0-vsdoc.js" />
     <Content Include="Scripts\jquery-1.8.0.js" />
@@ -218,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Travels\Delete.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Travels\Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Prices\Index.cshtml" />

@@ -1,0 +1,40 @@
+﻿@model Bookmaker.Models.TravelCopy
+
+@{
+    ViewBag.Title = "Copier un voyage";
+}
+
+<h2 class="crud">@Html.ActionCrud("Voyages")</h2>
+
+<fieldset>
+    <legend>Copie «&nbsp;@Model.Travel.Title&nbsp;»</legend>
+
+    @Html.Partial("_Display", Model.Travel)
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="editor-label five columns"> 
+            @Html.CaptionFor(model => model.Destination_ID)
+        </div>
+        <div class="editor-field eleven columns">
+            @Html.DropDownListFor(model => model.Destination_ID, Model.Destinations, string.Empty)
+            @Html.ValidationMessageFor(model => model.Destination_ID)
+        </div>
+
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Copier" />
+            @Html.ActionCancel()
+        </p>
+        <p class="offset-by-five eleven columns alpha important">
+            @ViewBag.Warning
+        </p>
+    }
+</fieldset>
+
+@section JavaScript
+{
+    @Html.Partial("_FormScripts")
+}

@@ -1,4 +1,7 @@
-﻿namespace Bookmaker.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
+namespace Bookmaker.Models
 {
     /// <summary>
     /// Classe pour afficher la liste des brochures dans la vue Index
@@ -29,5 +32,16 @@
             get { return (TravelType)TravelType; }
             set { TravelType = (int)value; }
         }
+    }
+
+    /// <summary>
+    /// Classe pour copier un voyage vers une autre brochure
+    /// </summary>
+    public class TravelCopy
+    {
+        public Travel Travel { get; set; }
+        [Display(Name = "Copier vers la brochure ?")]
+        public int Destination_ID { get; set; }
+        public SelectList Destinations { get; set; }
     }
 }

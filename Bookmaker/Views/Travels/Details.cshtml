@@ -12,6 +12,8 @@
     @Html.Partial("_Display", Model)
 </fieldset>
 
+<p>@Html.ActionLink("Copier le voyage dans une autre brochure", "Copy", "Travels", new { id = Model.Travel_ID }, null)</p>
+
 @Html.Partial(@"../Prices/Index")
 
 @Html.Partial(@"../Sections/Index")

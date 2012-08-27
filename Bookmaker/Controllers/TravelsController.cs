@@ -57,39 +57,6 @@ namespace Bookmaker.Controllers
         }
 
         //
-        // GET: /Travels/Copy/5
-
-        public ActionResult Copy(int id)
-        {
-            // Retrouve le voyage à copier
-            var travel = db.Travels.Find(id);
-            travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
-            travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
-
-            // Sérialisation / désérialisation
-            var temp = AutoMapper.Mapper.Map<Travel, JsonTravel>(travel);
-            var copy = AutoMapper.Mapper.Map<JsonTravel, Travel>(temp);
-
-            // Positionne chaque partie du voyage
-            int position = 0;
-            copy.Sections.ToList().ForEach(s => s.Position = ++position);
-
-            // Retrouve la brochure de destination (id codé en dur)
-            int dest_id = 2;
-            var destination = db.Booklets.Find(dest_id);
-
-            // Lui ajoute le voyage copié en dernière position
-            copy.Position = db.Travels.Where(t => t.Booklet_ID == dest_id).Count() + 1;
-            destination.Travels.Add(copy);
-
-            // Sauvegarde !
-            db.SaveChanges();
-
-            this.Flash(string.Format("Le voyage {0} a été copié", copy.Title));
-            return RedirectToAction("Details", new { root_id = dest_id, id = copy.Travel_ID });
-        }
-
-        //
         // GET: /Travels/Create
 
         public ViewResult Create(int Root_ID)
@@ -186,6 +153,64 @@ namespace Bookmaker.Controllers
 
             this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
             return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /Travels/Copy/5
+
+        public ViewResult Copy(int id)
+        {
+            var travel = db.Travels.Find(id);
+            var booklets = db.Booklets
+                             .Where(b => b.Booklet_ID != travel.Booklet_ID)
+                             .OrderByDescending(b => b.Year)
+                             .ThenBy(b => b.Title);
+
+            var copy = new TravelCopy
+            {
+                Travel = travel,
+                Destinations = new SelectList(booklets, "Booklet_ID", "Title")
+            };
+
+            return View(copy);
+        }
+
+        //
+        // POST: /Travels/Copy/5
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Copy(int id, int Destination_ID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Copy(id);
+            }
+
+            // Retrouve le voyage à copier
+            var travel = db.Travels.Find(id);
+            travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
+            travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
+
+            // Sérialisation / désérialisation
+            var temp = AutoMapper.Mapper.Map<Travel, JsonTravel>(travel);
+            var copy = AutoMapper.Mapper.Map<JsonTravel, Travel>(temp);
+
+            // Positionne chaque partie du voyage
+            int position = 0;
+            copy.Sections.ToList().ForEach(s => s.Position = ++position);
+
+            // Retrouve la brochure de destination (id codé en dur)
+            var destination = db.Booklets.Find(Destination_ID);
+
+            // Lui ajoute le voyage copié en dernière position
+            copy.Position = db.Travels.Where(t => t.Booklet_ID == Destination_ID).Count() + 1;
+            destination.Travels.Add(copy);
+
+            // Sauvegarde !
+            db.SaveChanges();
+
+            this.Flash(string.Format("Le voyage {0} a été copié", copy.Title));
+            return RedirectToAction("Details", new { root_id = Destination_ID, id = copy.Travel_ID });
         }
 
         protected override void Dispose(bool disposing)
