@@ -165,72 +165,28 @@ namespace Bookmaker.Models
 
         public static List<Booklet> JsonImport(string json)
         {
-            var booklets = new List<Booklet>();
-
             var serializer = new JavaScriptSerializer();
             var jsbooklets = serializer.Deserialize<List<JsonBooklet>>(json);
 
-            foreach (var b in jsbooklets)
-            {
-                var booklet = new Booklet
-                {
-                    Title = b.Title,
-                    Year = b.Year,
-                    Notes = b.Notes,
-                    Travels = new List<Travel>()
-                };
+            var booklets = AutoMapper.Mapper.Map<IList<JsonBooklet>, IList<Booklet>>(jsbooklets).ToList();
 
-                var t_position = 0;
+            foreach (var b in booklets)
+            {
+                int travel_position = 0;
                 foreach (var t in b.Travels)
                 {
-                    var prices = (from p in t.Prices
-                                  select new Price
-                                  {
-                                      Title = p.Title,
-                                      Price1 = p.Price1,
-                                      Price2 = p.Price2,
-                                      Price3 = p.Price3,
-                                      Price4 = p.Price4,
-                                      Price5 = p.Price5,
-                                      Notes = p.Notes
-                                  }).ToList();
+                    t.Position = ++travel_position;
 
-                    var s_position = 0;
-                    var sections = (from s in t.Sections
-                                    select new Section
-                                    {
-                                        Position = ++s_position,
-                                        TypeSection = (SectionType)Enum.Parse(typeof(SectionType), s.SectionType),
-                                        Content = s.Content
-                                    }).ToList();
-
-                    foreach (var s in sections)
+                    int section_position = 0;
+                    foreach (var s in t.Sections)
                     {
-                        s.Content = InputHelper.ContentFormat(s.Content);
-                        if (s.TypeSection == SectionType.Titre)
-                        {
-                            s.Content = InputHelper.TitleFormat(s.Content);
-                        }
+                        s.Position = ++section_position;
                     }
-
-                    t_position++;
-                    var travel = new Travel
-                    {
-                        Title = t.Title,
-                        Position = t_position,
-                        TypeTravel = (TravelType)Enum.Parse(typeof(TravelType), t.TravelType),
-                        Notes = t.Notes,
-                        Prices = prices,
-                        Sections = sections
-                    };
-
-                    booklet.Travels.Add(travel);
                 }
-
-                booklets.Add(booklet);
             }
 
             return booklets;
         }
+
     }
 }
