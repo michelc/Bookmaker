@@ -6,10 +6,13 @@
 
 <h2 class="crud">@Html.ActionCrudCopy("Voyages")</h2>
 
-<fieldset class="sixteen columns">
-    <legend>@Model.Title</legend>
+<fieldset class="navigation sixteen columns">
 
+    <legend>@Model.Title</legend>
     @Html.Partial("_Display", Model)
+
+    <a class="prev" href="@Url.Action("Previous", new { id = Model.Travel_ID} )"></a>
+    <a class="next" href="@Url.Action("Next", new { id = Model.Travel_ID} )"></a>
 </fieldset>
 
 @Html.Partial(@"../Prices/Index")

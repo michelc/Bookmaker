@@ -57,6 +57,54 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // GET: /Travels/Next/5
+
+        public RedirectResult Next(int id)
+        {
+            var travel = db.Travels.Find(id);
+
+            var next = (from t in db.Travels
+                        where (t.Booklet_ID == travel.Booklet_ID)
+                        && (t.Position > travel.Position)
+                        orderby t.Position ascending
+                        select t.Travel_ID).FirstOrDefault();
+
+            if (next == 0)
+            {
+                next = (from t in db.Travels
+                        where (t.Booklet_ID == travel.Booklet_ID)
+                        orderby t.Position ascending
+                        select t.Travel_ID).FirstOrDefault();
+            }
+
+            return Redirect(Url.Action("Details", new { id = next }));
+        }
+
+        //
+        // GET: /Travels/Previous/5
+
+        public RedirectResult Previous(int id)
+        {
+            var travel = db.Travels.Find(id);
+
+            var prev = (from t in db.Travels
+                        where (t.Booklet_ID == travel.Booklet_ID)
+                        && (t.Position < travel.Position)
+                        orderby t.Position descending
+                        select t.Travel_ID).FirstOrDefault();
+
+            if (prev == 0)
+            {
+                prev = (from t in db.Travels
+                        where (t.Booklet_ID == travel.Booklet_ID)
+                        orderby t.Position descending
+                        select t.Travel_ID).FirstOrDefault();
+            }
+
+            return Redirect(Url.Action("Details", new { id = prev }));
+        }
+
+        //
         // GET: /Travels/Create
 
         public ViewResult Create(int Root_ID)

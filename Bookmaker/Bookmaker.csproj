@@ -101,6 +101,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bookmaker.xml" />
+    <Content Include="Content\icons\arrow-next.png" />
+    <Content Include="Content\icons\arrow-prev.png" />
     <Content Include="Content\icons\delete.png" />
     <Content Include="Content\icons\doc_file.png" />
     <Content Include="Content\icons\edit.png" />

@@ -506,3 +506,34 @@ a.doc_file
 {
     background-image: url(icons/doc_file.png);
 }
+
+/* Icones pour gérer la navigation */
+.navigation
+{
+	position: relative;
+}
+.navigation a.prev
+{
+  background: url(icons/arrow-prev.png);
+  display: none;
+  height: 48px;
+  left: 25px;
+  position: absolute;
+  top: 75px;
+  width: 49px;
+}
+.navigation a.next
+{
+  background: url(icons/arrow-next.png);
+  display: none;
+  height: 48px;
+  right: 25px;
+  position: absolute;
+  top: 75px;
+  width: 49px;
+}
+.navigation:hover a.prev,
+.navigation:hover a.next
+{
+  display: block;
+}
