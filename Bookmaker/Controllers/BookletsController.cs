@@ -183,6 +183,7 @@ namespace Bookmaker.Controllers
             // Retrouve toutes les brochures classées par année
             var booklets = db
                 .Booklets
+                .Include(b => b.Travels)
                 .OrderBy(b => b.Year)
                 .ThenBy(b => b.Title).ToList();
 
@@ -190,7 +191,11 @@ namespace Bookmaker.Controllers
             foreach (var booklet in booklets)
             {
                 // Retrouve tous les voyages classés par position
-                booklet.Travels = booklet.Travels.OrderBy(t => t.Position).ToList();
+                booklet.Travels = db
+                    .Travels
+                    .Include(t => t.Prices)
+                    .Include(t => t.Sections)
+                    .OrderBy(t => t.Position).ToList();
 
                 // Pour chaque voyage
                 foreach (var travel in booklet.Travels)
