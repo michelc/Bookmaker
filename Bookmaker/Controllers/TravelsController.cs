@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper.QueryableExtensions;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
 
@@ -19,15 +20,8 @@ namespace Bookmaker.Controllers
                 .Travels
                 .Where(travel => travel.Booklet_ID == Root_ID)
                 .OrderBy(travel => travel.Position)
-                .Select(travel => new TravelIndex
-                {
-                    Travel_ID = travel.Travel_ID,
-                    Position = travel.Position,
-                    Title = travel.Title,
-                    TravelType = travel.TravelType,
-                    PricesCount = travel.Prices.Count(),
-                    SectionsCount = travel.Sections.Count()
-                }).ToList();
+                .Project().To<TravelIndex>()
+                .ToList();
 
             return View(travels);
         }

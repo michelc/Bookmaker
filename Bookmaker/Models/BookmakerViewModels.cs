@@ -30,7 +30,6 @@ namespace Bookmaker.Models
         public TravelType TypeTravel
         {
             get { return (TravelType)TravelType; }
-            set { TravelType = (int)value; }
         }
     }
 

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using AutoMapper.QueryableExtensions;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
 
@@ -21,14 +22,8 @@ namespace Bookmaker.Controllers
                 .Booklets
                 .OrderByDescending(booklet => booklet.Year)
                 .ThenBy(booklet => booklet.Title)
-                .Select(booklet => new BookletIndex
-                {
-                    Booklet_ID = booklet.Booklet_ID,
-                    Title = booklet.Title,
-                    Year = booklet.Year,
-                    TravelsCount1 = booklet.Travels.Where(t => t.TravelType == (int)TravelType.Journee).Count(),
-                    TravelsCount2 = booklet.Travels.Where(t => t.TravelType == (int)TravelType.Sejour).Count()
-                }).ToList();
+                .Project().To<BookletIndex>()
+                .ToList();
 
             return View(booklets);
         }
