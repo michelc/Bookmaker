@@ -148,7 +148,7 @@ namespace Bookmaker.Controllers
         //
         // GET: /Booklets/Generate/5
 
-        public ContentResult Generate(int id)
+        public FileResult Generate(int id)
         {
             // Retrouve tous les voyages de la brochure
             var travels = db
@@ -164,20 +164,21 @@ namespace Bookmaker.Controllers
 
             // Enregistre la brochure Word
             // (quand on est sur http://localhost/)
+            var file = "Bookmaker.doc";
             if (Request.Url.IsLoopback)
             {
-                var file = Server.MapPath("~/App_Data/Bookmaker.doc");
-                System.IO.File.WriteAllText(file, word);
+                var path = Server.MapPath("~/App_Data/" + file);
+                System.IO.File.WriteAllText(path, word);
             }
 
             // Renvoie la brochure au format Word
-            return Content(word, "application/msword", Encoding.UTF8);
+            return File(Encoding.UTF8.GetBytes(word), "application/msword", file);
         }
 
         //
         // GET: /Booklets/JsonExport
 
-        public ContentResult JsonExport()
+        public FileResult JsonExport()
         {
             // Retrouve toutes les brochures classées par année
             var booklets = db
@@ -207,14 +208,15 @@ namespace Bookmaker.Controllers
 
             // Sauvegarde les données au format Json
             // (quand on est sur http://localhost/)
+            var file = "json_db.txt";
             if (Request.Url.IsLoopback)
             {
-                var file = Server.MapPath("~/App_Data/json_db.txt");
-                System.IO.File.WriteAllText(file, json);
+                var path = Server.MapPath("~/App_Data/" + file);
+                System.IO.File.WriteAllText(path, json);
             }
 
             // Renvoie les données au format Json
-            return Content(json, "application/json", Encoding.Default);
+            return File(Encoding.UTF8.GetBytes(json), "application/json", file);
         }
 
         //
@@ -222,21 +224,21 @@ namespace Bookmaker.Controllers
 
         public ActionResult JsonImport()
         {
-            // Vide les tables actuelles
-            db.TruncateTable("Prices", "Price_ID");
-            db.TruncateTable("Sections", "Section_ID");
-            db.TruncateTable("Travels", "Travel_ID");
-            db.TruncateTable("Booklets", "Booklet_ID");
-
             // Charge les données à importer
             var file = Server.MapPath("~/App_Data/json_db.txt");
             var json = System.IO.File.ReadAllText(file);
 
             // Importe les données
             var booklets = ImportExport.JsonImport(json);
+            booklets.ForEach(t => db.Booklets.Add(t));
+
+            // Vide les tables actuelles
+            db.TruncateTable("Prices", "Price_ID");
+            db.TruncateTable("Sections", "Section_ID");
+            db.TruncateTable("Travels", "Travel_ID");
+            db.TruncateTable("Booklets", "Booklet_ID");
 
             // Insère les données importées dans la base de données
-            booklets.ForEach(t => db.Booklets.Add(t));
             db.SaveChanges();
 
             return RedirectToAction("Index");
