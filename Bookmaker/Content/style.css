@@ -83,7 +83,7 @@ tbody tr:nth-child(odd)
 /* Ajoute un effet lors du survol d'une ligne */
 tbody tr:hover
 {
-    background-color: #fcfec5; /* jaune postit de Msdn */
+    background-color: #ffffcc; /* jaune postit */
 }
 
 
@@ -120,6 +120,12 @@ table a.delete
     max-width: 24px;
     overflow: hidden;
     margin: -3px 0;
+}
+
+table th.iconwidth,
+table td.iconwidth
+{
+    width: 28px;
 }
 
 
