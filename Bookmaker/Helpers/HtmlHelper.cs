@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
@@ -138,29 +137,38 @@ namespace Bookmaker.Helpers
             return new MvcHtmlString(html);
         }
 
-        public static MvcHtmlString ActionCrudCopy(this HtmlHelper helper, string title)
+        public static MvcHtmlString ActionCrud(this HtmlHelper helper, string title, object linkValues)
         {
             var html = ActionCrud(helper, title).ToString();
 
             var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
             var id = helper.ViewContext.RouteData.Values["id"];
 
+            // http://stackoverflow.com/questions/1141874/c-sharp-detecting-anonymoustype-newname-value-and-convert-into-dictionarystr
+            var dico = linkValues.GetType()
+                                 .GetProperties()
+                                 .ToDictionary(p => p.Name, p => p.GetValue(linkValues, null).ToString());
+
+            var item = dico.First();
+
             // Si on a un identifiant de fiche
             if (id != null)
             {
-                // Alors, il faut générer le lien Copy
+                // Alors, il faut générer le lien Action
+                var action_name = item.Key.ToLowerInvariant();
+                var action_title = item.Value;
 
-                // Si on n'est pas sur la page Copy
+                // Si on n'est pas sur la page Action
                 html += " / ";
-                if (current_action != "copy")
+                if (current_action != action_name)
                 {
-                    // Alors, il faut un lien vers la page Copy
-                    html += helper.ActionLink("Copier", "Copy", new { id = id.ToString() }).ToString();
+                    // Alors, il faut un lien vers la page Action
+                    html += helper.ActionLink(action_title, action_name, new { id = id.ToString() }).ToString();
                 }
                 else
                 {
-                    // Sinon, il n'y a pas besoin d'un lien vers la page Copy
-                    html += "Copier";
+                    // Sinon, il n'y a pas besoin d'un lien vers la page Action
+                    html += action_title;
                 }
             }
 

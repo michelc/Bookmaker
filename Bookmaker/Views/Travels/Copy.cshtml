@@ -4,7 +4,7 @@
     ViewBag.Title = "Copier un voyage";
 }
 
-<h2 class="crud">@Html.ActionCrudCopy("Voyages")</h2>
+<h2 class="crud">@Html.ActionCrud("Voyages", new { copy = "Copier" })</h2>
 
 <fieldset>
     <legend>Copie «&nbsp;@Model.Travel.Title&nbsp;»</legend>
