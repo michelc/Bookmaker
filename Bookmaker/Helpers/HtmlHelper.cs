@@ -47,11 +47,11 @@ namespace Bookmaker.Helpers
             var id = helper.ViewContext.RouteData.Values["id"];
             if (id != null)
             {
-                html = helper.ActionLink("Annuler", "Details", new { id = id.ToString() });
+                html = helper.ActionLink("Annuler", "Details", new { id = id.ToString() }, new { @class="cancel" });
             }
             else
             {
-                html = helper.ActionLink("Annuler", "Index");
+                html = helper.ActionLink("Annuler", "Index", null, new { @class = "cancel" });
             }
 
             return html;

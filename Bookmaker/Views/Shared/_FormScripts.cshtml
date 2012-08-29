@@ -17,5 +17,29 @@
         /* --------------------------------------------- */
         $(":input:visible:enabled:first").focus();
 
+        /* Active l'alerte en sortie de page dès que quelque chose est saisi */
+        /* ----------------------------------------------------------------- */
+        $("form").on("change keyup", ":input", function () {
+            SetConfirmUnload(true);
+        });
+
+        /* Désactive l'alerte en sortie de page quand on valide le formulaire */
+        /* ------------------------------------------------------------------ */
+        $("form").on("submit", function () {
+            SetConfirmUnload(false);
+        });
+
+        /* Désactive l'alerte en sortie de page quand on abandonne la saisie */
+        /* ----------------------------------------------------------------- */
+        $(".cancel").on("click", function () {
+            SetConfirmUnload(false);
+        });
+
     });
+
+    function SetConfirmUnload(on) {
+        var message = "Vous avez des données en cours de saisie. Souhaitez-vous malgré tout quitter cette page ?";
+        window.onbeforeunload = (on) ? function () { return message; } : null;
+    }
+
 </script>
