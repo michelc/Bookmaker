@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Bookmaker.Helpers;
 
@@ -108,6 +111,10 @@ namespace Bookmaker.Models
                     {
                         word.Add("Titre4", line.Substring(4));
                     }
+                    else if (line.StartsWith("<p><img"))
+                    {
+                        word.Add(GetImageData(line));
+                    }
                     else 
                     {
                         word.Add(line.Substring(3));
@@ -119,5 +126,71 @@ namespace Bookmaker.Models
             var content = word.Content().ToString();
             return content;
         }
+
+        private static XmlWord2003Image GetImageData(string line)
+        {
+            var image = new XmlWord2003Image();
+
+            var src = line.Replace("<p><img src=\"", "");
+            src = src.Replace("\" />", "");
+            if (src.StartsWith("/"))
+            {
+                var www = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+                src = www + src;
+            }
+
+            string[] arr = src.Split('/');
+            image.FileName = arr[arr.Length - 1];
+
+            image.BinaryData = GrabUrlBytes(src);
+            if (image.BinaryData == null) return image;
+
+            MemoryStream stream = new MemoryStream(image.BinaryData);
+            var img = Image.FromStream(stream);
+            stream.Close();
+
+            image.Width = img.Width;
+            image.Height = img.Height;
+
+            return image;
+        }
+
+        private static byte[] GrabUrlBytes(string url)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.Headers["Accept-Encoding"] = string.Empty;
+            request.UserAgent = "Mozilla/5.0 (Windows NT 5.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1";
+
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch
+            {
+                return null;
+            }
+
+            if (response != null)
+            {
+                byte[] buffer;
+                using (var reader = new BinaryReader(response.GetResponseStream()))
+                {
+                    buffer = reader.ReadBytes(500000);
+                    reader.Close();
+                }
+                response.Close();
+
+                return buffer;
+            }
+            else
+            {
+                response.Close();
+            }
+
+            return null;
+        }
+
     }
 }

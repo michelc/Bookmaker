@@ -5,6 +5,14 @@ using System.Xml;
 
 namespace Bookmaker.Models
 {
+    public class XmlWord2003Image
+    {
+        public string FileName { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public byte[] BinaryData { get; set; }
+    }
+
     public class XmlWord2003
     {
         private StringBuilder body = new StringBuilder();
@@ -94,7 +102,7 @@ namespace Bookmaker.Models
         /// </summary>
         private string Smallify(string text)
         {
-            var tags_small = "<w:sz w:val=\"28\"/><w:szCs w:val=\"28\"/>";
+            var tags_small = "<w:sz w:val=\"28\"/><w:szCs w:val=\"28\" />";
             return Xmlify(text, "<small>", tags_small);
         }
 
@@ -127,6 +135,59 @@ namespace Bookmaker.Models
             text = text.Replace("<w:r>\n\t\t<w:t></w:t>\n\t</w:r>\n\t", string.Empty);
 
             return text;
+        }
+
+        /// <summary>
+        /// Ajoute une image
+        /// </summary>
+        /// <param name="Text">Texte composant le paragraphe</param>
+        public void Add(XmlWord2003Image image)
+        {
+            if (image.Width == 0)
+            {
+                Add("<strong>***** " + image.FileName + " *****</strong>");
+                return;
+            }
+
+            string template = "\n<w:p>"
+                            + "\n\t<w:r>"
+                            + "\n\t\t<w:pict>"
+                            + "\n\t\t\t<v:shapetype id=\"_x0000_t75\" coordsize=\"21600,21600\" o:spt=\"75\" o:preferrelative=\"t\" path=\"m@4@5l@4@11@9@11@9@5xe\" filled=\"f\" stroked=\"f\">"
+                            + "\n\t\t\t\t<v:stroke joinstyle=\"miter\" />"
+                            + "\n\t\t\t\t<v:formulas>"
+                            + "\n\t\t\t\t\t<v:f eqn=\"if lineDrawn pixelLineWidth 0\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"sum @0 1 0\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"sum 0 0 @1\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"prod @2 1 2\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"prod @3 21600 pixelWidth\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"prod @3 21600 pixelHeight\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"sum @0 0 1\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"prod @6 1 2\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"prod @7 21600 pixelWidth\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"sum @8 21600 0\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"prod @7 21600 pixelHeight\" />"
+                            + "\n\t\t\t\t\t<v:f eqn=\"sum @10 21600 0\" />"
+                            + "\n\t\t\t\t</v:formulas>"
+                            + "\n\t\t\t\t<v:path o:extrusionok=\"f\" gradientshapeok=\"t\" o:connecttype=\"rect\" />"
+                            + "\n\t\t\t\t<o:lock v:ext=\"edit\" aspectratio=\"t\" />"
+                            + "\n\t\t\t</v:shapetype>"
+                            + "\n\t\t\t<w:binData w:name=\"wordml://{{name}}\" xml:space=\"preserve\">{{binary}}</w:binData>"
+                            + "\n\t\t\t<v:shape id=\"_x0000_i1026\" type=\"#_x0000_t75\" style=\"width:{{width}}px;height:{{height}}px\">"
+                            + "\n\t\t\t\t<v:imagedata src=\"wordml://{{name}}\" o:title=\"{{filename}}\" />"
+                            + "\n\t\t\t</v:shape>"
+                            + "\n\t\t</w:pict>"
+                            + "\n\t</w:r>"
+                            + "\n</w:p>";
+
+            var name = DateTime.Now.Millisecond.ToString() + image.FileName;
+
+            var text = template.Replace("{{filename}}", image.FileName)
+                               .Replace("{{width}}", image.Width.ToString())
+                               .Replace("{{height}}", image.Height.ToString())
+                               .Replace("{{name}}", name)
+                               .Replace("{{binary}}", Convert.ToBase64String(image.BinaryData));
+
+            body.Append(text);
         }
 
         /// <summary>
