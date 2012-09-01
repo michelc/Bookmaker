@@ -227,16 +227,19 @@ namespace Bookmaker.Controllers
             // Charge les données à importer
             var file = Server.MapPath("~/App_Data/json_db.txt");
             var json = System.IO.File.ReadAllText(file);
-
-            // Importe les données
             var booklets = ImportExport.JsonImport(json);
-            booklets.ForEach(t => db.Booklets.Add(t));
+
+            // Rien à faire quand rien n'a été importé
+            if (booklets.Count == 0) return RedirectToAction("Index");
 
             // Vide les tables actuelles
             db.TruncateTable("Prices", "Price_ID");
             db.TruncateTable("Sections", "Section_ID");
             db.TruncateTable("Travels", "Travel_ID");
             db.TruncateTable("Booklets", "Booklet_ID");
+
+            // Importe les données dans la base de données
+            booklets.ForEach(t => db.Booklets.Add(t));
 
             // Insère les données importées dans la base de données
             db.SaveChanges();
