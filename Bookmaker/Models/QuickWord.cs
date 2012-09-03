@@ -135,8 +135,7 @@ namespace Bookmaker.Models
             src = src.Replace("\" />", "");
             if (src.StartsWith("/"))
             {
-                var www = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                src = www + src;
+                src = new Uri(System.Web.HttpContext.Current.Request.Url, src).ToString();
             }
 
             image.FileName = Path.GetFileName(src);
