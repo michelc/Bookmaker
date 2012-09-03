@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Web.Hosting;
 using Bookmaker.Helpers;
 
 namespace Bookmaker.Models
@@ -133,14 +133,19 @@ namespace Bookmaker.Models
 
             var src = line.Replace("<p><img src=\"", "");
             src = src.Replace("\" />", "");
-            if (src.StartsWith("/"))
-            {
-                src = new Uri(System.Web.HttpContext.Current.Request.Url, src).ToString();
-            }
-
             image.FileName = Path.GetFileName(src);
 
-            image.BinaryData = GrabUrlBytes(src);
+            if (src.StartsWith("/"))
+            {
+                // Chargement image locale
+                src = HostingEnvironment.MapPath(src);
+                image.BinaryData = System.IO.File.ReadAllBytes(src);
+            }
+            else
+            {
+                // Chargement image externe
+                image.BinaryData = GrabUrlBytes(src);
+            }
             if (image.BinaryData == null) return image;
 
             MemoryStream stream = new MemoryStream(image.BinaryData);
