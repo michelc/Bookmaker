@@ -139,8 +139,7 @@ namespace Bookmaker.Models
                 src = www + src;
             }
 
-            string[] arr = src.Split('/');
-            image.FileName = arr[arr.Length - 1];
+            image.FileName = Path.GetFileName(src);
 
             image.BinaryData = GrabUrlBytes(src);
             if (image.BinaryData == null) return image;
