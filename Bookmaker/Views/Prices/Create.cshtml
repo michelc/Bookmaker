@@ -16,7 +16,7 @@
 
         <p class="offset-by-five eleven columns alpha">
             <input type="submit" value="Enregistrer" />
-            @Html.ActionLink("Annuler", "Details", "Travels", new { id = Model.Travel_ID }, null)
+            @Html.ActionLink("Annuler", "Details", "Travels", new { id = Model.Travel_ID }, new { @class = "cancel" })
         </p>
     </fieldset>
 }
