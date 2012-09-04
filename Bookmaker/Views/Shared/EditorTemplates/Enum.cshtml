@@ -25,7 +25,13 @@
                             Selected = v.Equals(Model),
                             Text = GetDisplayName(v),
                             Value = v.ToString()
-                        });                               
+                        });
+
+    var fieldId = ViewData.TemplateInfo.GetFullHtmlFieldId("");
 }
  
-@Html.DropDownList("", values)
+@foreach (var v in values)
+{
+    @Html.RadioButton("", v.Value, v.Selected, new { @id = @fieldId + "_" + @v.Value })
+    <label for="@(fieldId + "_" + v.Value)">@v.Text</label>
+}
