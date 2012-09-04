@@ -8,7 +8,9 @@ namespace Bookmaker.Models
 {
     public enum TravelType : int
     {
+        [Display(Name = "Journée")]
         Journee = 1,
+        [Display(Name = "Séjour")]
         Sejour = 2
     }
 
@@ -17,6 +19,7 @@ namespace Bookmaker.Models
         Titre = 1,
         Texte = 2,
         Menu = 3,
+        [Display(Name = "Menu centré")]
         Menu_Centre = 4,
         Image = 5
     }
@@ -73,6 +76,7 @@ namespace Bookmaker.Models
         // Type du voyage : journée ou séjour
         [Required]
         [Display(Name = "Type de voyage")]
+        [UIHint("Enum")]
         public TravelType TypeTravel
         {
             get { return (TravelType)TravelType; }
@@ -111,6 +115,7 @@ namespace Bookmaker.Models
         // Type de la partie (introduction, sous-titre, menu, tarif...)
         [Required]
         [Display(Name = "Type de contenu")]
+        [UIHint("Enum")]
         public SectionType TypeSection
         {
             get { return (SectionType)SectionType; }

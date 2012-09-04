@@ -107,7 +107,6 @@ namespace Bookmaker.Controllers
 
             travel.Booklet_ID = Root_ID;
 
-            ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
         }
 
@@ -130,7 +129,6 @@ namespace Bookmaker.Controllers
                 return RedirectToAction("Details", new { id = travel.Travel_ID });
             }
 
-            ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
         }
 
@@ -141,7 +139,6 @@ namespace Bookmaker.Controllers
         {
             var travel = db.Travels.Find(id);
 
-            ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
         }
 
@@ -160,7 +157,6 @@ namespace Bookmaker.Controllers
                 return RedirectToAction("Details", new { id = travel.Travel_ID });
             }
 
-            ViewBag.TravelType = db.Enums<TravelType>();
             return View(travel);
         }
 

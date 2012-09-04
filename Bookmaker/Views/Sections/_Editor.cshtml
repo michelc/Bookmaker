@@ -7,7 +7,7 @@
     @Html.CaptionFor(model => model.TypeSection)
 </div>
 <div class="editor-field eleven columns">
-    @Html.DropDownListFor(model => Model.TypeSection, (SelectList)ViewBag.SectionType, string.Empty)
+    @Html.EditorFor(model => model.TypeSection)
     @Html.ValidationMessageFor(model => model.TypeSection)
 </div>
 

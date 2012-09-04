@@ -48,7 +48,6 @@ namespace Bookmaker.Controllers
                 section.SectionType = SectionType;
             }
 
-            ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
         }
 
@@ -85,7 +84,6 @@ namespace Bookmaker.Controllers
             }
 
             section.Travel = db.Travels.Find(section.Travel_ID);
-            ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
         }
 
@@ -98,7 +96,6 @@ namespace Bookmaker.Controllers
             section.Content = section.Content.Replace("« ", "\"").Replace(" »", "\"");
             section.Travel = db.Travels.Find(section.Travel_ID);
 
-            ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
         }
 
@@ -124,7 +121,6 @@ namespace Bookmaker.Controllers
             }
 
             section.Travel = db.Travels.Find(section.Travel_ID);
-            ViewBag.SectionType = db.Enums<SectionType>();
             return View(section);
         }
 

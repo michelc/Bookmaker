@@ -15,7 +15,7 @@
     @Html.CaptionFor(model => model.TypeTravel)
 </div>
 <div class="editor-field eleven columns">
-    @Html.DropDownListFor(model => Model.TypeTravel, (SelectList)ViewBag.TravelType, string.Empty)
+    @Html.EditorFor(model => model.TypeTravel)
     @Html.ValidationMessageFor(model => model.TypeTravel)
 </div>
 
