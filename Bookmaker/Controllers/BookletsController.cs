@@ -190,6 +190,7 @@ namespace Bookmaker.Controllers
                     .Travels
                     .Include(t => t.Prices)
                     .Include(t => t.Sections)
+                    .Where(t => t.Booklet_ID == booklet.Booklet_ID)
                     .OrderBy(t => t.Position).ToList();
 
                 // Pour chaque voyage
