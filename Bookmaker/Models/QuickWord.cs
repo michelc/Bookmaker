@@ -34,54 +34,11 @@ namespace Bookmaker.Models
                 // Tarif(s) du voyage
                 if (t.TypeTravel == TravelType.Journee)
                 {
-                    var prix = "";
-                    var count = 0;
-                    foreach (var p in t.Prices.OrderBy(p => p.Title))
-                    {
-                        prix += "<br>";
-                        if (p.Title != "*")
-                        {
-                            prix += p.Title + "&nbsp;: ";
-                        }
-                        prix += p.Price5.ToString() + " € par personne";
-                        count++;
-                    }
-                    if (count > 0)
-                    {
-                        if (count == 1) prix = prix.Replace("<br>", "&nbsp;: ");
-                        prix = "Tarif 2013 à partir de 50 participants" + prix;
-                        html.AppendFormat("<h4>{0}</h4>", prix);
-                    }
+                    html.Append(GetDayPrices(t));
                 }
                 else
                 {
-                    var prix = "";
-                    var hasTitle = false;
-                    var count = 0;
-                    foreach (var p in t.Prices.OrderBy(p => p.Title))
-                    {
-                        prix += "<br>";
-                        prix += p.Price5.ToString() + " € par personne";
-                        if (p.Title != "*")
-                        {
-                            prix += " " + p.Title;
-                            hasTitle = true;
-                        }
-                        count++;
-                    }
-                    if (count > 0)
-                    {
-                        if ((count == 1) && (hasTitle == false))
-                        {
-                            prix += " (hors assurance annulation)";
-                            prix = "Tarif en base double à partir de 50 participants" + prix;
-                        }
-                        else
-                        {
-                            prix = "Tarif base double à partir de 50 participants (hors assurance annulation)" + prix;
-                        }
-                        html.AppendFormat("<h4>{0}</h4>", prix);
-                    }
+                    html.Append(GetStayPrices(t));
                 }
             }
 
@@ -158,6 +115,65 @@ namespace Bookmaker.Models
             // Renvoie le document XML Word 2003 généré
             var content = word.Content().ToString();
             return content;
+        }
+
+        private static string GetDayPrices(Travel t)
+        {
+            var prices = "";
+            var count = 0;
+            foreach (var p in t.Prices.OrderBy(p => p.Title))
+            {
+                prices += "<br>";
+                if (p.Title != "*")
+                {
+                    prices += p.Title + "&nbsp;: ";
+                }
+                prices += p.Price5.ToString() + " € par personne";
+                count++;
+            }
+
+            if (count > 0)
+            {
+                if (count == 1) prices = prices.Replace("<br>", "&nbsp;: ");
+                prices = "Tarif 2013 à partir de 50 participants" + prices;
+                prices = string.Format("<h4>{0}</h4>", prices);
+            }
+
+            return prices;
+        }
+
+        private static string GetStayPrices(Travel t)
+        {
+            var prices = "";
+            var hasTitle = false;
+            var count = 0;
+            foreach (var p in t.Prices.OrderBy(p => p.Title))
+            {
+                prices += "<br>";
+                prices += p.Price5.ToString() + " € par personne";
+                if (p.Title != "*")
+                {
+                    prices += " " + p.Title;
+                    hasTitle = true;
+                }
+                count++;
+            }
+
+            if (count > 0)
+            {
+                if ((count == 1) && (hasTitle == false))
+                {
+                    prices += " (hors assurance annulation)";
+                    prices = "Tarif en base double à partir de 50 participants" + prices;
+                }
+                else
+                {
+                    prices = "Tarif base double à partir de 50 participants (hors assurance annulation)" + prices;
+                }
+                prices = string.Format("<h4>{0}</h4>", prices);
+            }
+
+            return prices;
         }
 
         private static XmlWord2003Image GetImageData(string line)
