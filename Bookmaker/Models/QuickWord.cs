@@ -18,10 +18,10 @@ namespace Bookmaker.Models
             {
                 // Titre du voyage
                 var title = SectionHelper.CheckHtml(t.Title);
-                var br = title.IndexOf("[br]");
-                if (br != -1)
+                if (!string.IsNullOrEmpty(t.Subtitle))
                 {
-                    title = title.Insert(br + 4, "<small>") + "</small>";
+                    var subtitle = SectionHelper.CheckHtml(t.Subtitle);
+                    title += "<br><small>" + subtitle + "</small>";
                 }
                 html.AppendFormat("<h1>{0}</h1>", title);
 

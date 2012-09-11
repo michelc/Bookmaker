@@ -12,6 +12,14 @@
 </div>
 
 <div class="editor-label five columns">
+    @Html.CaptionFor(model => model.Subtitle)
+</div>
+<div class="editor-field eleven columns">
+    @Html.EditorFor(model => model.Subtitle)
+    @Html.ValidationMessageFor(model => model.Subtitle)
+</div>
+
+<div class="editor-label five columns">
     @Html.CaptionFor(model => model.TypeTravel)
 </div>
 <div class="editor-field eleven columns">

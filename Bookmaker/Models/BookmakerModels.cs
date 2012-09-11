@@ -74,6 +74,11 @@ namespace Bookmaker.Models
         [StringLength(100)]
         public string Title { get; set; }
 
+        // Suite du titre du voyage
+        [Display(Name = "Sous-Titre")]
+        [StringLength(100)]
+        public string Subtitle { get; set; }
+
         // Type du voyage : journée ou séjour
         [Required]
         [Display(Name = "Type de voyage")]

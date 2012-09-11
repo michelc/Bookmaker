@@ -121,6 +121,10 @@ namespace Bookmaker.Controllers
                 // Initialise la position à la prochaine disponible
                 travel.Position = db.Travels.Where(t => t.Booklet_ID == travel.Booklet_ID).Count() + 1;
 
+                // Reformate et contrôle le contenu saisi
+                travel.Title = InputHelper.ContentFormat(travel.Title);
+                travel.Subtitle = InputHelper.ContentFormat(travel.Subtitle);
+
                 // Enregistre le nouveau voyage
                 db.Travels.Add(travel);
                 db.SaveChanges();
@@ -150,6 +154,11 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Reformate et contrôle le contenu saisi
+                travel.Title = InputHelper.ContentFormat(travel.Title);
+                travel.Subtitle = InputHelper.ContentFormat(travel.Subtitle);
+
+                // Enregistre les modifications
                 db.Entry(travel).State = EntityState.Modified;
                 db.SaveChanges();
 

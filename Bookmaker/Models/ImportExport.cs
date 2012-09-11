@@ -18,6 +18,7 @@ namespace Bookmaker.Models
     public class JsonTravel
     {
         public string Title { get; set; }
+        public string Subtitle { get; set; }
         public string TravelType { get; set; }
         public string Notes { get; set; }
         public IList<JsonSection> Sections { get; set; }

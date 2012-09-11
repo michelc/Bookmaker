@@ -113,12 +113,14 @@ namespace Bookmaker.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Reformate et contrôle le contenu saisi
                 section.Content = InputHelper.ContentFormat(section.Content);
                 if (section.TypeSection == SectionType.Titre)
                 {
                     section.Content = InputHelper.TitleFormat(section.Content);
                 }
 
+                // Enregistre les modifications
                 db.Entry(section).State = EntityState.Modified;
                 db.SaveChanges();
 

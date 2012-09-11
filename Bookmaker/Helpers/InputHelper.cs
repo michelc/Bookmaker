@@ -7,6 +7,8 @@ namespace Bookmaker.Helpers
     {
         public static string ContentFormat(string content)
         {
+            if (content == null) return null;
+
             var text = new StringBuilder();
 
             var lines = content.Trim().Replace("\t", " ").Replace("\r\n", "\r").Split('\r');
