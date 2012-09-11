@@ -36,16 +36,22 @@ namespace Bookmaker.Controllers
         //
         // GET: /Sections/Create?Parent_ID=5
 
-        public ViewResult Create(int Parent_ID, int SectionType = 0)
+        public ViewResult Create(int Parent_ID, int Section_Type = 0)
         {
             var section = new Section
             {
                 Travel_ID = Parent_ID,
                 Travel = db.Travels.Find(Parent_ID)
             };
-            if (SectionType != 0)
+            if (Section_Type != 0)
             {
-                section.SectionType = SectionType;
+                section.SectionType = Section_Type;
+                if (Section_Type == (int)SectionType.Tarif)
+                {
+                    // Seul le type de section compte pour les tarifs
+                    // (mais le contenu est obligatoire)
+                    section.Content = "*";
+                }
             }
 
             return View(section);
@@ -72,7 +78,7 @@ namespace Bookmaker.Controllers
                 {
                     // A la création, gère un copier / coller depuis ancienne brochure
                     // où le tiret long sert de séparateur entre les plats
-                    section.Content = section.Content.Replace(" – ", "\r\n"); ;
+                    section.Content = section.Content.Replace(" – ", "\r\n");
                 }
 
                 // Enregistre la nouvelle partie

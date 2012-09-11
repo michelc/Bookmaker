@@ -27,6 +27,9 @@ namespace Bookmaker.Helpers
                 case SectionType.Image:
                     html = HtmlImage(html, content);
                     break;
+                case SectionType.Tarif:
+                    html.Append("<h2>*** Tarifs ***</h2>");
+                    break;
                 default:
                     html = HtmlDefault(html, lines);
                     break;

@@ -25,20 +25,36 @@ namespace Bookmaker.Models
                 }
                 html.AppendFormat("<h1>{0}</h1>", title);
 
-                // Parties du voyages
-                foreach (var s in t.Sections.OrderBy(s => s.Position))
-                {
-                    html.Append(SectionHelper.ContentAsHtml(s));
-                }
-
                 // Tarif(s) du voyage
+                var prices = "";
                 if (t.TypeTravel == TravelType.Journee)
                 {
-                    html.Append(GetDayPrices(t));
+                    prices = GetDayPrices(t);
                 }
                 else
                 {
-                    html.Append(GetStayPrices(t));
+                    prices = GetStayPrices(t);
+                }
+
+                // Parties du voyages
+                var hasPrice = false;
+                foreach (var s in t.Sections.OrderBy(s => s.Position))
+                {
+                    if (s.TypeSection == SectionType.Tarif)
+                    {
+                        html.Append(prices);
+                        hasPrice = true;
+                    }
+                    else
+                    {
+                        html.Append(SectionHelper.ContentAsHtml(s));
+                    }
+                }
+
+                // Termine par les tarifs s'ils n'ont pas encore été ajouté
+                if (hasPrice == false)
+                {
+                    html.Append(prices);
                 }
             }
 
