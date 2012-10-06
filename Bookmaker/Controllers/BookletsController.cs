@@ -35,9 +35,14 @@ namespace Bookmaker.Controllers
         [OutputCache(Duration = 60, VaryByParam = "root_id")]
         public ContentResult Title(int root_id)
         {
-            var title = (from b in db.Booklets
+            var title = "";
+            try
+            {
+                title = (from b in db.Booklets
                          where b.Booklet_ID == root_id
                          select b.Title).FirstOrDefault();
+            }
+            catch {}
 
             return Content(title);
         }
