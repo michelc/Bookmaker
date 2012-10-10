@@ -150,6 +150,9 @@ namespace Bookmaker.Controllers
 
         public FileResult Generate(int id)
         {
+            // Retrouve la brochure
+            var booklet = db.Booklets.Find(id);
+
             // Retrouve tous les voyages de la brochure
             var travels = db
                 .Travels
@@ -159,7 +162,12 @@ namespace Bookmaker.Controllers
                 .OrderBy(t => t.Position);
 
             // Génère la brochure au format Word
-            var templatePath = Server.MapPath("~/Content/Bookmaker.xml");
+            var templatePath = string.Format("~/Content/Bookmaker_{0}.xml", booklet.Year);
+            templatePath = Server.MapPath(templatePath);
+            if (!System.IO.File.Exists(templatePath))
+            {
+                templatePath = Server.MapPath("~/Content/Bookmaker.xml");
+            }
             var word = QuickWord.Generate(travels, templatePath);
 
             // Enregistre la brochure Word
