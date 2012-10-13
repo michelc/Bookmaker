@@ -1,5 +1,8 @@
 ﻿using System.Data;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
+using AutoMapper.QueryableExtensions;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
 
@@ -8,6 +11,24 @@ namespace Bookmaker.Controllers
     public class PricesController : Controller
     {
         private BookmakerContext db = new BookmakerContext();
+
+        //
+        // GET: /Prices
+
+        public ViewResult Index(int root_id)
+        {
+            // Retrouve tous les tarifs de la brochure
+            var prices = db
+                .Prices
+                .Include(p => p.Travel)
+                .Where(p => p.Travel.Booklet_ID == root_id)
+                .OrderBy(p => p.Travel.Position)
+                .ThenBy(p => p.Price1)
+                .Project().To<PriceIndex>()
+                .ToList();
+
+            return View("List", prices);
+        }
 
         //
         // GET: /Prices/Details/5

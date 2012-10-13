@@ -18,7 +18,7 @@ namespace Bookmaker.Models
     /// <summary>
     /// Classe pour afficher la liste des tarifs d'une brochure
     /// </summary>
-    public class BookletPrice
+    public class PriceIndex
     {
         public int Price_ID { get; set; }
         public int Travel_ID { get; set; }

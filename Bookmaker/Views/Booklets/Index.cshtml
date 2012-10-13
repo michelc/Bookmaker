@@ -17,7 +17,6 @@
             Titre
         </th>
         <th class="iconwidth"></th>
-        <th class="iconwidth"></th>
         <th>
             Journées
         </th>
@@ -40,10 +39,7 @@
             @Html.ActionLink(@item.Title, "Details", new { root_id = item.Booklet_ID, id = item.Booklet_ID })
         </td>
         <td>
-            @Html.ActionLink("Générer la brochure", "Generate", new { root_id = item.Booklet_ID, id = item.Booklet_ID }, new { @class = "icon doc_file", title = "Générer la brochure" })
-        </td>
-        <td>
-            @Html.ActionLink("Afficher les tarifs", "Prices", new { root_id = item.Booklet_ID, id = item.Booklet_ID }, new { @class = "icon euro", title = "Afficher les tarifs" })
+            @Html.ActionLink("Générer le fichier Word", "Generate", new { root_id = item.Booklet_ID, id = item.Booklet_ID }, new { @class = "icon doc_file", title = "Générer le fichier Word" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TravelsCount1)
