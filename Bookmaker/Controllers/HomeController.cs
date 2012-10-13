@@ -22,6 +22,7 @@ namespace Bookmaker.Controllers
                     root_id = 1;
                 }
 
+                if (root_id == 0) root_id = 1;
                 return RedirectToAction("Index", new { root_id = root_id });
             }
 
