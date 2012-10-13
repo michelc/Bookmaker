@@ -14,6 +14,9 @@ namespace Bookmaker.Models
                 .ForMember(x => x.TravelsCount1, o => o.MapFrom(x => x.Travels.Where(t => t.TravelType == (int)TravelType.Journee).Count()))
                 .ForMember(x => x.TravelsCount2, o => o.MapFrom(x => x.Travels.Where(t => t.TravelType == (int)TravelType.Sejour).Count()));
 
+            Mapper.CreateMap<Price, BookletPrice>()
+                .ForMember(dest => dest.HasNotes, opt => opt.MapFrom(src => src.Notes != null));
+
             Mapper.CreateMap<Travel, TravelIndex>();
 
             Mapper.CreateMap<Booklet, JsonBooklet>();

@@ -16,6 +16,23 @@ namespace Bookmaker.Models
     }
 
     /// <summary>
+    /// Classe pour afficher la liste des tarifs d'une brochure
+    /// </summary>
+    public class BookletPrice
+    {
+        public int Price_ID { get; set; }
+        public int Travel_ID { get; set; }
+        public string TravelTitle { get; set; }
+        public string Title { get; set; }
+        public float Price1 { get; set; }
+        public float Price2 { get; set; }
+        public float Price3 { get; set; }
+        public float Price4 { get; set; }
+        public float Price5 { get; set; }
+        public bool HasNotes { get; set; }
+    }
+
+    /// <summary>
     /// Classe pour afficher la liste des voyages dans la vue Index
     /// </summary>
     public class TravelIndex

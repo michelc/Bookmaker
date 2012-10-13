@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Bookmaker.Models.BookletPrice>
+
+@{
+    ViewBag.Title = "Tous les tarifs";
+}
+
+<h2>@Html.Action("Title", "Booklets")</h2>
+
+@{ var current = -1; }
+
+<table>
+<thead>
+    <tr>
+        <th>
+            Voyage
+        </th>
+        <th>
+            Tarif
+        </th>
+        <th>
+            30 à 34
+        </th>
+        <th>
+            35 à 39
+        </th>
+        <th>
+            40 à 44
+        </th>
+        <th>
+            45 à 49
+        </th>
+        <th>
+            50 à 55
+        </th>
+        <th>
+            Notes
+        </th>
+        <th class="iconwidth"></th>
+    </tr>
+</thead>
+<tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+        @if (current != item.Travel_ID)
+        {
+            current = item.Travel_ID;
+            @Html.ActionLink(@item.TravelTitle, "Details", "Travels", new { id = item.Travel_ID }, null)
+        }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @if (item.Price1 != item.Price5) { @Html.DisplayFor(modelItem => item.Price1) }
+        </td>
+        <td>
+            @if (item.Price2 != item.Price5) { @Html.DisplayFor(modelItem => item.Price2) }
+        </td>
+        <td>
+            @if (item.Price3 != item.Price5) { @Html.DisplayFor(modelItem => item.Price3) }
+        </td>
+        <td>
+            @if (item.Price4 != item.Price5) { @Html.DisplayFor(modelItem => item.Price4) }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price5)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HasNotes)
+        </td>
+        <td>
+            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID }, new { @class = "edit" })
+        </td>
+    </tr>
+}
+</tbody>
+</table>

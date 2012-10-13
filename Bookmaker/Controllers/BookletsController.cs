@@ -146,6 +146,27 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // GET: /Booklets/Prices/5
+
+        public ViewResult Prices(int root_id)
+        {
+            // Retrouve la brochure
+            var booklet = db.Booklets.Find(root_id);
+
+            // Retrouve tous les tarifs de la brochure
+            var prices = db
+                .Prices
+                .Include(p => p.Travel)
+                .Where(p => p.Travel.Booklet_ID == root_id)
+                .OrderBy(p => p.Travel.Position)
+                .ThenBy(p => p.Price1)
+                .Project().To<BookletPrice>()
+                .ToList();
+
+            return View(prices);
+        }
+
+        //
         // GET: /Booklets/Generate/5
 
         public FileResult Generate(int id)

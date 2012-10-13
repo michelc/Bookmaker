@@ -542,3 +542,9 @@ a.doc_file
 {
     background-image: url(icons/doc_file.png);
 }
+
+/* Icone pour afficher le détail des tarifs de la brochure */
+a.euro
+{
+    background-image: url(icons/euro.png);
+}
