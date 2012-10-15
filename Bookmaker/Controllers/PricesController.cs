@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
@@ -20,7 +19,6 @@ namespace Bookmaker.Controllers
             // Retrouve tous les tarifs de la brochure
             var prices = db
                 .Prices
-                .Include(p => p.Travel)
                 .Where(p => p.Travel.Booklet_ID == root_id)
                 .OrderBy(p => p.Travel.Position)
                 .ThenBy(p => p.Price1)

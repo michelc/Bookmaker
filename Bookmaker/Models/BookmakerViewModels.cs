@@ -30,6 +30,17 @@ namespace Bookmaker.Models
         public float Price4 { get; set; }
         public float Price5 { get; set; }
         public bool HasNotes { get; set; }
+
+        // Impossible de faire àa au niveau de Mapper.CreateMap<Price, PriceIndex>().ForMember(...)
+        // car on ne peut pas mélanger des auto-projection LINQ avec des ForMember qui ne peuvent
+        // pas être transformés en code SQL
+        // https://github.com/AutoMapper/AutoMapper/issues/134#issuecomment-3098563
+        public string TextPrice1 { get { return Price1 == Price5 ? "" : Price1.ToString(); } }
+        public string TextPrice2 { get { return Price2 == Price5 ? "" : Price2.ToString(); } }
+        public string TextPrice3 { get { return Price3 == Price5 ? "" : Price3.ToString(); } }
+        public string TextPrice4 { get { return Price4 == Price5 ? "" : Price4.ToString(); } }
+        public string TextPrice5 { get { return Price5.ToString(); } }
+        public string TextNotes { get { return HasNotes ? "x" : ""; } }
     }
 
     /// <summary>

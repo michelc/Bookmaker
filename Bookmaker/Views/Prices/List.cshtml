@@ -49,25 +49,25 @@
         }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @item.Title
         </td>
         <td>
-            @if (item.Price1 != item.Price5) { @Html.DisplayFor(modelItem => item.Price1) }
+            @item.TextPrice1
         </td>
         <td>
-            @if (item.Price2 != item.Price5) { @Html.DisplayFor(modelItem => item.Price2) }
+            @item.TextPrice2
         </td>
         <td>
-            @if (item.Price3 != item.Price5) { @Html.DisplayFor(modelItem => item.Price3) }
+            @item.TextPrice3
         </td>
         <td>
-            @if (item.Price4 != item.Price5) { @Html.DisplayFor(modelItem => item.Price4) }
+            @item.TextPrice4
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price5)
+            @item.TextPrice5
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.HasNotes)
+            @item.TextNotes
         </td>
         <td>
             @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID }, new { @class = "edit" })
