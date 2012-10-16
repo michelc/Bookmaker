@@ -148,7 +148,7 @@ namespace Bookmaker.Controllers
         //
         // GET: /Booklets/Generate/5
 
-        public FileResult Generate(int id)
+        public FileResult Generate(int id, int travel_id = 0)
         {
             // Retrouve la brochure
             var booklet = db.Booklets.Find(id);
@@ -158,8 +158,18 @@ namespace Bookmaker.Controllers
                 .Travels
                 .Where(t => t.Booklet_ID == id)
                 .Include(t => t.Sections)
-                .Include(t => t.Prices)
-                .OrderBy(t => t.Position);
+                .Include(t => t.Prices);
+
+            // Filtre éventuellement sur le voyage demandé
+            // (sinon trie les voyages selon leur position)
+            if (travel_id != 0)
+            {
+                travels = travels.Where(t => t.Travel_ID == travel_id);
+            }
+            else
+            {
+                travels = travels.OrderBy(t => t.Position);
+            }
 
             // Génère la brochure au format Word
             var templatePath = string.Format("~/Content/Bookmaker_{0}.xml", booklet.Year);

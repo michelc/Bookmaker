@@ -8,7 +8,10 @@
 
 <fieldset class="navigation sixteen columns">
 
-    <legend>@Model.Title</legend>
+    <legend>
+        @Model.Title
+        @Html.ActionLink("Générer le fichier Word", "Generate", "Booklets", new { id = Model.Booklet_ID, Model.Travel_ID }, new { @class = "icon doc_file", title = "Générer le fichier Word" })
+    </legend>
     @Html.Partial("_Display", Model)
 
     <a class="prev" href="@Url.Action("Previous", new { id = Model.Travel_ID} )"></a>

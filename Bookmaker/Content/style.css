@@ -111,6 +111,7 @@ a.delete
     background-image: url(icons/delete.png);
 }
 
+legend a.icon,
 table a.icon,
 table a.edit,
 table a.delete
