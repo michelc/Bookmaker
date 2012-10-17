@@ -57,17 +57,18 @@ namespace Bookmaker.Controllers
         {
             var travel = db.Travels.Find(id);
 
-            var next = (from t in db.Travels
-                        where (t.Booklet_ID == travel.Booklet_ID)
-                        && (t.Position > travel.Position)
-                        orderby t.Position ascending
+            var travels = (from t in db.Travels
+                         where (t.Booklet_ID == travel.Booklet_ID)
+                         orderby t.Position ascending
+                         select new { t.Travel_ID, t.Position });
+
+            var next = (from t in travels
+                        where (t.Position > travel.Position)
                         select t.Travel_ID).FirstOrDefault();
 
             if (next == 0)
             {
-                next = (from t in db.Travels
-                        where (t.Booklet_ID == travel.Booklet_ID)
-                        orderby t.Position ascending
+                next = (from t in travels
                         select t.Travel_ID).FirstOrDefault();
             }
 
@@ -81,17 +82,18 @@ namespace Bookmaker.Controllers
         {
             var travel = db.Travels.Find(id);
 
-            var prev = (from t in db.Travels
-                        where (t.Booklet_ID == travel.Booklet_ID)
-                        && (t.Position < travel.Position)
-                        orderby t.Position descending
+            var travels = (from t in db.Travels
+                           where (t.Booklet_ID == travel.Booklet_ID)
+                           orderby t.Position descending
+                           select new { t.Travel_ID, t.Position });
+
+            var prev = (from t in travels
+                        where (t.Position < travel.Position)
                         select t.Travel_ID).FirstOrDefault();
 
             if (prev == 0)
             {
-                prev = (from t in db.Travels
-                        where (t.Booklet_ID == travel.Booklet_ID)
-                        orderby t.Position descending
+                prev = (from t in travels
                         select t.Travel_ID).FirstOrDefault();
             }
 
