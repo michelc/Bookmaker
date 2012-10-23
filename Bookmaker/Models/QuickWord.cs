@@ -137,7 +137,7 @@ namespace Bookmaker.Models
         {
             var prices = "";
             var count = 0;
-            foreach (var p in t.Prices.OrderBy(p => p.Title))
+            foreach (var p in t.Prices.OrderBy(p => p.Price1))
             {
                 prices += "<br>";
                 if (p.Title != "*")
@@ -163,7 +163,7 @@ namespace Bookmaker.Models
             var prices = "";
             var hasTitle = false;
             var count = 0;
-            foreach (var p in t.Prices.OrderBy(p => p.Title))
+            foreach (var p in t.Prices.OrderBy(p => p.Price1))
             {
                 prices += "<br>";
                 prices += p.Price5.ToString() + " € par personne";
