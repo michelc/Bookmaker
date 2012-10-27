@@ -83,12 +83,13 @@ namespace Bookmaker.Models
         [Required]
         [Display(Name = "Type de voyage")]
         [UIHint("Enum")]
-        public TravelType TypeTravel
+        public TravelType TravelType
         {
-            get { return (TravelType)TravelType; }
-            set { TravelType = (int)value; }
+            get { return (TravelType)TravelType_Int; }
+            set { TravelType_Int = (int)value; }
         }
-        public int TravelType { get; set; }
+        [Column("TravelType")]
+        public int TravelType_Int { get; set; }
 
         // Commentaires sur ce voyage
         [Display(Name = "Remarques")]
@@ -122,12 +123,13 @@ namespace Bookmaker.Models
         [Required]
         [Display(Name = "Type de contenu")]
         [UIHint("Enum")]
-        public SectionType TypeSection
+        public SectionType SectionType
         {
-            get { return (SectionType)SectionType; }
-            set { SectionType = (int)value; }
+            get { return (SectionType)SectionType_Int; }
+            set { SectionType_Int = (int)value; }
         }
-        public int SectionType { get; set; }
+        [Column("SectionType")]
+        public int SectionType_Int { get; set; }
 
         // Texte pour le contenu de la partie
         [Required]

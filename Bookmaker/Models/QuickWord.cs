@@ -27,7 +27,7 @@ namespace Bookmaker.Models
 
                 // Tarif(s) du voyage
                 var prices = "";
-                if (t.TypeTravel == TravelType.Journee)
+                if (t.TravelType == TravelType.Journee)
                 {
                     prices = GetDayPrices(t);
                 }
@@ -40,7 +40,7 @@ namespace Bookmaker.Models
                 var hasPrice = false;
                 foreach (var s in t.Sections.OrderBy(s => s.Position))
                 {
-                    if (s.TypeSection == SectionType.Tarif)
+                    if (s.SectionType == SectionType.Tarif)
                     {
                         html.Append(prices);
                         hasPrice = true;

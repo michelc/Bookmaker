@@ -45,8 +45,8 @@ namespace Bookmaker.Controllers
             };
             if (Section_Type != 0)
             {
-                section.SectionType = Section_Type;
-                if (Section_Type == (int)SectionType.Tarif)
+                section.SectionType = (SectionType)Section_Type;
+                if (section.SectionType == SectionType.Tarif)
                 {
                     // Seul le type de section compte pour les tarifs
                     // (mais le contenu est obligatoire)
@@ -70,11 +70,11 @@ namespace Bookmaker.Controllers
 
                 // Reformate et contrôle le contenu saisi
                 section.Content = InputHelper.ContentFormat(section.Content);
-                if (section.TypeSection == SectionType.Titre)
+                if (section.SectionType == SectionType.Titre)
                 {
                     section.Content = InputHelper.TitleFormat(section.Content);
                 }
-                if (section.TypeSection == SectionType.Menu)
+                if (section.SectionType == SectionType.Menu)
                 {
                     // A la création, gère un copier / coller depuis ancienne brochure
                     // où le tiret long sert de séparateur entre les plats
@@ -115,7 +115,7 @@ namespace Bookmaker.Controllers
             {
                 // Reformate et contrôle le contenu saisi
                 section.Content = InputHelper.ContentFormat(section.Content);
-                if (section.TypeSection == SectionType.Titre)
+                if (section.SectionType == SectionType.Titre)
                 {
                     section.Content = InputHelper.TitleFormat(section.Content);
                 }

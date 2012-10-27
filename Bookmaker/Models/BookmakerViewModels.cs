@@ -51,13 +51,13 @@ namespace Bookmaker.Models
         public int Travel_ID { get; set; }
         public int Position { get; set; }
         public string Title { get; set; }
-        public int TravelType { get; set; }
+        public int TravelType_Int { get; set; }
         public int PricesCount { get; set; }
         public int SectionsCount { get; set; }
 
-        public TravelType TypeTravel
+        public TravelType TravelType
         {
-            get { return (TravelType)TravelType; }
+            get { return (TravelType)TravelType_Int; }
         }
     }
 

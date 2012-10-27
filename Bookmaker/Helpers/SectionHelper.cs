@@ -13,7 +13,7 @@ namespace Bookmaker.Helpers
             var content = section.Content;
             var lines = content.Replace("\r\n", "\r").Split('\r');
 
-            switch (section.TypeSection)
+            switch (section.SectionType)
             {
                 case SectionType.Titre:
                     html = HtmlTitle(html, content);
