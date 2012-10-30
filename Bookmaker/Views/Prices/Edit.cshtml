@@ -17,7 +17,14 @@
 
         <p class="offset-by-five eleven columns alpha">
             <input type="submit" value="Enregistrer" />
-            @Html.ActionCancel()
+            @if (ViewBag.Cancel == null)
+            {
+                @Html.ActionCancel()
+            }
+            else
+            {
+                @ViewBag.Cancel
+            }
         </p>
     </fieldset>
 }

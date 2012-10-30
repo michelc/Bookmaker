@@ -75,10 +75,17 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, string view_from)
         {
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
+
+            ViewBag.Cancel = null;
+            if (view_from == "index")
+            {
+                view_from = string.Format("<a href=\"{0}\" class=\"cancel\">Annuler</a>", Url.Action("Index"));
+                ViewBag.Cancel = new MvcHtmlString(view_from);
+            }
 
             return View(price);
         }
@@ -87,7 +94,7 @@ namespace Bookmaker.Controllers
         // POST: /Prices/Edit/5
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(Price price)
+        public ActionResult Edit(Price price, string view_from)
         {
             if (ModelState.IsValid)
             {
@@ -95,6 +102,9 @@ namespace Bookmaker.Controllers
                 db.SaveChanges();
 
                 this.Flash(string.Format("Le tarif {0} a été modifié", price.Title));
+
+                if (view_from == "index") return RedirectToAction("Index");
+
                 return RedirectToAction("Details", "Travels", new { id = price.Travel_ID });
             }
 

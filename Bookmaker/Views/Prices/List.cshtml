@@ -70,7 +70,7 @@
             @item.TextNotes
         </td>
         <td>
-            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID }, new { @class = "edit" })
+            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID, view_from = "index" }, new { @class = "edit" })
         </td>
     </tr>
 }
