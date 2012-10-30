@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using Bookmaker.Helpers;
@@ -26,6 +27,57 @@ namespace Bookmaker.Controllers
                 .ToList();
 
             return View("List", prices);
+        }
+
+        //
+        // GET: /Prices/Export
+
+        public FileResult Export(int root_id)
+        {
+            // Retrouve tous les tarifs de la brochure
+            var prices = db
+                .Prices
+                .Where(p => p.Travel.Booklet_ID == root_id)
+                .OrderBy(p => p.Travel.Position)
+                .ThenBy(p => p.Price1)
+                .Project().To<PriceIndex>()
+                .ToList();
+
+            var csv = new StringBuilder();
+            var sep = ";";
+            var current = -1;
+            foreach (var price in prices)
+            {
+                csv.Append("\"");
+                if (current != price.Travel_ID)
+                {
+                    current = price.Travel_ID;
+                    csv.Append(price.TravelTitle.Replace("[br]", " / ").Replace("\"", "'"));
+                }
+                csv.Append("\"");
+                csv.Append(sep);
+                csv.Append("\"");
+                csv.Append(price.Title.Replace("\"", "'"));
+                csv.Append("\"");
+                csv.Append(sep);
+                csv.Append(price.Price1);
+                csv.Append(sep);
+                csv.Append(price.Price2);
+                csv.Append(sep);
+                csv.Append(price.Price3);
+                csv.Append(sep);
+                csv.Append(price.Price4);
+                csv.Append(sep);
+                csv.Append(price.Price5);
+                csv.AppendLine();
+            }
+
+            // Renvoie les données au format CSV
+            var file = "Bookmaker.csv";
+            // application/vnd.ms-excel
+            string text = csv.ToString();
+            Response.ContentEncoding = Encoding.GetEncoding("iso-8859-1");
+            return File(Encoding.Default.GetBytes(text), "text/csv", file);
         }
 
         //

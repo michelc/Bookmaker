@@ -108,6 +108,7 @@
     <Content Include="Content\icons\delete.png" />
     <Content Include="Content\icons\doc_file.png" />
     <Content Include="Content\icons\edit.png" />
+    <Content Include="Content\icons\xls_file.png" />
     <Content Include="Content\skeleton\javascripts\tabs.js" />
     <Content Include="Content\skeleton\stylesheets\base.css" />
     <Content Include="Content\skeleton\stylesheets\layout.css" />

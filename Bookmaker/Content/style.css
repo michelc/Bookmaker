@@ -111,6 +111,7 @@ a.delete
     background-image: url(icons/delete.png);
 }
 
+h2 a.icon,
 legend a.icon,
 table a.icon,
 table a.edit,
@@ -542,4 +543,10 @@ h1 em
 a.doc_file
 {
     background-image: url(icons/doc_file.png);
+}
+
+/* Icone pour exporter les tarifs vers Excel */
+a.xls_file
+{
+    background-image: url(icons/xls_file.png);
 }

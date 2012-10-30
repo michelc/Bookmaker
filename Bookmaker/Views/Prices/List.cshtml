@@ -4,7 +4,10 @@
     ViewBag.Title = "Tous les tarifs";
 }
 
-<h2>@Html.Action("Title", "Booklets")</h2>
+<h2>
+    @Html.Action("Title", "Booklets")
+    @Html.ActionLink("Exporter les tarifs vers Excel", "Export", null, new { @class = "icon xls_file", title = "Exporter les tarifs vers Excel" })
+</h2>
 
 @{ var current = -1; }
 
