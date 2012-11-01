@@ -106,8 +106,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Create
 
-        public ViewResult Create(int Root_ID)
+        public ActionResult Create(int Root_ID)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpNotFoundResult();
+
             var travel = new Travel();
 
             travel.Booklet_ID = Root_ID;
@@ -147,8 +150,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Edit/5
 
-        public ViewResult Edit(int id)
+        public ActionResult Edit(int Root_ID, int id)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpNotFoundResult();
+
             var travel = db.Travels.Find(id);
 
             return View(travel);
@@ -183,8 +189,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Delete/5
 
-        public ViewResult Delete(int id)
+        public ActionResult Delete(int Root_ID, int id)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpNotFoundResult();
+
             var travel = db.Travels.Find(id);
 
             if (travel.Prices.Count + travel.Sections.Count > 0)
@@ -224,6 +233,7 @@ namespace Bookmaker.Controllers
             var travel = db.Travels.Find(id);
             var booklets = db.Booklets
                              .Where(b => b.Booklet_ID != travel.Booklet_ID)
+                             .Where(b => b.Booklet_ID != 1) // exclue les brochures "clôturées"
                              .OrderByDescending(b => b.Year)
                              .ThenBy(b => b.Title);
 
