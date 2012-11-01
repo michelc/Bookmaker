@@ -94,8 +94,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Create?int Parent_ID=5
 
-        public ViewResult Create(int Parent_ID)
+        public ActionResult Create(int Root_ID, int Parent_ID)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+
             var price = new Price
             {
                 Travel_ID = Parent_ID,
@@ -109,8 +112,11 @@ namespace Bookmaker.Controllers
         // POST: /Prices/Create
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Create(Price price)
+        public ActionResult Create(int Root_ID, Price price)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+
             if (ModelState.IsValid)
             {
                 db.Prices.Add(price);
@@ -127,8 +133,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Edit/5
 
-        public ActionResult Edit(int id, string view_from)
+        public ActionResult Edit(int Root_ID, int id, string view_from)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
 
@@ -146,8 +155,11 @@ namespace Bookmaker.Controllers
         // POST: /Prices/Edit/5
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(Price price, string view_from)
+        public ActionResult Edit(int Root_ID, Price price, string view_from)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+
             if (ModelState.IsValid)
             {
                 db.Entry(price).State = EntityState.Modified;
@@ -167,8 +179,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int Root_ID, int id)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
 
@@ -179,8 +194,11 @@ namespace Bookmaker.Controllers
         // POST: /Prices/Delete/5
 
         [HttpPost, ValidateAntiForgeryToken, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int Root_ID, int id)
         {
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+
             var price = db.Prices.Find(id);
             db.Prices.Remove(price);
             db.SaveChanges();

@@ -109,7 +109,7 @@ namespace Bookmaker.Controllers
         public ActionResult Create(int Root_ID)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpNotFoundResult();
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
 
             var travel = new Travel();
 
@@ -153,7 +153,7 @@ namespace Bookmaker.Controllers
         public ActionResult Edit(int Root_ID, int id)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpNotFoundResult();
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
 
             var travel = db.Travels.Find(id);
 
@@ -192,7 +192,7 @@ namespace Bookmaker.Controllers
         public ActionResult Delete(int Root_ID, int id)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpNotFoundResult();
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
 
             var travel = db.Travels.Find(id);
 
