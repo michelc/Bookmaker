@@ -32,9 +32,8 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Sort(int Root_ID, int from, int to)
         {
-            // Vérifie que la brochure n'est pas clôturée
-            var booklet = db.Booklets.Find(Root_ID);
-            if (booklet.Booklet_ID == 1) return new HttpStatusCodeResult(403);
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
 
             var success = db.SortPositions("Travels", "Booklet_ID", Root_ID, from, to);
 
@@ -122,9 +121,8 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Create(int Root_ID, Travel travel)
         {
-            // Vérifie que la brochure n'est pas clôturée
-            var booklet = db.Booklets.Find(Root_ID);
-            if (booklet.Booklet_ID == 1) return new HttpStatusCodeResult(403);
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
 
             if (ModelState.IsValid)
             {
@@ -162,9 +160,8 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Edit(int Root_ID, Travel travel)
         {
-            // Vérifie que la brochure n'est pas clôturée
-            var booklet = db.Booklets.Find(Root_ID);
-            if (booklet.Booklet_ID == 1) return new HttpStatusCodeResult(403);
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
 
             if (ModelState.IsValid)
             {
@@ -204,9 +201,8 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int Root_ID, int id)
         {
-            // Vérifie que la brochure n'est pas clôturée
-            var booklet = db.Booklets.Find(Root_ID);
-            if (booklet.Booklet_ID == 1) return new HttpStatusCodeResult(403);
+            // Vérifie que la màj de la brochure est possible
+            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
 
             // Supprime le voyage
             var travel = db.Travels.Find(id);
@@ -246,9 +242,8 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Copy(int id, int Destination_ID)
         {
-            // Vérifie que la brochure cible n'est pas clôturée
-            var booklet = db.Booklets.Find(Destination_ID);
-            if (booklet.Booklet_ID == 1) return new HttpStatusCodeResult(403);
+            // Vérifie que la màj de la brochure cible est possible
+            if (!db.BookletIsUpdatable(Destination_ID)) return new HttpStatusCodeResult(403);
 
             if (!ModelState.IsValid)
             {

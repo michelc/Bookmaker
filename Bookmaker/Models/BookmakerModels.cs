@@ -195,7 +195,7 @@ namespace Bookmaker.Models
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<BookmakerContext, Configuration>());
         }
 
-        public void ExecuteSql(string sql)
+        private void ExecuteSql(string sql)
         {
             this.Database.ExecuteSqlCommand(sql);
         }
@@ -267,6 +267,29 @@ namespace Bookmaker.Models
                 this.ExecuteSql(string.Format("DBCC CHECKIDENT('{0}', RESEED, 0)", tableName));
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Détermine si une brochure peut être mise à jour
+        /// </summary>
+        /// <param name="Booklet_ID">Identifiant de la brochurer à tester</param>
+        /// <returns>True si la màj est possible</returns>
+        public bool BookletIsUpdatable(int Booklet_ID)
+        {
+            // Retrouve la brochure concernée
+            var booklet = this.Booklets.Find(Booklet_ID);
+
+            // Sa màj n'est pas possible si elle n'existe pas
+            if (booklet == null) return false;
+
+            // Sa màj est interdite si elle est clôturée
+            if (booklet.Booklet_ID == 1)
+            {
+                return false;
+            }
+
+            // La màj ne fait pas de difficulté
+            return true;
         }
     }
 
