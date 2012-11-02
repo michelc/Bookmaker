@@ -12,6 +12,7 @@ namespace Bookmaker.Models
         public string Title { get; set; }
         public string Year { get; set; }
         public string Notes { get; set; }
+        public bool IsReadOnly { get; set; }
         public IList<JsonTravel> Travels { get; set; }
     }
 
