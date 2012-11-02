@@ -15,12 +15,16 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices
 
-        public ViewResult Index(int root_id)
+        public ViewResult Index(int Root_ID)
         {
+            // Détermine si la màj de la brochure est possible
+            ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
+            this.RouteData.Values.Add("is_updatable", false);
+
             // Retrouve tous les tarifs de la brochure
             var prices = db
                 .Prices
-                .Where(p => p.Travel.Booklet_ID == root_id)
+                .Where(p => p.Travel.Booklet_ID == Root_ID)
                 .OrderBy(p => p.Travel.Position)
                 .ThenBy(p => p.Price1)
                 .Project().To<PriceIndex>()

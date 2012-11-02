@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<Bookmaker.Models.TravelIndex>
 
+@functions
+{
+    HelperResult OK(Func<dynamic, HelperResult> nugget)
+    {
+        if (ViewBag.IsUpdatable) {
+            return new HelperResult(w => nugget(null).WriteTo(w));
+        }
+        return new HelperResult(w => w.Write(""));
+    }
+}
+
 @{
     ViewBag.Title = "Tous les voyages";
 }
@@ -9,7 +20,7 @@
 <table class="sortable" data-url='@Url.Action("Sort", "Travels")'>
 <thead>
     <tr>
-        <th class="iconwidth"></th>
+        @OK(@<th class="iconwidth"></th>)
         <th>
             N°
         </th>
@@ -25,15 +36,16 @@
         <th>
             Tarifs
         </th>
-        <th class="iconwidth"></th>
+        @OK(@<th class="iconwidth"></th>)
     </tr>
 </thead>
 <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
-        <td>
+        @OK(@<td>
             @Html.ActionLink("Edit", "Edit", new { id = item.Travel_ID }, new { @class = "edit" })
-        </td>
+        </td>)
         <td class="handle" data-pos="@(item.Position - 1)">
             @item.Position
         </td>
@@ -49,9 +61,9 @@
         <td>
             @item.PricesCount
         </td>
-        <td>
+        @OK(@<td>
             @Html.ActionLink("Delete", "Delete", new { id = item.Travel_ID }, new { @class = "delete" })
-        </td>
+        </td>)
     </tr>
 }
 </tbody>

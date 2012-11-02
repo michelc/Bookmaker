@@ -1,5 +1,17 @@
 ﻿@model IEnumerable<Bookmaker.Models.PriceIndex>
 
+@functions
+{
+    HelperResult OK(Func<dynamic, HelperResult> nugget)
+    {
+        if (ViewBag.IsUpdatable)
+        {
+            return new HelperResult(w => nugget(null).WriteTo(w));
+        }
+        return new HelperResult(w => w.Write(""));
+    }
+}
+
 @{
     ViewBag.Title = "Tous les tarifs";
 }
@@ -38,11 +50,12 @@
         <th>
             Notes ?
         </th>
-        <th class="iconwidth"></th>
+        @OK(@<th class="iconwidth"></th>)
     </tr>
 </thead>
 <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
         @if (current != item.Travel_ID)
@@ -72,9 +85,9 @@
         <td>
             @item.TextNotes
         </td>
-        <td>
+        @OK(@<td>
             @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID, view_from = "index" }, new { @class = "edit" })
-        </td>
+        </td>)
     </tr>
 }
 </tbody>

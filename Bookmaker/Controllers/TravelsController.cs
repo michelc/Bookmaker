@@ -16,6 +16,10 @@ namespace Bookmaker.Controllers
 
         public ViewResult Index(int Root_ID)
         {
+            // Détermine si la màj de la brochure est possible
+            ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
+            this.RouteData.Values.Add("is_updatable", false);
+
             var travels = db
                 .Travels
                 .Where(travel => travel.Booklet_ID == Root_ID)
@@ -44,8 +48,12 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Details/5
 
-        public ViewResult Details(int id)
+        public ViewResult Details(int Root_ID, int id)
         {
+            // Détermine si la màj de la brochure est possible
+            ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
+            this.RouteData.Values.Add("is_updatable", false);
+
             var travel = db.Travels.Find(id);
             travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
             travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
