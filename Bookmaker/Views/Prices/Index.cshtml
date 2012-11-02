@@ -43,35 +43,35 @@
     </tr>
 </thead>
 <tbody>
-@foreach (var item in Model.Prices)
+@foreach (var line in Model.Prices)
 {
     <tr>
         @OK(@<td>
-            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID }, new { @class = "edit" })
+            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = line.Price_ID }, new { @class = "edit" })
         </td>)
         <td>
-            @Html.ActionLink(@item.Title, "Details", "Prices", new { id = item.Price_ID }, null)
+            @Html.ActionLink(@line.Title, "Details", "Prices", new { id = line.Price_ID }, null)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price1)
+            @Html.DisplayFor(modelItem => line.Price1)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price2)
+            @Html.DisplayFor(modelItem => line.Price2)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price3)
+            @Html.DisplayFor(modelItem => line.Price3)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price4)
+            @Html.DisplayFor(modelItem => line.Price4)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price5)
+            @Html.DisplayFor(modelItem => line.Price5)
         </td>
         <td>
-            @(string.IsNullOrEmpty(item.Notes) ? "" : "Oui")
+            @(string.IsNullOrEmpty(line.Notes) ? "" : "Oui")
         </td>
         @OK(@<td>
-            @Html.ActionLink("Supprimer", "Delete", "Prices", new { id = item.Price_ID }, new { @class = "delete" })
+            @Html.ActionLink("Supprimer", "Delete", "Prices", new { id = line.Price_ID }, new { @class = "delete" })
         </td>)
     </tr>
 }

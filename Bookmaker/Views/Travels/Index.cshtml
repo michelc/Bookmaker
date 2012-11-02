@@ -40,29 +40,29 @@
     </tr>
 </thead>
 <tbody>
-@foreach (var item in Model)
+@foreach (var line in Model)
 {
     <tr>
         @OK(@<td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Travel_ID }, new { @class = "edit" })
+            @Html.ActionLink("Edit", "Edit", new { id = line.Travel_ID }, new { @class = "edit" })
         </td>)
-        <td class="handle" data-pos="@(item.Position - 1)">
-            @item.Position
+        <td class="handle" data-pos="@(line.Position - 1)">
+            @line.Position
         </td>
         <td>
-            @Html.ActionLink(@item.Title, "Details", new { id = item.Travel_ID })
+            @Html.ActionLink(@line.Title, "Details", new { id = line.Travel_ID })
         </td>
         <td>
-            @item.TravelType
+            @line.TravelType
         </td>
         <td>
-            @item.SectionsCount
+            @line.SectionsCount
         </td>
         <td>
-            @item.PricesCount
+            @line.PricesCount
         </td>
         @OK(@<td>
-            @Html.ActionLink("Delete", "Delete", new { id = item.Travel_ID }, new { @class = "delete" })
+            @Html.ActionLink("Delete", "Delete", new { id = line.Travel_ID }, new { @class = "delete" })
         </td>)
     </tr>
 }

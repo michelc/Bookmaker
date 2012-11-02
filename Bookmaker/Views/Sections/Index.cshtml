@@ -27,20 +27,20 @@
     </tr>
 </thead>
 <tbody>
-@foreach (var item in Model.Sections)
+@foreach (var line in Model.Sections)
 {
     <tr>
         @OK(@<td>
-            @Html.ActionLink("Modifier", "Edit", "Sections", new { id = item.Section_ID }, new { @class = "edit" })
+            @Html.ActionLink("Modifier", "Edit", "Sections", new { id = line.Section_ID }, new { @class = "edit" })
         </td>)
-        <td class="handle" data-pos="@(item.Position - 1)">
-            @item.Position
+        <td class="handle" data-pos="@(line.Position - 1)">
+            @line.Position
         </td>
         <td>
-            @item.ContentAsHtml()
+            @line.ContentAsHtml()
         </td>
         @OK(@<td>
-            @Html.ActionLink("Supprimer", "Delete", "Sections", new { id = item.Section_ID }, new { @class = "delete" })
+            @Html.ActionLink("Supprimer", "Delete", "Sections", new { id = line.Section_ID }, new { @class = "delete" })
         </td>)
     </tr>
 }

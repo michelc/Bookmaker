@@ -54,39 +54,39 @@
     </tr>
 </thead>
 <tbody>
-@foreach (var item in Model)
+@foreach (var line in Model)
 {
     <tr>
         <td>
-        @if (current != item.Travel_ID)
+        @if (current != line.Travel_ID)
         {
-            current = item.Travel_ID;
-            @Html.ActionLink(@item.TravelTitle, "Details", "Travels", new { id = item.Travel_ID }, null)
+            current = line.Travel_ID;
+            @Html.ActionLink(@line.TravelTitle, "Details", "Travels", new { id = line.Travel_ID }, null)
         }
         </td>
         <td>
-            @item.Title
+            @line.Title
         </td>
         <td>
-            @item.TextPrice1
+            @line.TextPrice1
         </td>
         <td>
-            @item.TextPrice2
+            @line.TextPrice2
         </td>
         <td>
-            @item.TextPrice3
+            @line.TextPrice3
         </td>
         <td>
-            @item.TextPrice4
+            @line.TextPrice4
         </td>
         <td>
-            @item.TextPrice5
+            @line.TextPrice5
         </td>
         <td>
-            @item.TextNotes
+            @line.TextNotes
         </td>
         @OK(@<td>
-            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = item.Price_ID, view_from = "index" }, new { @class = "edit" })
+            @Html.ActionLink("Modifier", "Edit", "Prices", new { id = line.Price_ID, view_from = "index" }, new { @class = "edit" })
         </td>)
     </tr>
 }
