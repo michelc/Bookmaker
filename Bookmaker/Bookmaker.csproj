@@ -93,6 +93,7 @@
     <Compile Include="Helpers\InputHelper.cs" />
     <Compile Include="Helpers\SectionHelper.cs" />
     <Compile Include="Models\AutoMapperConfiguration.cs" />
+    <Compile Include="Models\BookmakerAttributes.cs" />
     <Compile Include="Models\BookmakerModels.cs" />
     <Compile Include="Models\BookmakerViewModels.cs" />
     <Compile Include="Models\ImportExport.cs" />
