@@ -211,8 +211,7 @@ namespace Bookmaker.Controllers
         //
         // POST: /Travels/Delete/5
 
-        [HttpPost, ValidateAntiForgeryToken, ActionName("Delete")]
-        [BookletUpdatable()]
+        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(), ActionName("Delete")]
         public ActionResult DeleteConfirmed(int Root_ID, int id)
         {
             // Vérifie que la màj de la brochure est possible

@@ -15,12 +15,9 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices
 
+        [BookletUpdatable()]
         public ViewResult Index(int Root_ID)
         {
-            // Détermine si la màj de la brochure est possible
-            ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
-            this.RouteData.Values.Add("is_updatable", false);
-
             // Retrouve tous les tarifs de la brochure
             var prices = db
                 .Prices
@@ -87,12 +84,9 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Details/5
 
+        [BookletUpdatable()]
         public ViewResult Details(int Root_ID, int id)
         {
-            // Détermine si la màj de la brochure est possible
-            ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
-            this.RouteData.Values.Add("is_updatable", ViewBag.IsUpdatable);
-
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
 
@@ -102,10 +96,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Create?int Parent_ID=5
 
+        [BookletUpdatable()]
         public ActionResult Create(int Root_ID, int Parent_ID)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
 
             var price = new Price
             {
@@ -119,11 +114,11 @@ namespace Bookmaker.Controllers
         //
         // POST: /Prices/Create
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Create(int Root_ID, Price price)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
 
             if (ModelState.IsValid)
             {
@@ -141,10 +136,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Edit/5
 
+        [BookletUpdatable()]
         public ActionResult Edit(int Root_ID, int id, string view_from)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
 
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
@@ -162,11 +158,11 @@ namespace Bookmaker.Controllers
         //
         // POST: /Prices/Edit/5
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Edit(int Root_ID, Price price, string view_from)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
 
             if (ModelState.IsValid)
             {
@@ -187,10 +183,11 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Delete/5
 
+        [BookletUpdatable()]
         public ActionResult Delete(int Root_ID, int id)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
 
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
@@ -201,11 +198,11 @@ namespace Bookmaker.Controllers
         //
         // POST: /Prices/Delete/5
 
-        [HttpPost, ValidateAntiForgeryToken, ActionName("Delete")]
+        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(), ActionName("Delete")]
         public ActionResult DeleteConfirmed(int Root_ID, int id)
         {
             // Vérifie que la màj de la brochure est possible
-            if (!db.BookletIsUpdatable(Root_ID)) return new HttpStatusCodeResult(403);
+            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
 
             var price = db.Prices.Find(id);
             db.Prices.Remove(price);
