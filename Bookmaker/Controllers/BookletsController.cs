@@ -93,6 +93,11 @@ namespace Bookmaker.Controllers
         {
             var booklet = db.Booklets.Find(id);
 
+            if (booklet.IsReadOnly)
+            {
+                ViewBag.Warning = "Attention, cette brochure est actuellement en lecture seule !";
+            }
+
             return View(booklet);
         }
 
@@ -120,6 +125,12 @@ namespace Bookmaker.Controllers
         public ActionResult Delete(int id)
         {
             var booklet = db.Booklets.Find(id);
+
+            if (booklet.IsReadOnly)
+            {
+                this.Flash("!Suppression interdite car la brochure est en lecture seule");
+                return RedirectToAction("Details", new { id = booklet.Booklet_ID });
+            }
 
             if (booklet.Travels.Count > 0)
             {
