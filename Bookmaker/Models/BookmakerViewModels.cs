@@ -13,6 +13,9 @@ namespace Bookmaker.Models
         public string Year { get; set; }
         public int TravelsCount1 { get; set; }
         public int TravelsCount2 { get; set; }
+        public bool IsReadOnly { get; set; }
+
+        public string TextReadOnly { get { return IsReadOnly ? "x" : ""; } }
     }
 
     /// <summary>

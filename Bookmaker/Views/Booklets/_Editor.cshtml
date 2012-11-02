@@ -23,3 +23,11 @@
     @Html.EditorFor(model => model.Notes)
     @Html.ValidationMessageFor(model => model.Notes)
 </div>
+
+<div class="editor-label five columns">
+    @Html.CaptionFor(model => model.IsReadOnly)
+</div>
+<div class="editor-field eleven columns">
+    @Html.EditorFor(model => model.IsReadOnly)
+    @Html.ValidationMessageFor(model => model.IsReadOnly)
+</div>

@@ -49,6 +49,10 @@ namespace Bookmaker.Models
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
+        // Brochure "clôturée"
+        [Display(Name = "Lecture seule")]
+        public bool IsReadOnly { get; set; }
+
         // Voyages de la brochure
         public virtual ICollection<Travel> Travels { get; set; }
     }
