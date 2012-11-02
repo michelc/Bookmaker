@@ -33,9 +33,9 @@ namespace Bookmaker.Controllers
 
         public ActionResult About()
         {
-            // return View();
+            return View();
 
-            throw new System.Exception("Quelquefois une erreur survient !");
+            // throw new System.Exception("Quelquefois une erreur survient !");
         }
     }
 }
