@@ -18,7 +18,7 @@ namespace Bookmaker.Controllers
         {
             // Détermine si la màj de la brochure est possible
             ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
-            this.RouteData.Values.Add("is_updatable", false);
+            this.RouteData.Values.Add("is_updatable", ViewBag.IsUpdatable);
 
             var travels = db
                 .Travels
@@ -52,7 +52,7 @@ namespace Bookmaker.Controllers
         {
             // Détermine si la màj de la brochure est possible
             ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
-            this.RouteData.Values.Add("is_updatable", false);
+            this.RouteData.Values.Add("is_updatable", ViewBag.IsUpdatable);
 
             var travel = db.Travels.Find(id);
             travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
@@ -236,8 +236,12 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Copy/5
 
-        public ViewResult Copy(int id)
+        public ViewResult Copy(int Root_ID, int id)
         {
+            // Détermine si la màj de la brochure est possible
+            ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
+            this.RouteData.Values.Add("is_updatable", ViewBag.IsUpdatable);
+
             var travel = db.Travels.Find(id);
             var booklets = db.Booklets
                              .Where(b => b.Booklet_ID != travel.Booklet_ID)
@@ -258,14 +262,14 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Copy/5
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Copy(int id, int Destination_ID)
+        public ActionResult Copy(int Root_ID, int id, int Destination_ID)
         {
             // Vérifie que la màj de la brochure cible est possible
             if (!db.BookletIsUpdatable(Destination_ID)) return new HttpStatusCodeResult(403);
 
             if (!ModelState.IsValid)
             {
-                return Copy(id);
+                return Copy(Root_ID, id);
             }
 
             // Retrouve le voyage à copier

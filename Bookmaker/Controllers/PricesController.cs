@@ -87,8 +87,12 @@ namespace Bookmaker.Controllers
         //
         // GET: /Prices/Details/5
 
-        public ViewResult Details(int id)
+        public ViewResult Details(int Root_ID, int id)
         {
+            // Détermine si la màj de la brochure est possible
+            ViewBag.IsUpdatable = db.BookletIsUpdatable(Root_ID);
+            this.RouteData.Values.Add("is_updatable", ViewBag.IsUpdatable);
+
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
 

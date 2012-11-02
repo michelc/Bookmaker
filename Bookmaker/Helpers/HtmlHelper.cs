@@ -60,6 +60,9 @@ namespace Bookmaker.Helpers
         public static MvcHtmlString ActionCrud(this HtmlHelper helper, string title, object linkValues = null)
         {
             var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
+            var is_updatable = helper.ViewContext.RouteData.Values["is_updatable"] == null
+                ? true
+                : (bool)helper.ViewContext.RouteData.Values["is_updatable"];
 
             var html = "";
 
@@ -75,18 +78,21 @@ namespace Bookmaker.Helpers
                 html += title;
             }
 
-            // Si on n'est pas sur la page Create
-            html += " / ";
-            if (current_action != "create")
+            if (is_updatable)
             {
-                // Alors, il faut un lien vers la page Create
-                var current_controller = helper.ViewContext.RouteData.Values["controller"].ToString().ToLower();
-                html += helper.ActionLink("Créer", "Create").ToString();
-            }
-            else
-            {
-                // Sinon, il n'y a pas besoin d'un lien vers la page Create
-                html += "Créer";
+                // Si on n'est pas sur la page Create
+                html += " / ";
+                if (current_action != "create")
+                {
+                    // Alors, il faut un lien vers la page Create
+                    var current_controller = helper.ViewContext.RouteData.Values["controller"].ToString().ToLower();
+                    html += helper.ActionLink("Créer", "Create").ToString();
+                }
+                else
+                {
+                    // Sinon, il n'y a pas besoin d'un lien vers la page Create
+                    html += "Créer";
+                }
             }
 
             // Si on a un identifiant de fiche
@@ -100,6 +106,11 @@ namespace Bookmaker.Helpers
                     { "edit", "Modifier" },
                     { "delete", "Supprimer" }
                 };
+                if (!is_updatable)
+                {
+                    crud.Remove("edit");
+                    crud.Remove("delete");
+                }
 
                 if (linkValues != null)
                 {
@@ -135,6 +146,9 @@ namespace Bookmaker.Helpers
         {
             var current_controller = helper.ViewContext.RouteData.Values["controller"].ToString().ToLower();
             var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
+            var is_updatable = helper.ViewContext.RouteData.Values["is_updatable"] == null
+                ? true
+                : (bool)helper.ViewContext.RouteData.Values["is_updatable"];
 
             var parent_controller = "travels";
 
@@ -152,17 +166,20 @@ namespace Bookmaker.Helpers
                 html += title;
             }
 
-            // Si on n'est pas sur la page Create
-            html += " / ";
-            if (current_action != "create")
+            if (is_updatable)
             {
-                // Alors, il faut un lien vers la page Create
-                html += helper.ActionLink("Créer", "Create", child_controller, new { Parent_ID = parent_id.ToString() }, null).ToString();
-            }
-            else
-            {
-                // Sinon, il n'y a pas besoin d'un lien vers la page Create
-                html += "Créer";
+                // Si on n'est pas sur la page Create
+                html += " / ";
+                if (current_action != "create")
+                {
+                    // Alors, il faut un lien vers la page Create
+                    html += helper.ActionLink("Créer", "Create", child_controller, new { Parent_ID = parent_id.ToString() }, null).ToString();
+                }
+                else
+                {
+                    // Sinon, il n'y a pas besoin d'un lien vers la page Create
+                    html += "Créer";
+                }
             }
 
             // Si on a un identifiant de fiche
@@ -183,6 +200,11 @@ namespace Bookmaker.Helpers
                     { "edit", "Modifier" },
                     { "delete", "Supprimer" }
                 };
+                if (!is_updatable)
+                {
+                    crud.Remove("edit");
+                    crud.Remove("delete");
+                }
 
                 foreach (var action in crud)
                 {
