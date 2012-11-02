@@ -245,7 +245,7 @@ namespace Bookmaker.Controllers
             var travel = db.Travels.Find(id);
             var booklets = db.Booklets
                              .Where(b => b.Booklet_ID != travel.Booklet_ID)
-                             .Where(b => b.Booklet_ID != 1) // exclue les brochures "clôturées"
+                             .Where(b => b.IsReadOnly == false)
                              .OrderByDescending(b => b.Year)
                              .ThenBy(b => b.Title);
 

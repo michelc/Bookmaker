@@ -286,11 +286,8 @@ namespace Bookmaker.Models
             // Sa màj n'est pas possible si elle n'existe pas
             if (booklet == null) return false;
 
-            // Sa màj est interdite si elle est clôturée
-            if (booklet.Booklet_ID == 1)
-            {
-                return false;
-            }
+            // Sa màj est interdite si elle est en lecture seule
+            if (booklet.IsReadOnly == true) return false;
 
             // La màj ne fait pas de difficulté
             return true;
