@@ -13,7 +13,8 @@ namespace Bookmaker.Controllers
 
         //
         // GET: /Travels/
-        [BookletUpdatable()]
+
+        [BookletUpdatable(Continue = true)]
         public ViewResult Index(int Root_ID)
         {
             var travels = db
@@ -32,9 +33,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Sort(int Root_ID, int from, int to)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var success = db.SortPositions("Travels", "Booklet_ID", Root_ID, from, to);
 
             if (!success) Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
@@ -44,7 +42,7 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Details/5
 
-        [BookletUpdatable()]
+        [BookletUpdatable(Continue = true)]
         public ViewResult Details(int Root_ID, int id)
         {
             var travel = db.Travels.Find(id);
@@ -110,9 +108,6 @@ namespace Bookmaker.Controllers
         [BookletUpdatable()]
         public ActionResult Create(int Root_ID)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var travel = new Travel();
 
             travel.Booklet_ID = Root_ID;
@@ -126,9 +121,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Create(int Root_ID, Travel travel)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             if (ModelState.IsValid)
             {
                 // Initialise la position à la prochaine disponible
@@ -155,9 +147,6 @@ namespace Bookmaker.Controllers
         [BookletUpdatable()]
         public ActionResult Edit(int Root_ID, int id)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var travel = db.Travels.Find(id);
 
             return View(travel);
@@ -169,9 +158,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Edit(int Root_ID, Travel travel)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             if (ModelState.IsValid)
             {
                 // Reformate et contrôle le contenu saisi
@@ -195,9 +181,6 @@ namespace Bookmaker.Controllers
         [BookletUpdatable()]
         public ActionResult Delete(int Root_ID, int id)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var travel = db.Travels.Find(id);
 
             if (travel.Prices.Count + travel.Sections.Count > 0)
@@ -214,9 +197,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(), ActionName("Delete")]
         public ActionResult DeleteConfirmed(int Root_ID, int id)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             // Supprime le voyage
             var travel = db.Travels.Find(id);
             db.Travels.Remove(travel);
@@ -232,7 +212,7 @@ namespace Bookmaker.Controllers
         //
         // GET: /Travels/Copy/5
 
-        [BookletUpdatable()]
+        [BookletUpdatable(Continue = true)]
         public ViewResult Copy(int Root_ID, int id)
         {
             var travel = db.Travels.Find(id);
@@ -257,9 +237,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(ParamKey="Destination_ID")]
         public ActionResult Copy(int Root_ID, int id, int Destination_ID)
         {
-            // Vérifie que la màj de la brochure cible est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             if (!ModelState.IsValid)
             {
                 return Copy(Root_ID, id);

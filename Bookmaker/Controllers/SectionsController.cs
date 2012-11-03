@@ -27,9 +27,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Sort(int Root_ID, int Parent_ID, int from, int to)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var success = db.SortPositions("Sections", "Travel_ID", Parent_ID, from, to);
 
             if (!success) Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
@@ -42,9 +39,6 @@ namespace Bookmaker.Controllers
         [BookletUpdatable()]
         public ActionResult Create(int Root_ID, int Parent_ID, int Section_Type = 0)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var section = new Section
             {
                 Travel_ID = Parent_ID,
@@ -70,9 +64,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Create(int Root_ID, Section section)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             if (ModelState.IsValid)
             {
                 // Initialise la position à la prochaine disponible
@@ -109,9 +100,6 @@ namespace Bookmaker.Controllers
         [BookletUpdatable()]
         public ActionResult Edit(int Root_ID, int id)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var section = db.Sections.Find(id);
             section.Content = section.Content.Replace("« ", "\"").Replace(" »", "\"");
             section.Travel = db.Travels.Find(section.Travel_ID);
@@ -125,9 +113,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Edit(int Root_ID, Section section)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             if (ModelState.IsValid)
             {
                 // Reformate et contrôle le contenu saisi
@@ -155,9 +140,6 @@ namespace Bookmaker.Controllers
         [BookletUpdatable()]
         public ActionResult Delete(int Root_ID, int id)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             var section = db.Sections.Find(id);
             section.Travel = db.Travels.Find(section.Travel_ID);
 
@@ -170,9 +152,6 @@ namespace Bookmaker.Controllers
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(), ActionName("Delete")]
         public ActionResult DeleteConfirmed(int Root_ID, int id)
         {
-            // Vérifie que la màj de la brochure est possible
-            if (!ViewBag.IsUpdatable) return new HttpStatusCodeResult(403);
-
             // Supprime la partie du voyage
             var section = db.Sections.Find(id);
             db.Sections.Remove(section);
