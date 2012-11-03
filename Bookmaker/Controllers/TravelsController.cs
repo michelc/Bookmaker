@@ -234,7 +234,7 @@ namespace Bookmaker.Controllers
         //
         // POST: /Travels/Copy/5
 
-        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(ParamKey="Destination_ID")]
+        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(Name="Destination_ID")]
         public ActionResult Copy(int Root_ID, int id, int Destination_ID)
         {
             if (!ModelState.IsValid)
