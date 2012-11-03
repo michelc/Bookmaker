@@ -60,9 +60,7 @@ namespace Bookmaker.Helpers
         public static MvcHtmlString ActionCrud(this HtmlHelper helper, string title, object linkValues = null)
         {
             var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
-            var is_updatable = helper.ViewContext.RouteData.Values["is_updatable"] == null
-                ? true
-                : (bool)helper.ViewContext.RouteData.Values["is_updatable"];
+            var is_updatable = helper.ViewData["IsUpdatable"] == null ? true : (bool)helper.ViewData["IsUpdatable"];
 
             var html = "";
 
@@ -146,9 +144,7 @@ namespace Bookmaker.Helpers
         {
             var current_controller = helper.ViewContext.RouteData.Values["controller"].ToString().ToLower();
             var current_action = helper.ViewContext.RouteData.Values["action"].ToString().ToLower();
-            var is_updatable = helper.ViewContext.RouteData.Values["is_updatable"] == null
-                ? true
-                : (bool)helper.ViewContext.RouteData.Values["is_updatable"];
+            var is_updatable = helper.ViewData["IsUpdatable"] == null ? true : (bool)helper.ViewData["IsUpdatable"];
 
             var parent_controller = "travels";
 

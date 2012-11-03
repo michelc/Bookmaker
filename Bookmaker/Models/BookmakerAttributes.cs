@@ -42,7 +42,6 @@ namespace Bookmaker.Models
             }
 
             // Mémorise l'état de la brochure pour la suite de l'action
-            filterContext.RouteData.Values.Add("is_updatable", IsUpdatable);
             filterContext.Controller.ViewBag.IsUpdatable = IsUpdatable;
 
             base.OnActionExecuting(filterContext);
