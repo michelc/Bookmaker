@@ -27,7 +27,8 @@ namespace Bookmaker.Models
         {
             // Vérifie si la brochure en cours est en lecture seule
             var db = new BookmakerContext();
-            var Booklet_ID = Convert.ToInt32(filterContext.ActionParameters[Name]);
+            var paramValue = filterContext.Controller.ValueProvider.GetValue(Name);
+            var Booklet_ID = paramValue == null ? 0 : Convert.ToInt32(paramValue.AttemptedValue);
             var IsUpdatable = db.BookletIsUpdatable(Booklet_ID);
 
             // Si la mise à jour de la brochure n'est pas possible

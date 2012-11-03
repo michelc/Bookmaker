@@ -16,12 +16,12 @@ namespace Bookmaker.Controllers
         // GET: /Prices
 
         [BookletUpdatable(Continue=true)]
-        public ViewResult Index(int Root_ID)
+        public ViewResult Index(int root_id)
         {
             // Retrouve tous les tarifs de la brochure
             var prices = db
                 .Prices
-                .Where(p => p.Travel.Booklet_ID == Root_ID)
+                .Where(p => p.Travel.Booklet_ID == root_id)
                 .OrderBy(p => p.Travel.Position)
                 .ThenBy(p => p.Price1)
                 .Project().To<PriceIndex>()
@@ -85,7 +85,7 @@ namespace Bookmaker.Controllers
         // GET: /Prices/Details/5
 
         [BookletUpdatable(Continue = true)]
-        public ViewResult Details(int Root_ID, int id)
+        public ViewResult Details(int id)
         {
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
@@ -97,7 +97,7 @@ namespace Bookmaker.Controllers
         // GET: /Prices/Create?int Parent_ID=5
 
         [BookletUpdatable()]
-        public ActionResult Create(int Root_ID, int Parent_ID)
+        public ActionResult Create(int Parent_ID)
         {
             var price = new Price
             {
@@ -112,7 +112,7 @@ namespace Bookmaker.Controllers
         // POST: /Prices/Create
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Create(int Root_ID, Price price)
+        public ActionResult Create(Price price)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +131,7 @@ namespace Bookmaker.Controllers
         // GET: /Prices/Edit/5
 
         [BookletUpdatable()]
-        public ActionResult Edit(int Root_ID, int id, string view_from)
+        public ActionResult Edit(int id, string view_from)
         {
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
@@ -150,7 +150,7 @@ namespace Bookmaker.Controllers
         // POST: /Prices/Edit/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Edit(int Root_ID, Price price, string view_from)
+        public ActionResult Edit(Price price, string view_from)
         {
             if (ModelState.IsValid)
             {
@@ -172,7 +172,7 @@ namespace Bookmaker.Controllers
         // GET: /Prices/Delete/5
 
         [BookletUpdatable()]
-        public ActionResult Delete(int Root_ID, int id)
+        public ActionResult Delete(int id)
         {
             var price = db.Prices.Find(id);
             price.Travel = db.Travels.Find(price.Travel_ID);
@@ -184,7 +184,7 @@ namespace Bookmaker.Controllers
         // POST: /Prices/Delete/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(), ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int Root_ID, int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             var price = db.Prices.Find(id);
             db.Prices.Remove(price);

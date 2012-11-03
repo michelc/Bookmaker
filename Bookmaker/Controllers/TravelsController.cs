@@ -15,11 +15,11 @@ namespace Bookmaker.Controllers
         // GET: /Travels/
 
         [BookletUpdatable(Continue = true)]
-        public ViewResult Index(int Root_ID)
+        public ViewResult Index(int root_id)
         {
             var travels = db
                 .Travels
-                .Where(travel => travel.Booklet_ID == Root_ID)
+                .Where(travel => travel.Booklet_ID == root_id)
                 .OrderBy(travel => travel.Position)
                 .Project().To<TravelIndex>()
                 .ToList();
@@ -31,9 +31,9 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Sort?from=5&to=10
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Sort(int Root_ID, int from, int to)
+        public ActionResult Sort(int root_id, int from, int to)
         {
-            var success = db.SortPositions("Travels", "Booklet_ID", Root_ID, from, to);
+            var success = db.SortPositions("Travels", "Booklet_ID", root_id, from, to);
 
             if (!success) Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
             return Json(success);
@@ -43,7 +43,7 @@ namespace Bookmaker.Controllers
         // GET: /Travels/Details/5
 
         [BookletUpdatable(Continue = true)]
-        public ViewResult Details(int Root_ID, int id)
+        public ViewResult Details(int id)
         {
             var travel = db.Travels.Find(id);
             travel.Prices = travel.Prices.OrderBy(p => p.Title).ToList();
@@ -119,7 +119,7 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Create
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Create(int Root_ID, Travel travel)
+        public ActionResult Create(Travel travel)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +145,7 @@ namespace Bookmaker.Controllers
         // GET: /Travels/Edit/5
 
         [BookletUpdatable()]
-        public ActionResult Edit(int Root_ID, int id)
+        public ActionResult Edit(int id)
         {
             var travel = db.Travels.Find(id);
 
@@ -156,7 +156,7 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Edit/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Edit(int Root_ID, Travel travel)
+        public ActionResult Edit(Travel travel)
         {
             if (ModelState.IsValid)
             {
@@ -179,7 +179,7 @@ namespace Bookmaker.Controllers
         // GET: /Travels/Delete/5
 
         [BookletUpdatable()]
-        public ActionResult Delete(int Root_ID, int id)
+        public ActionResult Delete(int id)
         {
             var travel = db.Travels.Find(id);
 
@@ -195,7 +195,7 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Delete/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(), ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int Root_ID, int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             // Supprime le voyage
             var travel = db.Travels.Find(id);
@@ -213,7 +213,7 @@ namespace Bookmaker.Controllers
         // GET: /Travels/Copy/5
 
         [BookletUpdatable(Continue = true)]
-        public ViewResult Copy(int Root_ID, int id)
+        public ViewResult Copy(int id)
         {
             var travel = db.Travels.Find(id);
             var booklets = db.Booklets
@@ -235,11 +235,11 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Copy/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(Name="Destination_ID")]
-        public ActionResult Copy(int Root_ID, int id, int Destination_ID)
+        public ActionResult Copy(int id, int Destination_ID)
         {
             if (!ModelState.IsValid)
             {
-                return Copy(Root_ID, id);
+                return Copy(id);
             }
 
             // Retrouve le voyage à copier

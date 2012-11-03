@@ -25,7 +25,7 @@ namespace Bookmaker.Controllers
         // POST: /Sections/Sort?Parent_ID=1&from=5&to=10
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Sort(int Root_ID, int Parent_ID, int from, int to)
+        public ActionResult Sort(int Parent_ID, int from, int to)
         {
             var success = db.SortPositions("Sections", "Travel_ID", Parent_ID, from, to);
 
@@ -37,7 +37,7 @@ namespace Bookmaker.Controllers
         // GET: /Sections/Create?Parent_ID=5
 
         [BookletUpdatable()]
-        public ActionResult Create(int Root_ID, int Parent_ID, int Section_Type = 0)
+        public ActionResult Create(int Parent_ID, int Section_Type = 0)
         {
             var section = new Section
             {
@@ -62,7 +62,7 @@ namespace Bookmaker.Controllers
         // POST: /Sections/Create
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Create(int Root_ID, Section section)
+        public ActionResult Create(Section section)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace Bookmaker.Controllers
         // GET: /Sections/Edit/5
 
         [BookletUpdatable()]
-        public ActionResult Edit(int Root_ID, int id)
+        public ActionResult Edit(int id)
         {
             var section = db.Sections.Find(id);
             section.Content = section.Content.Replace("« ", "\"").Replace(" »", "\"");
@@ -111,7 +111,7 @@ namespace Bookmaker.Controllers
         // POST: /Sections/Edit/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Edit(int Root_ID, Section section)
+        public ActionResult Edit(Section section)
         {
             if (ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace Bookmaker.Controllers
         // GET: /Sections/Delete/5
 
         [BookletUpdatable()]
-        public ActionResult Delete(int Root_ID, int id)
+        public ActionResult Delete(int id)
         {
             var section = db.Sections.Find(id);
             section.Travel = db.Travels.Find(section.Travel_ID);
@@ -150,7 +150,7 @@ namespace Bookmaker.Controllers
         // POST: /Sections/Delete/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable(), ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int Root_ID, int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             // Supprime la partie du voyage
             var section = db.Sections.Find(id);
