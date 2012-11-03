@@ -106,11 +106,11 @@ namespace Bookmaker.Controllers
         // GET: /Travels/Create
 
         [BookletUpdatable()]
-        public ActionResult Create(int Root_ID)
+        public ActionResult Create(int root_id)
         {
             var travel = new Travel();
 
-            travel.Booklet_ID = Root_ID;
+            travel.Booklet_ID = root_id;
 
             return View(travel);
         }

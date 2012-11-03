@@ -1,0 +1,22 @@
+﻿@model Boolean?
+@{
+    var values = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Oui", Value = "true", Selected = Model.HasValue && Model.Value },
+        new SelectListItem { Text = "Non", Value = "false", Selected = Model.HasValue && !Model.Value }
+    };
+
+    var is_required = ViewData.ModelMetadata.IsRequired;
+    if (!is_required)
+    {
+        values.Add(new SelectListItem { Text = "(vide)", Value = "", Selected = !Model.HasValue });
+    }
+
+    var fieldId = ViewData.TemplateInfo.GetFullHtmlFieldId("");
+}
+ 
+@foreach (var v in values)
+{
+    @Html.RadioButton("", v.Value, v.Selected, new { @id = @fieldId + "_" + @v.Value })
+    <label for="@(fieldId + "_" + v.Value)">@v.Text</label>
+}
