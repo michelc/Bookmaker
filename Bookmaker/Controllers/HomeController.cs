@@ -14,6 +14,7 @@ namespace Bookmaker.Controllers
                 {
                     var db = new BookmakerContext();
                     root_id = (from b in db.Booklets
+                               orderby b.Year descending
                                orderby b.Booklet_ID descending
                                select b.Booklet_ID).FirstOrDefault();
                 }

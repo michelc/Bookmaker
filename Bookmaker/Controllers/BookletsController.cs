@@ -21,7 +21,7 @@ namespace Bookmaker.Controllers
             var booklets = db
                 .Booklets
                 .OrderByDescending(booklet => booklet.Year)
-                .ThenBy(booklet => booklet.Title)
+                .ThenByDescending(booklet => booklet.Booklet_ID)
                 .Project().To<BookletIndex>()
                 .ToList();
 
