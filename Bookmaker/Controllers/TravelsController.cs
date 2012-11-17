@@ -28,6 +28,23 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // GET: /Travels/Search?q=xxx
+
+        public ViewResult Search(string q)
+        {
+            var travels = db
+                .Travels
+                .Where(travel => travel.Title.Contains(q))
+                .OrderBy(travel => travel.Position)
+                .Project().To<TravelIndex>()
+                .ToList();
+
+            ViewBag.q = q;
+            ViewBag.IsUpdatable = false;
+            return View("Index", travels);
+        }
+
+        //
         // POST: /Travels/Sort?from=5&to=10
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]

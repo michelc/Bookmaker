@@ -549,3 +549,21 @@ a.xls_file
 {
     background-image: url(icons/xls_file.png);
 }
+
+/* Zone de recherche */
+ul.tabs { margin-bottom: 0; }
+#search
+{
+    margin: 0 0 20px 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    border-bottom: solid 1px #ddd;
+    text-align: right;
+}
+#search input[type="submit"]
+{
+    font-size: 100%;
+    font-weight: normal;
+    margin: 0px 0px 0 0;
+    padding: 10px 15px;
+}
