@@ -21,6 +21,14 @@ namespace Bookmaker.Models
 
             Mapper.CreateMap<Travel, TravelSearch>();
 
+            Mapper.CreateMap<Section, TravelSearch>()
+                .ForMember(dest => dest.BookletYear, opt => opt.MapFrom(src => src.Travel.Booklet.Year))
+                .ForMember(dest => dest.Booklet_ID, opt => opt.MapFrom(src => src.Travel.Booklet_ID))
+                .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.Travel.Position))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Travel.Title))
+                .ForMember(dest => dest.TravelType_Int, opt => opt.MapFrom(src => src.Travel.TravelType_Int))
+                .ForMember(dest => dest.BookletTitle, opt => opt.MapFrom(src => src.Travel.Booklet.Title));
+
             Mapper.CreateMap<Booklet, JsonBooklet>();
 
             Mapper.CreateMap<Travel, JsonTravel>()

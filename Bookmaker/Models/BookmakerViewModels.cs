@@ -70,10 +70,11 @@ namespace Bookmaker.Models
     public class TravelSearch
     {
         public int Travel_ID { get; set; }
+        public string BookletYear { get; set; }
+        public int Booklet_ID { get; set; }
         public int Position { get; set; }
         public string Title { get; set; }
         public int TravelType_Int { get; set; }
-        public int Booklet_ID { get; set; }
         public string BookletTitle { get; set; }
 
         public TravelType TravelType

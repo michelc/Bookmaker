@@ -32,17 +32,33 @@ namespace Bookmaker.Controllers
 
         public ViewResult Search(string q)
         {
-            var travels = db
+            var search_in_travels = db
                 .Travels
                 .Where(travel => travel.Title.Contains(q))
-                .OrderByDescending(travel => travel.Booklet.Year)
-                .ThenByDescending(travel => travel.Booklet_ID)
-                .ThenBy(travel => travel.Position)
                 .Project().To<TravelSearch>()
                 .ToList();
 
+            var search_in_sections = db
+                .Sections
+                .Where(section => section.Content.Contains(q))
+                .Project().To<TravelSearch>()
+                .Distinct()
+                .ToList();
+
+            foreach (var found in search_in_travels)
+            {
+                search_in_sections.RemoveAll(result => result.Travel_ID == found.Travel_ID);
+            }
+
+            var results = search_in_travels
+                .Union(search_in_sections)
+                .OrderByDescending(result => result.BookletYear)
+                .ThenByDescending(result => result.Booklet_ID)
+                .ThenBy(result => result.Position)
+                .ToList();
+
             ViewBag.q = q;
-            return View(travels);
+            return View(results);
         }
 
         //
