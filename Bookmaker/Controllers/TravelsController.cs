@@ -35,13 +35,14 @@ namespace Bookmaker.Controllers
             var travels = db
                 .Travels
                 .Where(travel => travel.Title.Contains(q))
-                .OrderBy(travel => travel.Position)
-                .Project().To<TravelIndex>()
+                .OrderByDescending(travel => travel.Booklet.Year)
+                .ThenByDescending(travel => travel.Booklet_ID)
+                .ThenBy(travel => travel.Position)
+                .Project().To<TravelSearch>()
                 .ToList();
 
             ViewBag.q = q;
-            ViewBag.IsUpdatable = false;
-            return View("Index", travels);
+            return View(travels);
         }
 
         //

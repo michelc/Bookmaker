@@ -65,6 +65,24 @@ namespace Bookmaker.Models
     }
 
     /// <summary>
+    /// Classe pour afficher la liste des voyages dans la vue Search
+    /// </summary>
+    public class TravelSearch
+    {
+        public int Travel_ID { get; set; }
+        public int Position { get; set; }
+        public string Title { get; set; }
+        public int TravelType_Int { get; set; }
+        public int Booklet_ID { get; set; }
+        public string BookletTitle { get; set; }
+
+        public TravelType TravelType
+        {
+            get { return (TravelType)TravelType_Int; }
+        }
+    }
+
+    /// <summary>
     /// Classe pour copier un voyage vers une autre brochure
     /// </summary>
     public class TravelCopy

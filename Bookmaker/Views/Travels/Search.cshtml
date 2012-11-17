@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Bookmaker.Models.TravelSearch>
+
+@{
+    ViewBag.Title = "Résultat de la recherche";
+}
+
+<h2 class="crud">@ViewBag.Title</h2>
+
+<table>
+<thead>
+    <tr>
+        <th>
+            Brochure
+        </th>
+        <th>
+            N°
+        </th>
+        <th>
+            Voyage
+        </th>
+        <th>
+            Type
+        </th>
+    </tr>
+</thead>
+<tbody>
+@foreach (var line in Model)
+{
+    <tr>
+        <td>
+            @line.BookletTitle
+        </td>
+        <td class="handle">
+            @line.Position
+        </td>
+        <td>
+            @Html.ActionLink(@line.Title, "Details", new { id = line.Travel_ID, root_id = line.Booklet_ID })
+        </td>
+        <td>
+            @line.TravelType
+        </td>
+    </tr>
+}
+</tbody>
+</table>

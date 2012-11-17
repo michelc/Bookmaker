@@ -19,6 +19,8 @@ namespace Bookmaker.Models
 
             Mapper.CreateMap<Travel, TravelIndex>();
 
+            Mapper.CreateMap<Travel, TravelSearch>();
+
             Mapper.CreateMap<Booklet, JsonBooklet>();
 
             Mapper.CreateMap<Travel, JsonTravel>()
