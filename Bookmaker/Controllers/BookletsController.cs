@@ -209,12 +209,13 @@ namespace Bookmaker.Controllers
 
         public FileResult JsonExport()
         {
-            // Retrouve toutes les brochures classées par année
+            // Retrouve toutes les brochures classées identifiant
+            // (elles seront importées dans le même ordre)
             var booklets = db
                 .Booklets
                 .Include(b => b.Travels)
-                .OrderBy(b => b.Year)
-                .ThenBy(b => b.Title).ToList();
+                .OrderBy(b => b.Booklet_ID)
+                .ToList();
 
             // Pour chaque brochure
             foreach (var booklet in booklets)
