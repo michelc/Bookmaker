@@ -44,7 +44,7 @@ namespace Bookmaker
 
             AutoMapperConfiguration.Configure();
 
-            // MiniProfilerEF.Initialize(true);
+            MiniProfilerEF.Initialize(true);
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
