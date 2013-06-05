@@ -266,8 +266,7 @@ namespace Bookmaker.Models
             catch { }
             try
             {
-                // SQL Server pas CE (ne semble pas fonctionner !)
-                this.ExecuteSql(string.Format("TRUNCATE TABLE {0}", tableName));
+                // SQL Server pas CE
                 this.ExecuteSql(string.Format("DBCC CHECKIDENT('{0}', RESEED, 0)", tableName));
             }
             catch { }
