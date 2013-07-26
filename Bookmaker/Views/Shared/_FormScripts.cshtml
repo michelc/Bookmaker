@@ -35,6 +35,26 @@
             SetConfirmUnload(false);
         });
 
+        /* Affichage de l'aide contextuelle pour les types de contenu */
+        /* ---------------------------------------------------------- */
+        $("[name=SectionType]").on("click", function () {
+            $(".aide").hide();
+            $("#Aide_" + this.id).show();
+            switch (this.id) {
+                case "SectionType_Titre":
+                case "SectionType_Image":
+                case "SectionType_Tarif":
+                    $("#Content").height("1.3em");
+                    break;
+                case "SectionType_Texte":
+                case "SectionType_Menu":
+                case "SectionType_Menu_Centre":
+                    $("#Content").height("");
+                    break;
+            }
+        });
+        $("[name=SectionType]:checked").click();
+
     });
 
     function SetConfirmUnload(on) {

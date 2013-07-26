@@ -569,3 +569,15 @@ ul.tabs { margin-bottom: 0; }
     margin: 0px 0px 0 0;
     padding: 10px 15px;
 }
+
+/* Aide contextuelle pour les types de contenu */
+.aide.columns
+{
+    display: none;
+    font-style: italic;
+}
+
+.aide p
+{
+    margin-bottom: 10px;
+}
