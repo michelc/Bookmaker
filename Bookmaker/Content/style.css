@@ -357,7 +357,8 @@ textarea
 }
 textarea
 {
-    height: 7em;
+    height: 9em;
+    line-height: 21px;
 }
 
 input[type="text"].inputshort
@@ -527,7 +528,7 @@ h1 em
 /* Agrandit la textbox de saisie d'une section */
 #Content
 {
-    height: 15em;
+    height: 19em;
 }
 
 /* Signale les zones permettant de drag & drop */
