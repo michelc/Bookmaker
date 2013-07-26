@@ -27,9 +27,14 @@ namespace Bookmaker.Helpers
 
             if (metadata.ContainerType != null)
             {
-                bool isRequired = metadata.ContainerType.GetProperty(metadata.PropertyName)
-                                          .GetCustomAttributes(typeof(RequiredAttribute), false)
-                                          .Length == 1;
+                bool isRequired = metadata.IsRequired;
+
+                if (!isRequired)
+                {
+                    isRequired = metadata.ContainerType.GetProperty(metadata.PropertyName)
+                                         .GetCustomAttributes(typeof(RequiredAttribute), false)
+                                         .Length == 1;
+                }
                 if (isRequired)
                 {
                     tag.AddCssClass("is_required");
