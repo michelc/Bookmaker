@@ -139,6 +139,12 @@ namespace Bookmaker.Helpers
                     return "Jour " + day + " : " + title;
                 }
             }
+
+            if (title.ToLower() == "retour")
+            {
+                title = "Retour dans votre région";
+            }
+
             return title;
         }
 
