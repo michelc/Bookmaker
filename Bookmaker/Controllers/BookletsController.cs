@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -258,31 +259,55 @@ namespace Bookmaker.Controllers
         //
         // GET: /Booklets/JsonImport
 
-        public ActionResult JsonImport()
+        public ViewResult JsonImport()
         {
-            // Charge les données à importer
-            var file = Server.MapPath("~/App_Data/json_db.txt");
-            var json = System.IO.File.ReadAllText(file);
-            var booklets = ImportExport.JsonImport(json);
+            var model = new JsonImport();
 
-            // Rien à faire quand rien n'a été importé
-            if (booklets.Count == 0) return RedirectToAction("Index");
-
-            // Vide les tables actuelles
-            db.TruncateTable("Prices", "Price_ID");
-            db.TruncateTable("Sections", "Section_ID");
-            db.TruncateTable("Travels", "Travel_ID");
-            db.TruncateTable("Booklets", "Booklet_ID");
-
-            // Importe les données dans la base de données
-            booklets.ForEach(t => db.Booklets.Add(t));
-
-            // Insère les données importées dans la base de données
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
+            ViewBag.Warning = "Attention, cela remplacera toutes les brochures existantes !"; 
+            return View(model);
         }
 
+        //
+        // POST: /Booklets/JsonImport
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult JsonImport(JsonImport source)
+        {
+            var booklets = new List<Booklet>();
+            if (ModelState.IsValid)
+            {
+                // Charge les données à importer
+                try
+                {
+                    booklets = ImportExport.JsonImport(source.Content);
+                }
+                catch
+                {
+                    ModelState.AddModelError("Content", "Aucune brochure à importer.");
+                }
+            }
+
+            // Importation des brochures présentes
+            if (booklets.Count > 0)
+            {
+                // Vide les tables actuelles
+                db.TruncateTable("Prices", "Price_ID");
+                db.TruncateTable("Sections", "Section_ID");
+                db.TruncateTable("Travels", "Travel_ID");
+                db.TruncateTable("Booklets", "Booklet_ID");
+
+                // Importe les données dans la base de données
+                booklets.ForEach(t => db.Booklets.Add(t));
+
+                // Insère les données importées dans la base de données
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Warning = "Attention, cela remplacera toutes les brochures existantes !";
+            return View(source);
+        }
 
         protected override void Dispose(bool disposing)
         {

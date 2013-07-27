@@ -275,6 +275,7 @@
     <Content Include="Views\Travels\_Editor.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Sections\_Help.cshtml" />
+    <Content Include="Views\Booklets\JsonImport.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

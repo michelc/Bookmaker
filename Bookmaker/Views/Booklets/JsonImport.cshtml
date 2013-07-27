@@ -1,0 +1,36 @@
+﻿@model Bookmaker.Models.JsonImport
+           
+@{
+    ViewBag.Title = "Importer les brochures";
+}
+
+<h2 class="crud">@Html.ActionCrud("Brochures")</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset class="sixteen columns">
+        <legend>@ViewBag.Title</legend>
+
+        <div class="editor-label five columns">
+            @Html.CaptionFor(model => model.Content)
+        </div>
+        <div class="editor-field eleven columns">
+            @Html.EditorFor(model => model.Content)
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+
+        <p class="offset-by-five eleven columns alpha">
+            <input type="submit" value="Ok pour importer !" />
+            @Html.ActionCancel()
+        </p>
+        <p class="offset-by-five eleven columns alpha important">
+            @ViewBag.Warning
+        </p>
+    </fieldset>
+}
+
+@section JavaScript
+{
+    @Html.Partial("_FormScripts")
+}

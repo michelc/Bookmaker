@@ -93,4 +93,15 @@ namespace Bookmaker.Models
         public int Destination_ID { get; set; }
         public SelectList Destinations { get; set; }
     }
+
+    /// <summary>
+    /// Classe pour saisir la source d'un import Json
+    /// </summary>
+    public class JsonImport
+    {
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Source JSON")]
+        [Required]
+        public string Content { get; set; }
+    }
 }

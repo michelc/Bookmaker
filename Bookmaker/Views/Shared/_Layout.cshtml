@@ -16,7 +16,7 @@
 
 @{
     var ActionName = ViewContext.RouteData.Values["Action"].ToString().ToLowerInvariant();
-    var IsSearchEnable = !(new[] { "create", "edit", "delete", "copy" }).Contains(ActionName);
+    var IsSearchEnable = !(new[] { "create", "edit", "delete", "copy", "jsonimport" }).Contains(ActionName);
 }
 
 <body>
