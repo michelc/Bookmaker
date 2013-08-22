@@ -289,8 +289,23 @@ namespace Bookmaker.Controllers
             int position = 0;
             copy.Sections.ToList().ForEach(s => s.Position = ++position);
 
-            // Retrouve la brochure de destination (id codé en dur)
+            // Retrouve la brochure d'origine
+            var origine = db.Booklets.Find(travel.Booklet_ID);
+
+            // Retrouve la brochure de destination
             var destination = db.Booklets.Find(Destination_ID);
+
+            // Renomme éventuellement les images
+            copy.Sections.ToList().ForEach(s =>
+            {
+                if (s.SectionType == SectionType.Image)
+                {
+                    if (s.Content.Contains(origine.Year))
+                    {
+                        s.Content = s.Content.Replace(origine.Year, destination.Year);
+                    }
+                }
+            });
 
             // Lui ajoute le voyage copié en dernière position
             copy.Position = db.Travels.Where(t => t.Booklet_ID == Destination_ID).Count() + 1;
