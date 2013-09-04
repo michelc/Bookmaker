@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Bookmaker.Helpers
@@ -71,6 +72,13 @@ namespace Bookmaker.Helpers
             {
                 var temp = car.ToString();
                 text = text.Replace(temp, temp + " ");
+            }
+
+            // Suppression des caractères de contrôle (pas de pb pour \r et \n car on travaille au niveau ligne)
+            var controls = Enumerable.Range(0, 27).Select(i => (char)i);
+            foreach (var car in controls)
+            {
+                text = text.Replace(car, ' ');
             }
 
             // Suppression des doubles espaces
