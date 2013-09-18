@@ -95,6 +95,18 @@ namespace Bookmaker.Models
     }
 
     /// <summary>
+    /// Classe pour importer les sections d'un voyage
+    /// </summary>
+    public class TravelImport
+    {
+        public Travel Travel { get; set; }
+        [Display(Name = "Contenu")]
+        [DataType(DataType.MultilineText)]
+        [Required]
+        public string Content { get; set; }
+    }
+
+    /// <summary>
     /// Classe pour saisir la source d'un import Json
     /// </summary>
     public class JsonImport

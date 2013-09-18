@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Bookmaker.Models;
 
 namespace Bookmaker.Helpers
 {
@@ -29,6 +32,61 @@ namespace Bookmaker.Helpers
             }
 
             return text.ToString();
+        }
+
+        public static IList<Section> ContentImport(TravelType type, string content)
+        {
+            var sections = new List<Section>();
+
+            content = ContentFormat(content);
+            var lines = content.Trim().Replace("\r\n", "\r").Split('\r');
+
+            var text = new StringBuilder();
+
+            foreach (var line in lines)
+            {
+                if (IsTitle(type, line))
+                {
+                    if (text.Length > 0)
+                    {
+                        sections.Add(CreateSection(text.ToString()));
+                        text.Clear();
+                    }
+                    sections.Add(CreateSection(TitleFormat(line), SectionType.Titre));
+                }
+                else if (IsMenu(type, line))
+                {
+                    if (text.Length > 0)
+                    {
+                        sections.Add(CreateSection(text.ToString()));
+                        text.Clear();
+                    }
+                    sections.Add(CreateSection(MenuFormat(line), SectionType.Menu));
+                }
+                else
+                {
+                    text.AppendLine(line);
+                }
+            }
+
+            if (text.Length > 0) sections.Add(CreateSection(text.ToString()));
+
+            int section_position = 0;
+            sections.ForEach(s => s.Position = ++section_position);
+            // foreach (var s in sections) s.Position = ++section_position;
+
+            return sections;
+        }
+
+        private static Section CreateSection(string text, SectionType type = SectionType.Texte)
+        {
+            var section = new Section
+            {
+                Content = ContentFormat(text),
+                SectionType = type
+            };
+
+            return section;
         }
 
         private static string CheckText(string text)
@@ -135,6 +193,11 @@ namespace Bookmaker.Helpers
                     }
                 }
 
+                if ((start == "matin") || (start == "midi") || (start == "après-midi"))
+                {
+                    title = title.Substring(0, space) + " : " + title.Substring(space + 1).Trim();
+                }
+
                 // En fait, start = "jour" au mieux !!!
                 var day = match(@"jour (\d\d)$", start);
                 if (string.IsNullOrEmpty(day)) day = match(@"jour (\d)$", start);
@@ -154,6 +217,102 @@ namespace Bookmaker.Helpers
             }
 
             return title;
+        }
+
+        private static string MenuFormat(string menu)
+        {
+            // Est-ce que la ligne pour le menu contient des tirets pour séparer les plats
+            var dash = menu.IndexOf(" – ");
+            if (dash == -1)
+            {
+                menu.IndexOf(" - ");
+            }
+            if (dash == -1)
+            {
+                // Non => renvoie le texte tel quel
+                return menu;
+            }
+
+            // Est-ce que la ligne pour le menu contient deux-points pour séparer le titre des plats
+            var points = menu.IndexOf(" : ");
+            if (points != -1)
+            {
+                if (points < dash)
+                {
+                    menu = menu.Substring(0, points) + " :" + Environment.NewLine + menu.Substring(points + 3);
+                }
+            }
+
+            menu = menu.Replace(" – ", Environment.NewLine);
+            menu = menu.Replace(" - ", Environment.NewLine);
+
+            return menu;
+        }
+
+        /// <summary>
+        /// Détermine si un texte peut correspondre à un titre
+        /// </summary>
+        /// <param name="type">Type du voyage (Journée ou Séjour)</param>
+        /// <param name="text">Texte à examiner</param>
+        /// <returns>True si c'est le cas</returns>
+        private static bool IsTitle(TravelType type, string text)
+        {
+            text = text.ToLower();
+            if (text.Length > 75) return false;
+
+            var title = "";
+
+            if (type == TravelType.Sejour)
+            {
+                if (StartsWithDay(text)) return true;
+
+                title = match(@"^(jour \d\d)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(jour \d)", text);
+            }
+            else
+            {
+                if (StartsWithHour(text)) return true;
+
+                title = match(@"^(matin)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(midi)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(déjeuner)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(après-midi)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(retour dans)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(ou )", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(\d\dh\d\d)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(\dh\d\d)", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(\d\dh )", text);
+                if (string.IsNullOrEmpty(title)) title = match(@"^(\dh )", text);
+
+                if (string.IsNullOrEmpty(title))
+                {
+                    if (text.Length <= 50) title = text;
+                }
+            }
+
+            return !string.IsNullOrEmpty(title);
+        }
+
+        /// <summary>
+        /// Détermine si un texte peut correspondre à un menu
+        /// </summary>
+        /// <param name="type">Type du voyage (Journée ou Séjour)</param>
+        /// <param name="text">Texte à examiner</param>
+        /// <returns>True si c'est le cas</returns>
+        private static bool IsMenu(TravelType type, string text)
+        {
+            if (type == TravelType.Sejour) return false;
+
+            text = text.ToLower();
+            var menu = match(@"^(entrée :)", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(plat )", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(dessert )", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(fromage )", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(menu )", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(ou menu )", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(exemple de menu )", text);
+
+            return !string.IsNullOrEmpty(menu);
         }
 
         public static bool StartsWithDay(string title)
