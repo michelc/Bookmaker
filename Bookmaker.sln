@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmaker", "Bookmaker\Bookmaker.csproj", "{ED413360-1C59-479B-9CB5-CF14F674F7F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmaker.Tests", "Bookmaker.Tests\Bookmaker.Tests.csproj", "{FF971A76-4E34-497A-B9AF-54946FFC31B3}"
