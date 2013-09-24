@@ -151,7 +151,7 @@ namespace Bookmaker.Models
             if (count > 0)
             {
                 if (count == 1) prices = prices.Replace("<br>", "&nbsp;: ");
-                prices = "Tarif 2013 à partir de 50 participants" + prices;
+                prices = "Tarif à partir de 50 participants" + prices;
                 prices = string.Format("<h4>{0}</h4>", prices);
             }
 
