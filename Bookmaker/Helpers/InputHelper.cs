@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -164,6 +165,14 @@ namespace Bookmaker.Helpers
         public static string TitleFormat(string title)
         {
             title = title.TrimEnd("0".ToCharArray());
+            if (title == title.ToUpper())
+            {
+                title = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(title.ToLowerInvariant());
+            }
+            if (title == title.ToUpperInvariant())
+            {
+                title = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(title.ToLowerInvariant());
+            }
 
             if (StartsWithDay(title)) return title;
             if (StartsWithHour(title)) return title;
@@ -219,14 +228,16 @@ namespace Bookmaker.Helpers
             return title;
         }
 
-        private static string MenuFormat(string menu)
+        public static string MenuFormat(string menu)
         {
+            // Gère cas où menu est copié / collé depuis un autre voyage
+            // => choix entre plats est séparé par un "ou" entre parentèses
+            menu = menu.Replace(" (ou) ", " ou ");
+
             // Est-ce que la ligne pour le menu contient des tirets pour séparer les plats
-            var dash = menu.IndexOf(" – ");
-            if (dash == -1)
-            {
-                menu.IndexOf(" - ");
-            }
+            menu = menu.Replace(" — ", " - ");
+            menu = menu.Replace(" – ", " - ");
+            var dash = menu.IndexOf(" - ");
             if (dash == -1)
             {
                 // Non => renvoie le texte tel quel
@@ -237,13 +248,15 @@ namespace Bookmaker.Helpers
             var points = menu.IndexOf(" : ");
             if (points != -1)
             {
+                // Si oui, est-ce que ces deux-points sont dans le premier plat
                 if (points < dash)
                 {
+                    // Oui => sépare le titre de menu du 1° plat
                     menu = menu.Substring(0, points) + " :" + Environment.NewLine + menu.Substring(points + 3);
                 }
             }
 
-            menu = menu.Replace(" – ", Environment.NewLine);
+            // Remplace les séparateurs de plats par un saut de ligne
             menu = menu.Replace(" - ", Environment.NewLine);
 
             return menu;
@@ -311,6 +324,7 @@ namespace Bookmaker.Helpers
             if (string.IsNullOrEmpty(menu)) menu = match(@"^(menu )", text);
             if (string.IsNullOrEmpty(menu)) menu = match(@"^(ou menu )", text);
             if (string.IsNullOrEmpty(menu)) menu = match(@"^(exemple de menu )", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(idée de menu )", text);
 
             return !string.IsNullOrEmpty(menu);
         }

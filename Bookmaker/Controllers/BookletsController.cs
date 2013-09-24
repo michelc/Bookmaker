@@ -279,7 +279,7 @@ namespace Bookmaker.Controllers
                 // Charge les données à importer
                 try
                 {
-                    booklets = ImportExport.JsonImport(source.Content);
+                    booklets = ImportExport.JsonImport(source.RawContent);
                 }
                 catch
                 {

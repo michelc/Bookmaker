@@ -531,6 +531,12 @@ h1 em
     height: 19em;
 }
 
+/* Agrandit la textbox de saisie pour un import */
+#RawContent
+{
+    height: 29em;
+}
+
 /* Signale les zones permettant de drag & drop */
 .handle
 {

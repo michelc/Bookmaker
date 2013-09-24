@@ -13,11 +13,11 @@
         <legend>@ViewBag.Title</legend>
 
         <div class="editor-label five columns">
-            @Html.CaptionFor(model => model.Content)
+            @Html.CaptionFor(model => model.RawContent)
         </div>
         <div class="editor-field eleven columns">
-            @Html.EditorFor(model => model.Content)
-            @Html.ValidationMessageFor(model => model.Content)
+            @Html.EditorFor(model => model.RawContent)
+            @Html.ValidationMessageFor(model => model.RawContent)
         </div>
 
         <p class="offset-by-five eleven columns alpha">

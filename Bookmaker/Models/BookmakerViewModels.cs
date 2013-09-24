@@ -100,10 +100,10 @@ namespace Bookmaker.Models
     public class TravelImport
     {
         public Travel Travel { get; set; }
-        [Display(Name = "Contenu")]
+        [Display(Name = "Contenu brut")]
         [DataType(DataType.MultilineText)]
         [Required]
-        public string Content { get; set; }
+        public string RawContent { get; set; }
     }
 
     /// <summary>
@@ -114,6 +114,6 @@ namespace Bookmaker.Models
         [DataType(DataType.MultilineText)]
         [Display(Name = "Source JSON")]
         [Required]
-        public string Content { get; set; }
+        public string RawContent { get; set; }
     }
 }

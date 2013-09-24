@@ -225,14 +225,14 @@ namespace Bookmaker.Controllers
         // POST: /Travels/Import/5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Import(int id, string content)
+        public ActionResult Import(int id, string rawcontent)
         {
             var travel = db.Travels.Find(id);
 
             if (ModelState.IsValid)
             {
                 // Reformate et contrôle le contenu saisi
-                travel.Sections = InputHelper.ContentImport(travel.TravelType, content);
+                travel.Sections = InputHelper.ContentImport(travel.TravelType, rawcontent);
 
                 // Enregistre les modifications
                 db.Entry(travel).State = EntityState.Modified;
@@ -242,7 +242,7 @@ namespace Bookmaker.Controllers
                 return RedirectToAction("Details", new { id = travel.Travel_ID });
             }
 
-            var import = new TravelImport { Travel = travel };
+            var import = new TravelImport { Travel = travel, RawContent = rawcontent };
             return View(import);
         }
 

@@ -75,11 +75,9 @@ namespace Bookmaker.Controllers
                 {
                     section.Content = InputHelper.TitleFormat(section.Content);
                 }
-                if (section.SectionType == SectionType.Menu)
+                else if (section.SectionType == SectionType.Menu)
                 {
-                    // A la création, gère un copier / coller depuis ancienne brochure
-                    // où le tiret long sert de séparateur entre les plats
-                    section.Content = section.Content.Replace(" – ", "\r\n");
+                    section.Content = InputHelper.MenuFormat(section.Content);
                 }
 
                 // Enregistre la nouvelle partie
@@ -120,6 +118,10 @@ namespace Bookmaker.Controllers
                 if (section.SectionType == SectionType.Titre)
                 {
                     section.Content = InputHelper.TitleFormat(section.Content);
+                }
+                else if (section.SectionType == SectionType.Menu)
+                {
+                    section.Content = InputHelper.MenuFormat(section.Content);
                 }
 
                 // Enregistre les modifications
