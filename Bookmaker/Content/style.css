@@ -423,6 +423,13 @@ input[type="text"].inputbig
     font-weight: bold;
 }
 
+/* Affichage d'une information accessoire */
+.accessoire {
+    color: #888;
+    font-size: smaller;
+    font-style: italic;
+}
+
 
 /* #Condense l'affichage pour les petites largeurs
 ================================================== */
