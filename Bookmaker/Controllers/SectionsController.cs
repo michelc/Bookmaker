@@ -84,7 +84,21 @@ namespace Bookmaker.Controllers
                 db.Sections.Add(section);
                 db.SaveChanges();
 
-                this.Flash(string.Format("La partie n° {0} a été créée", section.Position));
+                // Déplace la 1° image insérée en 1° position
+                var position = section.Position;
+                if (section.SectionType == SectionType.Image)
+                {
+                    if (section.Position > 1)
+                    {
+                        if (db.Sections.Where(s => s.Travel_ID == section.Travel_ID).ToList().Where(s => s.SectionType == SectionType.Image).Count() == 1)
+                        {
+                            var success = db.SortPositions("Sections", "Travel_ID", section.Travel_ID, section.Position - 1, 0);
+                            position = 1;
+                        }
+                    }
+                }
+
+                this.Flash(string.Format("La partie n° {0} a été créée", position));
                 return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
             }
 
