@@ -106,10 +106,10 @@ namespace Bookmaker.Helpers
             var open = text.IndexOf('"');
             while (open != -1)
             {
+                text = text.Substring(0, open) + "«" + text.Substring(open + 1);
                 var close = text.IndexOf('"', open + 1);
                 if (close != -1)
                 {
-                    text = text.Substring(0, open) + "«" + text.Substring(open + 1);
                     text = text.Substring(0, close) + "»" + text.Substring(close + 1);
                     open = text.IndexOf('"');
                 }
