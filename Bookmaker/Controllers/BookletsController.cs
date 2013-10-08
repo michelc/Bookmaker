@@ -283,7 +283,7 @@ namespace Bookmaker.Controllers
                 }
                 catch
                 {
-                    ModelState.AddModelError("Content", "Aucune brochure à importer.");
+                    ModelState.AddModelError("RawContent", "Aucune brochure à importer.");
                 }
             }
 
