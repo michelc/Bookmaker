@@ -159,6 +159,10 @@ namespace Bookmaker.Helpers
             // Quart
             text = text.Replace("1/4", "¼");
 
+            // Eperluette
+            text = text.Replace("&amp ; ", "&");
+            text = text.Replace("&", "&amp;");
+
             return text.Trim();
         }
 
