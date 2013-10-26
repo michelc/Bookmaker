@@ -117,10 +117,15 @@ namespace Bookmaker.Helpers
             {
                 if (content.EndsWith(")"))
                 {
+                    // Les images sont renseignées sous la forme "(annee/nom-fichier-sans-extension)"
+                    // La variable de configuration "ImagesPngPath" donne l'URL où sont stockées
+                    // les images en mode développement ou production.
                     var path = ConfigurationManager.AppSettings["ImagesPngPath"] ?? "";
                     if (path == "*") path = "";
                     if (!string.IsNullOrEmpty(path))
                     {
+                        // Reconstruit l'URL de l'image :
+                        // "url-stockage-images/annee/nom-fichier-sans-extension.png"
                         src = src.Substring(1, src.Length - 2);
                         html.AppendFormat("<p><img src=\"{0}{1}.png\" /></p>", path, src);
                         return html;
