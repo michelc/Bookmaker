@@ -74,7 +74,6 @@ namespace Bookmaker.Helpers
 
             int section_position = 0;
             sections.ForEach(s => s.Position = ++section_position);
-            // foreach (var s in sections) s.Position = ++section_position;
 
             return sections;
         }
@@ -83,80 +82,48 @@ namespace Bookmaker.Helpers
         {
             var prices = new List<Price>();
 
-            // Les tarifs sont séparés par des tabulations
+            // Remplace tabulations par séparateurs pour les tarifs
             content = content.Replace("\t", "|");
-            while (content.Contains("||"))
-            {
-                content = content.Replace("||", "|");
-            }
-            if (content.EndsWith("|")) content = content.Substring(0, content.Length - 1);
-
-            // Nettoie le contenu importé
             content = ContentFormat(content);
 
-            // Les tarifs contiennent au minimum 1 ligne de titre et 5 lignes de tarifs
+            // Il faut au minimum 1 ligne de titre et 5 lignes pour les 5 prix de chaque tarif
             var lines = content.Trim().Replace("\r\n", "\r").Split('\r');
             if (lines.Length < 6) return prices;
 
             // La 1° ligne contient les titres des tarifs
-            // Tarif par personne : | Menu A | Menu B | Menu C
-            //var cols = lines[0].Split('|');
-            //var nb_tarifs = cols.Length - 1;
-            int nb_tarifs = 0;
-            int price_index = 0;
-
-            var text = new StringBuilder();
-
-            foreach (var line in lines)
+            // --> "Tarif par personne : | Menu A | Menu B | Menu C"
+            // Ce qui donne le nombre de tarifs et le titre de chaque tarif
+            var cols = lines[0].Split('|');
+            int nb_tarifs = cols.Length - 1;
+            for (int t = 0; t < nb_tarifs; t++)
             {
-                var l = line;
-                if (l.EndsWith("|")) l = l.Substring(0, l.Length - 1);
+                prices.Add(new Price { Title = cols[t + 1] });
+            }
 
-                var cols = l.Split('|');
+            // Les 5 dernières lignes contiennent les 5 prix de chaque tarif
+            // => prend les 5 dernières lignes
+            lines = lines.Skip(lines.Length - 5).ToArray<string>();
 
-                // La 1° ligne contient les titres des tarifs
-                // Tarif par personne : | Menu A | Menu B | Menu C
-                if (nb_tarifs == 0)
-                {
-                    nb_tarifs = cols.Length - 1;
-                    for (int t = 1; t <= nb_tarifs; t++)
-                    {
-                        prices.Add(new Price { Title = cols[t] });
-                    }
-                }
-                else
-                {
-                    price_index++;
-                    int size = cols.Length - 1;
-                    switch (price_index)
-                    {
-                        case 1:
-                            prices[0].Price1 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
-                            prices[1].Price1 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
-                            prices[2].Price1 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
-                            break;
-                        case 2:
-                            prices[0].Price2 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
-                            prices[1].Price2 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
-                            prices[2].Price2 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
-                            break;
-                        case 3:
-                            prices[0].Price3 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
-                            prices[1].Price3 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
-                            prices[2].Price3 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
-                            break;
-                        case 4:
-                            prices[0].Price4 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
-                            prices[1].Price4 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
-                            prices[2].Price4 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
-                            break;
-                        case 5:
-                            prices[0].Price5 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
-                            prices[1].Price5 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
-                            prices[2].Price5 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
-                            break;
-                    }
-                }
+            // Les nb_tarifs dernières colonnes contiennent le prix pour chaque tarif
+            // => prend les nb_tarifs dernières colonnes, converties en float
+            var matrix = new List<float[]>();
+            for (int line = 0; line < 5; line++)
+            {
+                cols = lines[line].Split('|');
+                matrix.Add(cols
+                            .Skip(cols.Length - nb_tarifs)
+                            .Select(col => float.Parse(col.Replace(",", ".").Replace("€", "")))
+                            .ToArray());
+            }
+
+            // Renseigne les 5 prix de chaque tarif
+            for (int t = 0; t < nb_tarifs; t++)
+            {
+                prices[t].Price1 = matrix[0][t];
+                prices[t].Price2 = matrix[1][t];
+                prices[t].Price3 = matrix[2][t];
+                prices[t].Price4 = matrix[3][t];
+                prices[t].Price5 = matrix[4][t];
             }
 
             return prices;
@@ -224,10 +191,7 @@ namespace Bookmaker.Helpers
             }
 
             // Suppression des doubles espaces
-            while (text.Contains("  "))
-            {
-                text = text.Replace("  ", " ");
-            }
+            while (text.Contains("  ")) text = text.Replace("  ", " ");
 
             // Pas d'espace avant virgule, point, points et parenthèse fermante
             foreach (var car in ",.…)".ToCharArray())
@@ -245,6 +209,10 @@ namespace Bookmaker.Helpers
             // Eperluette
             text = text.Replace("&amp ; ", "&");
             text = text.Replace("&", "&amp;");
+
+            // Séparateurs pour importation des tarifs
+            while (text.Contains("||")) text = text.Replace("||", "|");
+            if (text.EndsWith("|")) text = text.Substring(0, text.Length - 1);
 
             return text.Trim();
         }
