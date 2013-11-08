@@ -107,6 +107,18 @@ namespace Bookmaker.Models
     }
 
     /// <summary>
+    /// Classe pour importer les tarifs d'un voyage
+    /// </summary>
+    public class PriceImport
+    {
+        public Travel Travel { get; set; }
+        [Display(Name = "Tarifs bruts")]
+        [DataType(DataType.MultilineText)]
+        [Required]
+        public string RawContent { get; set; }
+    }
+
+    /// <summary>
     /// Classe pour saisir la source d'un import Json
     /// </summary>
     public class JsonImport

@@ -12,7 +12,13 @@
     }
 }
 
-<h2 class="crud">@Html.ActionChildcrud("Tarifs", "Prices", Model.Travel_ID)</h2>
+<h2 class="crud">
+    @Html.ActionChildcrud("Tarifs", "Prices", Model.Travel_ID)
+    @if ((Model.Prices.Count == 0) && (ViewBag.IsUpdatable)) {
+    <text>/</text>
+    @Html.ActionLink("Importer", "Import", "Prices", new { Parent_ID = Model.Travel_ID }, null)
+    }
+</h2>
 
 <table>
 <thead>

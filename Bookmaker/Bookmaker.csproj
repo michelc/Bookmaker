@@ -290,6 +290,7 @@
   <ItemGroup>
     <None Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Sections\Import.cshtml" />
+    <Content Include="Views\Prices\Import.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

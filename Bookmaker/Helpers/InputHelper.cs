@@ -79,6 +79,89 @@ namespace Bookmaker.Helpers
             return sections;
         }
 
+        public static IList<Price> PriceImport(string content)
+        {
+            var prices = new List<Price>();
+
+            // Les tarifs sont séparés par des tabulations
+            content = content.Replace("\t", "|");
+            while (content.Contains("||"))
+            {
+                content = content.Replace("||", "|");
+            }
+            if (content.EndsWith("|")) content = content.Substring(0, content.Length - 1);
+
+            // Nettoie le contenu importé
+            content = ContentFormat(content);
+
+            // Les tarifs contiennent au minimum 1 ligne de titre et 5 lignes de tarifs
+            var lines = content.Trim().Replace("\r\n", "\r").Split('\r');
+            if (lines.Length < 6) return prices;
+
+            // La 1° ligne contient les titres des tarifs
+            // Tarif par personne : | Menu A | Menu B | Menu C
+            //var cols = lines[0].Split('|');
+            //var nb_tarifs = cols.Length - 1;
+            int nb_tarifs = 0;
+            int price_index = 0;
+
+            var text = new StringBuilder();
+
+            foreach (var line in lines)
+            {
+                var l = line;
+                if (l.EndsWith("|")) l = l.Substring(0, l.Length - 1);
+
+                var cols = l.Split('|');
+
+                // La 1° ligne contient les titres des tarifs
+                // Tarif par personne : | Menu A | Menu B | Menu C
+                if (nb_tarifs == 0)
+                {
+                    nb_tarifs = cols.Length - 1;
+                    for (int t = 1; t <= nb_tarifs; t++)
+                    {
+                        prices.Add(new Price { Title = cols[t] });
+                    }
+                }
+                else
+                {
+                    price_index++;
+                    int size = cols.Length - 1;
+                    switch (price_index)
+                    {
+                        case 1:
+                            prices[0].Price1 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
+                            prices[1].Price1 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
+                            prices[2].Price1 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
+                            break;
+                        case 2:
+                            prices[0].Price2 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
+                            prices[1].Price2 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
+                            prices[2].Price2 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
+                            break;
+                        case 3:
+                            prices[0].Price3 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
+                            prices[1].Price3 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
+                            prices[2].Price3 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
+                            break;
+                        case 4:
+                            prices[0].Price4 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
+                            prices[1].Price4 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
+                            prices[2].Price4 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
+                            break;
+                        case 5:
+                            prices[0].Price5 = float.Parse(cols[size - 2].Replace(",", ".").Replace("€", ""));
+                            prices[1].Price5 = float.Parse(cols[size - 1].Replace(",", ".").Replace("€", ""));
+                            prices[2].Price5 = float.Parse(cols[size - 0].Replace(",", ".").Replace("€", ""));
+                            break;
+                    }
+                }
+            }
+
+            return prices;
+        }
+
         private static Section CreateSection(string text, SectionType type = SectionType.Texte)
         {
             var section = new Section

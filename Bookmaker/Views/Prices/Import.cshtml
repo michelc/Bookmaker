@@ -1,10 +1,10 @@
-﻿@model Bookmaker.Models.SectionImport
+﻿@model Bookmaker.Models.PriceImport
 
 @{
-    ViewBag.Title = "Importer les sections d'un voyage";
+    ViewBag.Title = "Importer les tarifs d'un voyage";
 }
 
-<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.Travel.Travel_ID)</h2>
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Prices", Model.Travel.Travel_ID)</h2>
 
 <fieldset>
     <legend>Importe «&nbsp;@Model.Travel.Title&nbsp;»</legend>

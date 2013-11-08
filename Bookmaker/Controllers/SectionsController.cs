@@ -34,7 +34,7 @@ namespace Bookmaker.Controllers
         }
 
         //
-        // GET: /Travels/Import?Parent_ID=5
+        // GET: /Sections/Import?Parent_ID=5
 
         [BookletUpdatable()]
         public ActionResult Import(int Parent_ID)
@@ -46,7 +46,7 @@ namespace Bookmaker.Controllers
         }
 
         //
-        // POST: /Travels/Import?Parent_ID=5
+        // POST: /Sections/Import?Parent_ID=5
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
         public ActionResult Import(int Parent_ID, string rawcontent)
