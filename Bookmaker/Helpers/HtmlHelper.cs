@@ -171,7 +171,12 @@ namespace Bookmaker.Helpers
             {
                 // Si on n'est pas sur la page Create
                 html += " / ";
-                if (current_action != "create")
+                if (current_action == "import")
+                {
+                    // Pas besoin d'un lien vers la page Create si on est en importation
+                    html += "Import";
+                }
+                else if (current_action != "create")
                 {
                     // Alors, il faut un lien vers la page Create
                     html += helper.ActionLink("Créer", "Create", child_controller, new { Parent_ID = parent_id.ToString() }, null).ToString();

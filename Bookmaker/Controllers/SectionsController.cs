@@ -34,6 +34,43 @@ namespace Bookmaker.Controllers
         }
 
         //
+        // GET: /Travels/Import?Parent_ID=5
+
+        [BookletUpdatable()]
+        public ActionResult Import(int Parent_ID)
+        {
+            var travel = db.Travels.Find(Parent_ID);
+
+            var import = new SectionImport { Travel = travel };
+            return View(import);
+        }
+
+        //
+        // POST: /Travels/Import?Parent_ID=5
+
+        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
+        public ActionResult Import(int Parent_ID, string rawcontent)
+        {
+            var travel = db.Travels.Find(Parent_ID);
+
+            if (ModelState.IsValid)
+            {
+                // Reformate et contrôle le contenu saisi
+                travel.Sections = InputHelper.ContentImport(travel.TravelType, rawcontent);
+
+                // Enregistre les modifications
+                db.Entry(travel).State = EntityState.Modified;
+                db.SaveChanges();
+
+                this.Flash(string.Format("Le voyage {0} a été initialisé", travel.Title));
+                return RedirectToAction("Details", "Travels", new { id = travel.Travel_ID });
+            }
+
+            var import = new SectionImport { Travel = travel, RawContent = rawcontent };
+            return View(import);
+        }
+
+        //
         // GET: /Sections/Create?Parent_ID=5
 
         [BookletUpdatable()]

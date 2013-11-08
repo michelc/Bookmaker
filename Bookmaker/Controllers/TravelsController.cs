@@ -210,43 +210,6 @@ namespace Bookmaker.Controllers
         }
 
         //
-        // GET: /Travels/Import/5
-
-        [BookletUpdatable()]
-        public ActionResult Import(int id)
-        {
-            var travel = db.Travels.Find(id);
-
-            var import = new TravelImport { Travel = travel };
-            return View(import);
-        }
-
-        //
-        // POST: /Travels/Import/5
-
-        [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Import(int id, string rawcontent)
-        {
-            var travel = db.Travels.Find(id);
-
-            if (ModelState.IsValid)
-            {
-                // Reformate et contrôle le contenu saisi
-                travel.Sections = InputHelper.ContentImport(travel.TravelType, rawcontent);
-
-                // Enregistre les modifications
-                db.Entry(travel).State = EntityState.Modified;
-                db.SaveChanges();
-
-                this.Flash(string.Format("Le voyage {0} a été modifié", travel.Title));
-                return RedirectToAction("Details", new { id = travel.Travel_ID });
-            }
-
-            var import = new TravelImport { Travel = travel, RawContent = rawcontent };
-            return View(import);
-        }
-
-        //
         // GET: /Travels/Delete/5
 
         [BookletUpdatable()]

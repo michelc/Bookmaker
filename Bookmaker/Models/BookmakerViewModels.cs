@@ -97,7 +97,7 @@ namespace Bookmaker.Models
     /// <summary>
     /// Classe pour importer les sections d'un voyage
     /// </summary>
-    public class TravelImport
+    public class SectionImport
     {
         public Travel Travel { get; set; }
         [Display(Name = "Contenu brut")]

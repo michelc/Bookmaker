@@ -228,6 +228,10 @@ namespace Bookmaker.Helpers
             {
                 title = "Retour dans votre région";
             }
+            else if (title.ToLower() == "retour.")
+            {
+                title = "Retour dans votre région";
+            }
 
             return title;
         }

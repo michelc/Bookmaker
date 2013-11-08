@@ -1,10 +1,10 @@
-﻿@model Bookmaker.Models.TravelImport
+﻿@model Bookmaker.Models.SectionImport
 
 @{
     ViewBag.Title = "Importer un voyage";
 }
 
-<h2 class="crud">@Html.ActionCrud("Voyages", new { copy = "Copier" })</h2>
+<h2 class="crud">@Html.ActionChildcrud("Parties", "Sections", Model.Travel.Travel_ID)</h2>
 
 <fieldset>
     <legend>Importe «&nbsp;@Model.Travel.Title&nbsp;»</legend>
@@ -24,7 +24,7 @@
 
         <p class="offset-by-five eleven columns alpha">
             <input type="submit" value="Enregistrer" />
-            @Html.ActionCancel()
+            @Html.ActionLink("Annuler", "Details", "Travels", new { id = Model.Travel.Travel_ID }, new { @class = "cancel" })
         </p>
     }
 </fieldset>

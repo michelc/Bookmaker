@@ -13,9 +13,9 @@
 
 <h2 class="crud">
     @Html.ActionChildcrud("Parties", "Sections", Model.Travel_ID)
-    @if (Model.Sections.Count == 0) {
+    @if ((Model.Sections.Count == 0) && (ViewBag.IsUpdatable)) {
     <text>/</text>
-    @Html.ActionLink("Importer", "Import", new { id = Model.Travel_ID })
+    @Html.ActionLink("Importer", "Import", "Sections", new { Parent_ID = Model.Travel_ID }, null)
     }
 </h2>
 
