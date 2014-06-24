@@ -56,8 +56,9 @@
       <HintPath>..\packages\LowercaseRoutesMVC.1.0.3\lib\LowercaseRoutesMVC.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MiniProfiler">
-      <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+    <Reference Include="MiniProfiler, Version=3.0.11.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MiniProfiler.3.1\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
     <Reference Include="MiniProfiler.EntityFramework">
       <HintPath>..\packages\MiniProfiler.EF.2.1.0\lib\net40\MiniProfiler.EntityFramework.dll</HintPath>
@@ -219,17 +220,17 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.0.js" />
-    <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.7.1.js" />
+    <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -240,7 +241,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-2.1.0.min.map" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
