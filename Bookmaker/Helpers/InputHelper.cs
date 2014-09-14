@@ -220,13 +220,14 @@ namespace Bookmaker.Helpers
         public static string TitleFormat(string title)
         {
             title = title.TrimEnd("0".ToCharArray());
-            if (title == title.ToUpper())
+            if ((title == title.ToUpper()) || (title == title.ToUpperInvariant()))
             {
                 title = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(title.ToLowerInvariant());
-            }
-            if (title == title.ToUpperInvariant())
-            {
-                title = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(title.ToLowerInvariant());
+                var restes = new[] { " À ", " Au ", " Aux ", " Avec ", " De ", " Des ", " Du ", " D’", " En ", " La ", " Le ", " Les ", " L’", " Un ", " Une ", " Libre " };
+                foreach (var reste in restes)
+                {
+                    title = title.Replace(reste, reste.ToLower());
+                }
             }
 
             if (StartsWithDay(title)) return title;
@@ -283,6 +284,10 @@ namespace Bookmaker.Helpers
             {
                 title = "Retour dans votre région";
             }
+            else if (title.ToLower() == "fin de la journée")
+            {
+                title = "Retour dans votre région";
+            }
 
             return title;
         }
@@ -329,9 +334,11 @@ namespace Bookmaker.Helpers
         /// <returns>True si c'est le cas</returns>
         private static bool IsTitle(TravelType type, string text)
         {
-            text = text.ToLower();
+            if (text == text.ToUpper()) return true;
+            if (text == text.ToUpperInvariant()) return true;
             if (text.Length > 75) return false;
 
+            text = text.ToLower();
             var title = "";
 
             if (type == TravelType.Sejour)
