@@ -151,6 +151,17 @@ namespace Bookmaker.Helpers
             // Apostrophe suite à copié/collé depuis PDF
             text = text.Replace("‟", "’");
 
+            // Cochonneries suite à copié/collé depuis on ne sait où
+            text = text.Replace("à", "à");
+            text = text.Replace("é", "é");
+            text = text.Replace("è", "è");
+            text = text.Replace("â", "â");
+            text = text.Replace("ê", "ê");
+            text = text.Replace("î", "î");
+            text = text.Replace("ô", "ô");
+            text = text.Replace("ç", "ç");
+            text = text.Replace("‘", "’");
+
             // Jolis guillemets
             text = text.Replace("’’", "\"");
             var open = text.IndexOf('"');
