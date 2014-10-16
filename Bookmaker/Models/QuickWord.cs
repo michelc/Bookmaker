@@ -107,7 +107,11 @@ namespace Bookmaker.Models
                     }
                     else if (line.StartsWith("<h2>"))
                     {
-                        word.Add("Titre2", line.Substring(4));
+                        // Quand le titre commence par "Après-midi", c'est géré comme une indication de temps
+                        // * "Après-midi récréactif" => Après-midi : récréactif
+                        // Pour éviter ça, il faut faire commencer le titre par "Après-midi_"
+                        // "Après-midi_récréactif" => Après-midi récréactif
+                        word.Add("Titre2", line.Substring(4).Replace("_", " ").Replace("  ", " "));
                     }
                     else if (line.StartsWith("<h3>"))
                     {
