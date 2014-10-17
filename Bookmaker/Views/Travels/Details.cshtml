@@ -25,4 +25,18 @@
 @section JavaScript
 {
     @if (@ViewBag.IsUpdatable) { @Html.Partial("_SortScripts"); }
+
+<script>
+    $(document).ready(function () {
+
+        /* Indique la taille des illustrations */
+        /* ---------------------------------- */
+        $("td p img").each(function () {
+            var img = $(this);
+            var tooltip = img.width() + "x" + img.height();
+            img.attr("title", tooltip);
+        });
+
+    });
+</script>
 }
