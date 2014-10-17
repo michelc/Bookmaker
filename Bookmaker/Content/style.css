@@ -430,6 +430,12 @@ input[type="text"].inputbig
     font-style: italic;
 }
 
+/* Affichage d'une action impossible */
+.impossible {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 
 /* #Condense l'affichage pour les petites largeurs
 ================================================== */
