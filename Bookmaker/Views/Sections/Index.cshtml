@@ -1,16 +1,5 @@
 ﻿@model Bookmaker.Models.Travel
 
-@functions
-{
-    HelperResult OK(Func<dynamic, HelperResult> nugget)
-    {
-        if (ViewBag.IsUpdatable) {
-            return new HelperResult(w => nugget(null).WriteTo(w));
-        }
-        return new HelperResult(w => w.Write(""));
-    }
-}
-
 <h2 class="crud">
     @Html.ActionChildcrud("Parties", "Sections", Model.Travel_ID)
     @if ((Model.Sections.Count == 0) && (ViewBag.IsUpdatable)) {
@@ -22,36 +11,36 @@
 <table class="sortable sections" data-url='@Url.Action("Sort", "Sections", new { Parent_ID = @Model.Travel_ID })'>
 <thead>
     <tr>
-        @OK(@<th class="iconwidth"></th>)
+        <th class="iconwidth"></th>
         <th>
             N°
         </th>
         <th>
             Contenu
         </th>
-        @OK(@<th class="iconwidth"></th>)
+        <th class="iconwidth"></th>
     </tr>
 </thead>
 <tbody>
 @foreach (var line in Model.Sections)
 {
     <tr>
-        @OK(@<td>
+        <td>
             @Html.ActionLink("Modifier", "Edit", "Sections", new { id = line.Section_ID }, new { @class = "edit" })
-        </td>)
+        </td>
         <td class="handle" data-pos="@(line.Position - 1)">
             @line.Position
         </td>
         <td>
             @line.ContentAsHtml()
         </td>
-        @OK(@<td>
+        <td>
             @Html.ActionLink("Supprimer", "Delete", "Sections", new { id = line.Section_ID }, new { @class = "delete" })
-        </td>)
+        </td>
     </tr>
 }
 </tbody>
-@OK(@<tfoot>
+<tfoot>
     <tr>
         <td></td>
         <td></td>
@@ -66,5 +55,5 @@
         </td>
         <td></td>
     </tr>
-</tfoot>)
+</tfoot>
 </table>

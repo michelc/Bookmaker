@@ -1,17 +1,5 @@
 ﻿@model Bookmaker.Models.Travel
 
-@functions
-{
-    HelperResult OK(Func<dynamic, HelperResult> nugget)
-    {
-        if (ViewBag.IsUpdatable)
-        {
-            return new HelperResult(w => nugget(null).WriteTo(w));
-        }
-        return new HelperResult(w => w.Write(""));
-    }
-}
-
 <h2 class="crud">
     @Html.ActionChildcrud("Tarifs", "Prices", Model.Travel_ID)
     @if ((Model.Prices.Count == 0) && (ViewBag.IsUpdatable)) {
@@ -23,7 +11,7 @@
 <table>
 <thead>
     <tr>
-        @OK(@<th class="iconwidth"></th>)
+        <th class="iconwidth"></th>
         <th>
             Tarif
         </th>
@@ -45,16 +33,16 @@
         <th>
             Notes
         </th>
-        @OK(@<th class="iconwidth"></th>)
+        <th class="iconwidth"></th>
     </tr>
 </thead>
 <tbody>
 @foreach (var line in Model.Prices)
 {
     <tr>
-        @OK(@<td>
+        <td>
             @Html.ActionLink("Modifier", "Edit", "Prices", new { id = line.Price_ID }, new { @class = "edit" })
-        </td>)
+        </td>
         <td>
             @Html.ActionLink(@line.Title, "Details", "Prices", new { id = line.Price_ID }, null)
         </td>
@@ -80,9 +68,9 @@
         <td>
             @(string.IsNullOrEmpty(line.Notes) ? "" : "Oui")
         </td>
-        @OK(@<td>
+        <td>
             @Html.ActionLink("Supprimer", "Delete", "Prices", new { id = line.Price_ID }, new { @class = "delete" })
-        </td>)
+        </td>
     </tr>
 }
 </tbody>

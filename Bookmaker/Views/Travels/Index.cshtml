@@ -1,16 +1,5 @@
 ﻿@model IEnumerable<Bookmaker.Models.TravelIndex>
 
-@functions
-{
-    HelperResult OK(Func<dynamic, HelperResult> nugget)
-    {
-        if (ViewBag.IsUpdatable) {
-            return new HelperResult(w => nugget(null).WriteTo(w));
-        }
-        return new HelperResult(w => w.Write(""));
-    }
-}
-
 @{
     ViewBag.Title = "Tous les voyages";
 }
@@ -20,7 +9,7 @@
 <table class="sortable" data-url='@Url.Action("Sort", "Travels")'>
 <thead>
     <tr>
-        @OK(@<th class="iconwidth"></th>)
+        <th class="iconwidth"></th>
         <th>
             N°
         </th>
@@ -36,16 +25,16 @@
         <th>
             Tarifs
         </th>
-        @OK(@<th class="iconwidth"></th>)
+        <th class="iconwidth"></th>
     </tr>
 </thead>
 <tbody>
 @foreach (var line in Model)
 {
     <tr>
-        @OK(@<td>
+        <td>
             @Html.ActionLink("Edit", "Edit", new { id = line.Travel_ID }, new { @class = "edit" })
-        </td>)
+        </td>
         <td class="handle" data-pos="@(line.Position - 1)">
             @line.Position
         </td>
@@ -61,9 +50,9 @@
         <td>
             @line.PricesCount
         </td>
-        @OK(@<td>
+        <td>
             @Html.ActionLink("Delete", "Delete", new { id = line.Travel_ID }, new { @class = "delete" })
-        </td>)
+        </td>
     </tr>
 }
 </tbody>
@@ -72,4 +61,15 @@
 @section JavaScript
 {
     @if (@ViewBag.IsUpdatable) { @Html.Partial("_SortScripts"); }
+
+<script>
+    $(document).ready(function () {
+        @if (@ViewBag.IsUpdatable == false) {<text>
+        /* Désactive les liens de mise à jour */
+        /* ---------------------------------- */
+        $("td a.edit, td a.delete").removeAttr("href").css("cursor", "not-allowed");
+        </text>}
+
+    });
+</script>
 }

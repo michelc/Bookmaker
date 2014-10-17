@@ -30,12 +30,17 @@
     $(document).ready(function () {
 
         /* Indique la taille des illustrations */
-        /* ---------------------------------- */
+        /* ----------------------------------- */
         $("td p img").each(function () {
             var img = $(this);
             var tooltip = img.width() + "x" + img.height();
             img.attr("title", tooltip);
         });
+        @if (@ViewBag.IsUpdatable == false) {<text>
+        /* Désactive les liens de mise à jour */
+        /* ---------------------------------- */
+        $("td a").removeAttr("href").css("cursor", "not-allowed");
+        </text>}
 
     });
 </script>
