@@ -39,7 +39,7 @@
         @if (@ViewBag.IsUpdatable == false) {<text>
         /* Désactive les liens de mise à jour */
         /* ---------------------------------- */
-        $("td a.edit, td a.delete").removeAttr("href").addClass("impossible");
+        $("td a.edit, td a.delete, td.crud a").removeAttr("href").addClass("impossible");
         </text>}
 
     });
