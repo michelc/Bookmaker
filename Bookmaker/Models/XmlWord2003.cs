@@ -17,6 +17,7 @@ namespace Bookmaker.Models
     {
         private StringBuilder body = new StringBuilder();
         private string templatePath = null;
+        private string previousStyleId = null;
 
         /// <summary>
         /// Initialise un objet pour générer un document XML Word 2003
@@ -53,7 +54,15 @@ namespace Bookmaker.Models
                       + "\n\t</w:pPr>";
 
                 style = style.Replace("{{style_id}}", StyleId);
+                if ((StyleId == "Titre4") && (previousStyleId == "Titre2"))
+                {
+                    // La marge haute est moindre quand le tarif suit un titre
+                    style = style.Replace("\n\t</w:pPr>", "\n\t\t<w:spacing w:before=\"120\"/>\n\t</w:pPr>");
+                }
             }
+
+            // Mémorise le dernier style utilisé
+            previousStyleId = StyleId;
 
             // Génère le "morceau" pour spécifier le contenu du paragraphe
             // - Remplacement de quelques entités HTML

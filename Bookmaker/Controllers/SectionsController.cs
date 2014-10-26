@@ -90,6 +90,11 @@ namespace Bookmaker.Controllers
                     // (mais le contenu est obligatoire)
                     section.Content = "*";
                 }
+                else if (section.SectionType == SectionType.Conditions)
+                {
+                    string filename = Server.MapPath("~/Content/Conditions_" + section.Travel.TravelType.ToString() + ".txt");
+                    section.Content = System.IO.File.ReadAllText(filename);
+                }
             }
 
             return View(section);

@@ -22,7 +22,8 @@ namespace Bookmaker.Models
         [Display(Name = "Menu centré")]
         Menu_Centre = 4,
         Image = 5,
-        Tarif = 6
+        Tarif = 6,
+        Conditions = 7
     }
 
     public class Booklet

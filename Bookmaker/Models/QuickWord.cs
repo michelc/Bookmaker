@@ -42,6 +42,10 @@ namespace Bookmaker.Models
                 {
                     if (s.SectionType == SectionType.Tarif)
                     {
+                        if (s.Content != "*")
+                        {
+                            prices = GetAllPrices(t, s.Content);
+                        }
                         html.Append(prices);
                         hasPrice = true;
                     }
@@ -137,6 +141,36 @@ namespace Bookmaker.Models
             return content;
         }
 
+        private static string GetAllPrices(Travel t, string title)
+        {
+            var prices = "";
+            prices = "&nbsp;\tNb payants\t30 à 34\t35 à 39\t40 à 44\t45 à 49\t50 à 54";
+            var count = 0;
+            foreach (var p in t.Prices.OrderBy(p => p.Price1))
+            {
+                prices += "<br>\t";
+                if (p.Title != "*") prices += p.Title;
+                prices += string.Format("\t{0}&nbsp;€", +p.Price1);
+                prices += string.Format("\t{0}&nbsp;€", +p.Price2);
+                prices += string.Format("\t{0}&nbsp;€", +p.Price3);
+                prices += string.Format("\t{0}&nbsp;€", +p.Price4);
+                prices += string.Format("\t{0}&nbsp;€", +p.Price5);
+                count++;
+            }
+
+            if (count > 0)
+            {
+                prices = prices.Replace("\t0&nbsp;€", "\t-");
+                prices = prices.Replace("\t&nbsp;€", "\t-");
+                prices = string.Format("<h2>Tarif par personne (départ et retour à {0})</h2><h4>{1}</h4>", title, prices);
+                prices = prices.Replace(" (départ et retour à -)", "");
+                prices = prices.Replace(" (départ et retour à Le ", " (départ et retour au ");
+                prices = prices.Replace(" (départ et retour à Les ", " (départ et retour aux ");
+            }
+
+            return prices.Replace("\t", "<tab>");
+        }
+
         private static string GetDayPrices(Travel t)
         {
             var prices = "";
@@ -208,7 +242,14 @@ namespace Bookmaker.Models
             {
                 // Chargement image locale
                 src = HostingEnvironment.MapPath(src);
-                image.BinaryData = System.IO.File.ReadAllBytes(src);
+                try
+                {
+                    image.BinaryData = System.IO.File.ReadAllBytes(src);
+                }
+                catch
+                {
+                    return image;
+                }
             }
             else
             {

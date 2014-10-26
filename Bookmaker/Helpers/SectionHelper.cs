@@ -28,7 +28,18 @@ namespace Bookmaker.Helpers
                     html = HtmlImage(html, content);
                     break;
                 case SectionType.Tarif:
-                    html.Append("<h2>*** Tarifs ***</h2>");
+                    if (content == "*")
+                    {
+                        html.Append("<h2>*** Tarifs ***</h2>");
+                    }
+                    else if (content == "-")
+                    {
+                        html.Append("<h2>Tarif par personne</h2>");
+                    }
+                    else
+                    {
+                        html.Append("<h2>Tarif par personne (départ et retour à " + content + ")</h2>");
+                    }
                     break;
                 default:
                     html = HtmlDefault(html, lines);

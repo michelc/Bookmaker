@@ -189,6 +189,14 @@
           <w:right w:val="single" w:sz="48" wx:bdrwidth="120" w:space="4" w:color="D9D9D9" />
         </w:pBdr>
         <w:shd w:val="clear" w:color="auto" w:fill="F2F2F2" />
+        <w:tabs>
+          <w:tab w:val="center" w:pos="1418"/>
+          <w:tab w:val="center" w:pos="3402"/>
+          <w:tab w:val="center" w:pos="4820"/>
+          <w:tab w:val="center" w:pos="6237"/>
+          <w:tab w:val="center" w:pos="7655"/>
+          <w:tab w:val="center" w:pos="9072"/>
+        </w:tabs>
         <w:spacing w:before="480" w:after="0" />
         <w:jc w:val="center" />
         <w:outlineLvl w:val="3" />
@@ -200,7 +208,7 @@
         <w:i />
         <w:i-cs />
         <w:color w:val="595959" />
-        <w:sz w:val="24" />
+        <w:sz w:val="22" />
       </w:rPr>
     </w:style>
     <w:style w:type="character" w:default="on" w:styleId="Policepardfaut">

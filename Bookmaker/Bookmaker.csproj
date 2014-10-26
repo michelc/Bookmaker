@@ -143,9 +143,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Bookmaker.xml" />
+    <Content Include="Content\Bookmaker_2012.xml" />
     <Content Include="Content\Bookmaker_2013.xml" />
     <Content Include="Content\Bookmaker_2014.xml" />
     <Content Include="Content\Bookmaker_2015.xml" />
+    <Content Include="Content\Conditions_Journee.txt" />
+    <Content Include="Content\Conditions_Sejour.txt" />
     <Content Include="Content\icons\arrow-next.png" />
     <Content Include="Content\icons\arrow-prev.png" />
     <Content Include="Content\icons\delete.png" />

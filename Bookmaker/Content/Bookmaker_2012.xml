@@ -110,8 +110,8 @@
         <w:keepNext />
         <w:pageBreakBefore />
         <w:pBdr>
-          <w:top w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="FF7E00" />
-          <w:bottom w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="FF7E00" />
+          <w:top w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="00B050" />
+          <w:bottom w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="00B050" />
         </w:pBdr>
         <w:spacing w:before="0" w:after="480" />
         <w:jc w:val="center" />
@@ -147,7 +147,7 @@
         <w:b />
         <w:b-cs />
         <w:i-cs />
-        <w:color w:val="FF7E00" />
+        <w:color w:val="00B050" />
         <w:spacing w:val="-10" />
         <w:sz w:val="28" />
         <w:sz-cs w:val="28" />
@@ -189,14 +189,6 @@
           <w:right w:val="single" w:sz="48" wx:bdrwidth="120" w:space="4" w:color="D9D9D9" />
         </w:pBdr>
         <w:shd w:val="clear" w:color="auto" w:fill="F2F2F2" />
-        <w:tabs>
-          <w:tab w:val="center" w:pos="1418"/>
-          <w:tab w:val="center" w:pos="3402"/>
-          <w:tab w:val="center" w:pos="4820"/>
-          <w:tab w:val="center" w:pos="6237"/>
-          <w:tab w:val="center" w:pos="7655"/>
-          <w:tab w:val="center" w:pos="9072"/>
-        </w:tabs>
         <w:spacing w:before="480" w:after="0" />
         <w:jc w:val="center" />
         <w:outlineLvl w:val="3" />
@@ -208,7 +200,7 @@
         <w:i />
         <w:i-cs />
         <w:color w:val="595959" />
-        <w:sz w:val="22" />
+        <w:sz w:val="24" />
       </w:rPr>
     </w:style>
     <w:style w:type="character" w:default="on" w:styleId="Policepardfaut">
@@ -258,7 +250,7 @@
         <w:b />
         <w:b-cs />
         <w:i-cs />
-        <w:color w:val="FF7E00" />
+        <w:color w:val="00B050" />
         <w:spacing w:val="-10" />
         <w:sz w:val="28" />
         <w:sz-cs w:val="28" />
@@ -466,7 +458,7 @@
             <w:pStyle w:val="Pieddepage" />
           </w:pPr>
           <w:r>
-            <w:t>Arsac-Tourisme – Groupes 2015</w:t>
+            <w:t>Arsac-Tourisme – Groupes 2012</w:t>
           </w:r>
           <w:r>
             <w:tab />
