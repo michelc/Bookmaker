@@ -7,8 +7,8 @@ using StackExchange.Profiling;
 
 namespace Bookmaker
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+    // Remarque : pour obtenir des instructions sur l'activation du mode classique IIS6 ou IIS7,
+    // visitez http://go.microsoft.com/?LinkId=9394801
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
@@ -25,7 +25,7 @@ namespace Bookmaker
 
             AutoMapperConfiguration.Configure();
 
-            MiniProfilerEF.Initialize(true);
+            MiniProfilerEF.Initialize();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
