@@ -122,13 +122,7 @@ namespace Bookmaker.Models
         [Required]
         [Display(Name = "Type de contenu")]
         [UIHint("Enum")]
-        public SectionType SectionType
-        {
-            get { return (SectionType)SectionType_Int; }
-            set { SectionType_Int = (int)value; }
-        }
-        [Column("SectionType")]
-        public int SectionType_Int { get; set; }
+        public SectionType SectionType { get; set; }
 
         // Texte pour le contenu de la partie
         [Required]

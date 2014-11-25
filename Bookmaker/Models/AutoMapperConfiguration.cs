@@ -49,7 +49,7 @@ namespace Bookmaker.Models
             Mapper.CreateMap<JsonPrice, Price>();
 
             Mapper.CreateMap<JsonSection, Section>()
-                .ForMember(dest => dest.SectionType_Int, opt => opt.MapFrom(src => src.SectionType.ToEnum<SectionType>()));
+                .ForMember(dest => dest.SectionType, opt => opt.MapFrom(src => src.SectionType.ToEnum<SectionType>()));
         }
     }
 }
