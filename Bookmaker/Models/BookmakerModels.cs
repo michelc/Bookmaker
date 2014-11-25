@@ -88,13 +88,7 @@ namespace Bookmaker.Models
         [Required]
         [Display(Name = "Type de voyage")]
         [UIHint("Enum")]
-        public TravelType TravelType
-        {
-            get { return (TravelType)TravelType_Int; }
-            set { TravelType_Int = (int)value; }
-        }
-        [Column("TravelType")]
-        public int TravelType_Int { get; set; }
+        public TravelType TravelType { get; set; }
 
         // Commentaires sur ce voyage
         [Display(Name = "Remarques")]
