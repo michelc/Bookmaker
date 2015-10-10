@@ -1,4 +1,6 @@
-﻿*resharper.user
+﻿# Fichiers à ignorer
+.vs/
+*resharper.user
 [Aa]pp_[Dd]ata/
 [Dd]ebug/
 [Rr]elease/
