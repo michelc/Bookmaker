@@ -80,7 +80,7 @@ namespace Bookmaker.Controllers
                 db.Booklets.Add(booklet);
                 db.SaveChanges();
 
-                this.Flash(string.Format("La brochure {0} a été créée", booklet.Title));
+                this.Flash("La brochure {0} a été créée", booklet.Title);
                 return RedirectToAction("Details", new { id = booklet.Booklet_ID });
             }
 
@@ -113,7 +113,7 @@ namespace Bookmaker.Controllers
                 db.Entry(booklet).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("La brochure {0} a été modifiée", booklet.Title));
+                this.Flash("La brochure {0} a été modifiée", booklet.Title);
                 return RedirectToAction("Details", new { id = booklet.Booklet_ID });
             }
 
@@ -153,7 +153,7 @@ namespace Bookmaker.Controllers
             db.Booklets.Remove(booklet);
             db.SaveChanges();
 
-            this.Flash(string.Format("La brochure {0} a été supprimée", booklet.Title));
+            this.Flash("La brochure {0} a été supprimée", booklet.Title);
             return RedirectToAction("Index");
         }
 
@@ -263,7 +263,7 @@ namespace Bookmaker.Controllers
         {
             var model = new JsonImport();
 
-            ViewBag.Warning = "Attention, cela remplacera toutes les brochures existantes !"; 
+            ViewBag.Warning = "Attention, cela remplacera toutes les brochures existantes !";
             return View(model);
         }
 

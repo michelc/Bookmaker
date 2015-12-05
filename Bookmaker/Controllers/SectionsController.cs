@@ -62,7 +62,7 @@ namespace Bookmaker.Controllers
                 db.Entry(travel).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le voyage {0} a été initialisé", travel.Title));
+                this.Flash("Le voyage {0} a été initialisé", travel.Title);
                 return RedirectToAction("Details", "Travels", new { id = travel.Travel_ID });
             }
 
@@ -140,7 +140,7 @@ namespace Bookmaker.Controllers
                     }
                 }
 
-                this.Flash(string.Format("La partie n° {0} a été créée", position));
+                this.Flash("La partie n° {0} a été créée", position);
                 return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
             }
 
@@ -184,7 +184,7 @@ namespace Bookmaker.Controllers
                 db.Entry(section).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("La partie n° {0} a été modifiée", section.Position));
+                this.Flash("La partie n° {0} a été modifiée", section.Position);
                 return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
             }
 
@@ -218,7 +218,7 @@ namespace Bookmaker.Controllers
             // Réordonne les parties du voyages
             db.RefillPositions("Sections", "Travel_ID", section.Travel_ID, section.Position);
 
-            this.Flash(string.Format("La partie n° {0} a été supprimée", section.Position));
+            this.Flash("La partie n° {0} a été supprimée", section.Position);
             return RedirectToAction("Details", "Travels", new { id = section.Travel_ID });
         }
 

@@ -122,7 +122,7 @@ namespace Bookmaker.Controllers
                 db.Entry(travel).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le voyage {0} a été initialisé", travel.Title));
+                this.Flash("Le voyage {0} a été initialisé", travel.Title);
                 return RedirectToAction("Details", "Travels", new { id = travel.Travel_ID });
             }
 
@@ -156,7 +156,7 @@ namespace Bookmaker.Controllers
                 db.Prices.Add(price);
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le tarif {0} a été créé", price.Title));
+                this.Flash("Le tarif {0} a été créé", price.Title);
                 return RedirectToAction("Details", "Travels", new { id = price.Travel_ID });
             }
 
@@ -194,7 +194,7 @@ namespace Bookmaker.Controllers
                 db.Entry(price).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le tarif {0} a été modifié", price.Title));
+                this.Flash("Le tarif {0} a été modifié", price.Title);
 
                 if (view_from == "index") return RedirectToAction("Index");
 
@@ -227,7 +227,7 @@ namespace Bookmaker.Controllers
             db.Prices.Remove(price);
             db.SaveChanges();
 
-            this.Flash(string.Format("Le tarif {0} a été supprimé", price.Title));
+            this.Flash("Le tarif {0} a été supprimé", price.Title);
             return RedirectToAction("Details", "Travels", new { id = price.Travel_ID });
         }
 

@@ -168,7 +168,7 @@ namespace Bookmaker.Controllers
                 db.Travels.Add(travel);
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le voyage {0} a été créé", travel.Title));
+                this.Flash("Le voyage {0} a été créé", travel.Title);
                 return RedirectToAction("Details", new { id = travel.Travel_ID });
             }
 
@@ -202,7 +202,7 @@ namespace Bookmaker.Controllers
                 db.Entry(travel).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.Flash(string.Format("Le voyage {0} a été modifié", travel.Title));
+                this.Flash("Le voyage {0} a été modifié", travel.Title);
                 return RedirectToAction("Details", new { id = travel.Travel_ID });
             }
 
@@ -239,7 +239,7 @@ namespace Bookmaker.Controllers
             // Réordonne les voyages
             db.RefillPositions("Travels", "Booklet_ID", travel.Booklet_ID, travel.Position);
 
-            this.Flash(string.Format("Le voyage {0} a été supprimé", travel.Title));
+            this.Flash("Le voyage {0} a été supprimé", travel.Title);
             return RedirectToAction("Index");
         }
 
@@ -314,7 +314,7 @@ namespace Bookmaker.Controllers
             // Sauvegarde !
             db.SaveChanges();
 
-            this.Flash(string.Format("Le voyage {0} a été copié", copy.Title));
+            this.Flash("Le voyage {0} a été copié", copy.Title);
             return RedirectToAction("Details", new { root_id = Destination_ID, id = copy.Travel_ID });
         }
 

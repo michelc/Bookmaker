@@ -4,9 +4,9 @@ namespace Bookmaker.Helpers
 {
     public static class FlashHelper
     {
-        public static void Flash(this Controller controler, string Value)
+        public static void Flash(this Controller controller, object text, params object[] args)
         {
-            controler.TempData["FlashKey"] = Value;
+            controller.TempData["FlashKey"] = string.Format(text.ToString(), args);
         }
 
         public static MvcHtmlString Flash(this HtmlHelper helper)
