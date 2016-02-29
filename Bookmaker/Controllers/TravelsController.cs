@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper.QueryableExtensions;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
 
@@ -21,7 +20,7 @@ namespace Bookmaker.Controllers
                 .Travels
                 .Where(travel => travel.Booklet_ID == root_id)
                 .OrderBy(travel => travel.Position)
-                .Project().To<TravelIndex>()
+                .MapTo<TravelIndex>()
                 .ToList();
 
             return View(travels);
@@ -35,13 +34,13 @@ namespace Bookmaker.Controllers
             var search_in_travels = db
                 .Travels
                 .Where(travel => travel.Title.Contains(q))
-                .Project().To<TravelSearch>()
+                .MapTo<TravelSearch>()
                 .ToList();
 
             var search_in_sections = db
                 .Sections
                 .Where(section => section.Content.Contains(q))
-                .Project().To<TravelSearch>()
+                .MapTo<TravelSearch>()
                 .Distinct()
                 .ToList();
 

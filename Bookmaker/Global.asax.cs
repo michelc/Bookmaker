@@ -23,7 +23,7 @@ namespace Bookmaker
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            AutoMapperConfiguration.Configure();
+            AutoMap.Configure();
 
             MiniProfilerEF.Initialize();
         }

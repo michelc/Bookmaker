@@ -1,27 +1,45 @@
 ﻿using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Bookmaker.Helpers;
 
 namespace Bookmaker.Models
 {
-    public class AutoMapperConfiguration
+    public static class AutoMap
     {
+        private static MapperConfiguration Config { get; set; }
+        private static IMapper Mapper { get; set; }
+
         public static void Configure()
         {
-            // Entités vers ViewModels
+            Config = new MapperConfiguration(cfg => {
+                ConfigureEntitiesToViewModels(cfg);
+                ConfigureViewModelsToEntities(cfg);
+            });
 
-            Mapper.CreateMap<Booklet, BookletIndex>()
+            Mapper = Config.CreateMapper();
+        }
+
+        public static IQueryable<T> MapTo<T>(this IQueryable<object> linq)
+        {
+            return linq.ProjectTo<T>(AutoMap.Config);
+        }
+
+        public static void ConfigureEntitiesToViewModels(IMapperConfiguration config)
+        {
+            // Entités vers ViewModels
+            config.CreateMap<Booklet, BookletIndex>()
                 .ForMember(x => x.TravelsCount1, o => o.MapFrom(x => x.Travels.Where(t => t.TravelType == TravelType.Journee).Count()))
                 .ForMember(x => x.TravelsCount2, o => o.MapFrom(x => x.Travels.Where(t => t.TravelType == TravelType.Sejour).Count()));
 
-            Mapper.CreateMap<Price, PriceIndex>()
+            config.CreateMap<Price, PriceIndex>()
                 .ForMember(dest => dest.HasNotes, opt => opt.MapFrom(src => src.Notes != null));
 
-            Mapper.CreateMap<Travel, TravelIndex>();
+            config.CreateMap<Travel, TravelIndex>();
 
-            Mapper.CreateMap<Travel, TravelSearch>();
+            config.CreateMap<Travel, TravelSearch>();
 
-            Mapper.CreateMap<Section, TravelSearch>()
+            config.CreateMap<Section, TravelSearch>()
                 .ForMember(dest => dest.BookletYear, opt => opt.MapFrom(src => src.Travel.Booklet.Year))
                 .ForMember(dest => dest.Booklet_ID, opt => opt.MapFrom(src => src.Travel.Booklet_ID))
                 .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.Travel.Position))
@@ -29,26 +47,29 @@ namespace Bookmaker.Models
                 .ForMember(dest => dest.TravelType, opt => opt.MapFrom(src => src.Travel.TravelType))
                 .ForMember(dest => dest.BookletTitle, opt => opt.MapFrom(src => src.Travel.Booklet.Title));
 
-            Mapper.CreateMap<Booklet, JsonBooklet>();
+            config.CreateMap<Booklet, JsonBooklet>();
 
-            Mapper.CreateMap<Travel, JsonTravel>()
+            config.CreateMap<Travel, JsonTravel>()
                 .ForMember(dest => dest.TravelType, opt => opt.MapFrom(src => src.TravelType));
 
-            Mapper.CreateMap<Price, JsonPrice>();
+            config.CreateMap<Price, JsonPrice>();
 
-            Mapper.CreateMap<Section, JsonSection>()
+            config.CreateMap<Section, JsonSection>()
                 .ForMember(dest => dest.SectionType, opt => opt.MapFrom(src => src.SectionType));
+        }
 
+        public static void ConfigureViewModelsToEntities(IMapperConfiguration config)
+        {
             // ViewModels vers entités
 
-            Mapper.CreateMap<JsonBooklet, Booklet>();
+            config.CreateMap<JsonBooklet, Booklet>();
 
-            Mapper.CreateMap<JsonTravel, Travel>()
+            config.CreateMap<JsonTravel, Travel>()
                 .ForMember(dest => dest.TravelType, opt => opt.MapFrom(src => src.TravelType.ToEnum<TravelType>()));
 
-            Mapper.CreateMap<JsonPrice, Price>();
+            config.CreateMap<JsonPrice, Price>();
 
-            Mapper.CreateMap<JsonSection, Section>()
+            config.CreateMap<JsonSection, Section>()
                 .ForMember(dest => dest.SectionType, opt => opt.MapFrom(src => src.SectionType.ToEnum<SectionType>()));
         }
     }

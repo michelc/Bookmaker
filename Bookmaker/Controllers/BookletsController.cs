@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using AutoMapper.QueryableExtensions;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
 
@@ -23,7 +22,7 @@ namespace Bookmaker.Controllers
                 .Booklets
                 .OrderByDescending(booklet => booklet.Year)
                 .ThenByDescending(booklet => booklet.Booklet_ID)
-                .Project().To<BookletIndex>()
+                .MapTo<BookletIndex>()
                 .ToList();
 
             return View(booklets);
