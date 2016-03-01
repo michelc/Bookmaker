@@ -281,8 +281,8 @@ namespace Bookmaker.Controllers
             travel.Sections = travel.Sections.OrderBy(s => s.Position).ToList();
 
             // Sérialisation / désérialisation
-            var temp = AutoMapper.Mapper.Map<Travel, JsonTravel>(travel);
-            var copy = AutoMapper.Mapper.Map<JsonTravel, Travel>(temp);
+            var temp = AutoMap.Map<JsonTravel>(travel);
+            var copy = AutoMap.Map<Travel>(temp);
 
             // Positionne chaque partie du voyage
             int position = 0;

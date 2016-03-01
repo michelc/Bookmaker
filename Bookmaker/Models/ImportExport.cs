@@ -47,7 +47,7 @@ namespace Bookmaker.Models
     {
         public static string JsonExport(IList<Booklet> booklets)
         {
-            var jsbooklets = AutoMapper.Mapper.Map<IList<Booklet>, IList<JsonBooklet>>(booklets);
+            var jsbooklets = AutoMap.Map<IList<JsonBooklet>>(booklets);
 
             var serializer = new JavaScriptSerializer();
             var json = serializer.Serialize(jsbooklets);
@@ -170,7 +170,7 @@ namespace Bookmaker.Models
             var serializer = new JavaScriptSerializer();
             var jsbooklets = serializer.Deserialize<List<JsonBooklet>>(json);
 
-            var booklets = AutoMapper.Mapper.Map<IList<JsonBooklet>, IList<Booklet>>(jsbooklets).ToList();
+            var booklets = AutoMap.Map<IList<Booklet>>(jsbooklets).ToList();
 
             foreach (var b in booklets)
             {

@@ -25,7 +25,14 @@ namespace Bookmaker.Models
             return linq.ProjectTo<T>(AutoMap.Config);
         }
 
-        public static void ConfigureEntitiesToViewModels(IMapperConfiguration config)
+        public static T Map<T>(object model)
+        {
+            var view_model = AutoMap.Mapper.Map<T>(model);
+
+            return view_model;
+        }
+
+        private static void ConfigureEntitiesToViewModels(IMapperConfiguration config)
         {
             // Entités vers ViewModels
             config.CreateMap<Booklet, BookletIndex>()
@@ -58,7 +65,7 @@ namespace Bookmaker.Models
                 .ForMember(dest => dest.SectionType, opt => opt.MapFrom(src => src.SectionType));
         }
 
-        public static void ConfigureViewModelsToEntities(IMapperConfiguration config)
+        private static void ConfigureViewModelsToEntities(IMapperConfiguration config)
         {
             // ViewModels vers entités
 
