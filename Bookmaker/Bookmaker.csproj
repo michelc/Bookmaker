@@ -151,6 +151,7 @@
     <Content Include="Content\Bookmaker_2014.xml" />
     <Content Include="Content\Bookmaker_2015.xml" />
     <Content Include="Content\Bookmaker_2016.xml" />
+    <Content Include="Content\Bookmaker_2017.xml" />
     <Content Include="Content\Conditions_Journee.txt" />
     <Content Include="Content\Conditions_Sejour.txt" />
     <Content Include="Content\icons\arrow-next.png" />
