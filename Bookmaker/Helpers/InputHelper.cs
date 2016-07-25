@@ -83,11 +83,15 @@ namespace Bookmaker.Helpers
             var prices = new List<Price>();
 
             // Remplace tabulations par séparateurs pour les tarifs
-            content = content.Replace("\t", "|");
+            content = content.Trim().Replace("\t", "|");
             content = ContentFormat(content);
 
+            // Supprime tabulation juste après la puce des listes
+            content = content.Replace("\r\n", "\r");
+            content = content.Replace("\r•|", "\r");
+
             // Il faut au minimum 1 ligne de titre et 5 lignes pour les 5 prix de chaque tarif
-            var lines = content.Trim().Replace("\r\n", "\r").Split('\r');
+            var lines = content.Split('\r');
             if (lines.Length < 6) return prices;
 
             // La 1° ligne contient les titres des tarifs
@@ -95,6 +99,13 @@ namespace Bookmaker.Helpers
             // Ce qui donne le nombre de tarifs et le titre de chaque tarif
             var cols = lines[0].Split('|');
             int nb_tarifs = cols.Length - 1;
+            if (nb_tarifs == 0)
+            {
+                // Cas où un seul tarif sans titre
+                // --> "Tarif par personne :"
+                nb_tarifs = 1;
+                cols = (lines[0] + "|*").Split('|');
+            }
             for (int t = 0; t < nb_tarifs; t++)
             {
                 prices.Add(new Price { Title = cols[t + 1] });
