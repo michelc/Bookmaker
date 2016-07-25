@@ -53,25 +53,33 @@
         }
         </td>
         <td>
-            @line.Title
+            @Html.DisplayFor(modelItem => line.Title)
         </td>
         <td>
-            @line.TextPrice1
+            @Html.DisplayFor(modelItem => line.Price1)
         </td>
         <td>
-            @line.TextPrice2
+            @Html.DisplayFor(modelItem => line.Price2)
+            @if (line.Price2 < line.Price1)
+            { <span class="accessoire">@((line.Price2 - line.Price1).ToString())</span> }
         </td>
         <td>
-            @line.TextPrice3
+            @Html.DisplayFor(modelItem => line.Price3)
+            @if (line.Price2 < line.Price1)
+            { <span class="accessoire">@((line.Price3 - line.Price1).ToString())</span> }
         </td>
         <td>
-            @line.TextPrice4
+            @Html.DisplayFor(modelItem => line.Price4)
+            @if (line.Price2 < line.Price1)
+            { <span class="accessoire">@((line.Price4 - line.Price1).ToString())</span> }
         </td>
         <td>
-            @line.TextPrice5
+            @Html.DisplayFor(modelItem => line.Price5)
+            @if (line.Price2 < line.Price1)
+            { <span class="accessoire">@((line.Price5 - line.Price1).ToString())</span> }
         </td>
         <td>
-            @line.TextNotes
+            @(string.IsNullOrEmpty(line.Notes) ? "" : "Oui")
         </td>
         <td>
             @Html.ActionLink("Modifier", "Edit", "Prices", new { id = line.Price_ID, view_from = "index" }, new { @class = "edit" })
