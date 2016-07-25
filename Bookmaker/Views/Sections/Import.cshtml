@@ -16,6 +16,17 @@
 
         <div class="editor-label five columns"> 
             @Html.CaptionFor(model => model.RawContent)
+            <br />
+            <br />
+            <p>
+                Il est possible de faire débuter une ligne par "!_" ("!" + espace) pour imposer
+                qu'elle soit reconnue en tant que titre.
+            </p>
+            <p>
+                Lorsqu'ils sont décrits sur plusieurs lignes, les menus doivent apparaitrent entre
+                un début ("Menu", "Menu_", "_Menu", "Entrée_", "Plat_", "Dessert_" ou "Fromage_")
+                et une fin (toujours "---").
+            </p>
         </div>
         <div class="editor-field eleven columns">
             @Html.EditorFor(model => model.RawContent)

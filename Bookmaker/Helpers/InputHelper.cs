@@ -42,18 +42,25 @@ namespace Bookmaker.Helpers
             content = ContentFormat(content);
             var lines = content.Trim().Replace("\r\n", "\r").Split('\r');
 
+            var is_menu = false;
             var text = new StringBuilder();
 
             foreach (var line in lines)
             {
-                if (IsTitle(type, line))
+                if (is_menu)
                 {
-                    if (text.Length > 0)
+                    if (line == "---")
                     {
-                        sections.Add(CreateSection(text.ToString()));
-                        text.Clear();
+                        is_menu = false;
                     }
-                    sections.Add(CreateSection(TitleFormat(line), SectionType.Titre));
+                    else if (line.ToLower().StartsWith("ou "))
+                    {
+                        sections.Last().Content += " ou " + line.Substring(3);
+                    }
+                    else
+                    {
+                        sections.Last().Content += Environment.NewLine + line;
+                    }
                 }
                 else if (IsMenu(type, line))
                 {
@@ -63,6 +70,19 @@ namespace Bookmaker.Helpers
                         text.Clear();
                     }
                     sections.Add(CreateSection(MenuFormat(line), SectionType.Menu));
+
+                    var menu = sections.Last().Content;
+                    is_menu = !menu.Contains(Environment.NewLine);
+                    if (is_menu && !menu.EndsWith(" :")) sections.Last().Content += " :";
+                }
+                else if (IsTitle(type, line))
+                {
+                    if (text.Length > 0)
+                    {
+                        sections.Add(CreateSection(text.ToString()));
+                        text.Clear();
+                    }
+                    sections.Add(CreateSection(TitleFormat(line), SectionType.Titre));
                 }
                 else
                 {
@@ -229,28 +249,42 @@ namespace Bookmaker.Helpers
             text = text.Replace("1/4", "¼");
 
             // Eperluette
-            text = text.Replace("&amp ; ", "&");
+            text = text.Replace("&amp ; ", "& ");
+            text = text.Replace("&amp ;", "&");
             text = text.Replace("&", "&amp;");
 
             // Séparateurs pour importation des tarifs
             while (text.Contains("||")) text = text.Replace("||", "|");
             if (text.EndsWith("|")) text = text.Substring(0, text.Length - 1);
 
+            // Séparateurs dans les menus
+            if (text.Trim('*') == "") text = "";
+
             return text.Trim();
         }
 
         public static string TitleFormat(string title)
         {
-            title = title.TrimEnd("0".ToCharArray());
+            if (title.StartsWith("! ")) title = title.Substring(2);
+            title = title.TrimEnd('0');
             if ((title == title.ToUpper()) || (title == title.ToUpperInvariant()))
             {
                 title = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(title.ToLowerInvariant());
-                var restes = new[] { " À ", " Au ", " Aux ", " Avec ", " De ", " Des ", " Du ", " D’", " En ", " La ", " Le ", " Les ", " L’", " Un ", " Une ", " Libre " };
+                var restes = new[] { " À ", " Au ", " Aux ", " Avec ", " De ", " Des ", " Du ", " D’", " En ", " Et ", " La ", " Le ", " Les ", " L’", " Un ", " Une ", " Libre " };
                 foreach (var reste in restes)
                 {
                     title = title.Replace(reste, reste.ToLower());
                 }
             }
+            title = title.Replace(" Decouverte", " découverte");
+            title = title.Replace("Decouverte", "Découverte");
+            title = title.Replace(" Degustation", " dégustation");
+            title = title.Replace("Degustation", "Dégustation");
+            title = title.Replace("Dejeuner", "Déjeuner");
+            title = title.Replace("DEJEUNER", "Déjeuner");
+            title = title.Replace("Depart", "Départ");
+            title = title.Replace("Guidee", "guidée");
+            title = title.Replace("Journée", "Journée");
 
             if (StartsWithDay(title)) return title;
             if (StartsWithHour(title)) return title;
@@ -311,6 +345,7 @@ namespace Bookmaker.Helpers
                 title = "Retour dans votre région";
             }
 
+            title = title.TrimEnd('.');
             return title;
         }
 
@@ -319,6 +354,7 @@ namespace Bookmaker.Helpers
             // Gère cas où menu est copié / collé depuis un autre voyage
             // => choix entre plats est séparé par un "ou" entre parentèses
             menu = menu.Replace(" (ou) ", " ou ");
+            menu = menu.Replace(" OU ", " ou ");
 
             // Est-ce que la ligne pour le menu contient des tirets pour séparer les plats
             menu = menu.Replace(" — ", " - ");
@@ -358,6 +394,7 @@ namespace Bookmaker.Helpers
         {
             if (text == text.ToUpper()) return true;
             if (text == text.ToUpperInvariant()) return true;
+            if (text.StartsWith("! ")) return true;
             if (text.Length > 75) return false;
 
             text = text.ToLower();
@@ -405,14 +442,13 @@ namespace Bookmaker.Helpers
             if (type == TravelType.Sejour) return false;
 
             text = text.ToLower();
-            var menu = match(@"^(entrée :)", text);
+            var menu = match(@"^(menu)$", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(menu )", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"( menu)$", text);
+            if (string.IsNullOrEmpty(menu)) menu = match(@"^(entrée )$", text);
             if (string.IsNullOrEmpty(menu)) menu = match(@"^(plat )", text);
             if (string.IsNullOrEmpty(menu)) menu = match(@"^(dessert )", text);
             if (string.IsNullOrEmpty(menu)) menu = match(@"^(fromage )", text);
-            if (string.IsNullOrEmpty(menu)) menu = match(@"^(menu )", text);
-            if (string.IsNullOrEmpty(menu)) menu = match(@"^(ou menu )", text);
-            if (string.IsNullOrEmpty(menu)) menu = match(@"^(exemple de menu )", text);
-            if (string.IsNullOrEmpty(menu)) menu = match(@"^(idée de menu )", text);
 
             return !string.IsNullOrEmpty(menu);
         }
