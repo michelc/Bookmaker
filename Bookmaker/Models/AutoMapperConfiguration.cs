@@ -32,7 +32,7 @@ namespace Bookmaker.Models
             return view_model;
         }
 
-        private static void ConfigureEntitiesToViewModels(IMapperConfiguration config)
+        private static void ConfigureEntitiesToViewModels(IMapperConfigurationExpression config)
         {
             // Entités vers ViewModels
             config.CreateMap<Booklet, BookletIndex>()
@@ -65,7 +65,7 @@ namespace Bookmaker.Models
                 .ForMember(dest => dest.SectionType, opt => opt.MapFrom(src => src.SectionType));
         }
 
-        private static void ConfigureViewModelsToEntities(IMapperConfiguration config)
+        private static void ConfigureViewModelsToEntities(IMapperConfigurationExpression config)
         {
             // ViewModels vers entités
 
