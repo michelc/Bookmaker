@@ -110,8 +110,8 @@
         <w:keepNext />
         <w:pageBreakBefore />
         <w:pBdr>
-          <w:top w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="5CC2FF" />
-          <w:bottom w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="5CC2FF" />
+          <w:top w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="145A32" />
+          <w:bottom w:val="single" w:sz="24" wx:bdrwidth="60" w:space="1" w:color="145A32" />
         </w:pBdr>
         <w:spacing w:before="0" w:after="480" />
         <w:jc w:val="center" />
@@ -147,7 +147,7 @@
         <w:b />
         <w:b-cs />
         <w:i-cs />
-        <w:color w:val="5CC2FF" />
+        <w:color w:val="145A32" />
         <w:spacing w:val="-10" />
         <w:sz w:val="28" />
         <w:sz-cs w:val="28" />
@@ -258,7 +258,7 @@
         <w:b />
         <w:b-cs />
         <w:i-cs />
-        <w:color w:val="5CC2FF" />
+        <w:color w:val="145A32" />
         <w:spacing w:val="-10" />
         <w:sz w:val="28" />
         <w:sz-cs w:val="28" />
