@@ -4,11 +4,10 @@ using System.Web.Routing;
 using Bookmaker.Helpers;
 using Bookmaker.Models;
 using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
 
 namespace Bookmaker
 {
-    // Remarque : pour obtenir des instructions sur l'activation du mode classique IIS6 ou IIS7,
-    // visitez http://go.microsoft.com/?LinkId=9394801
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
@@ -25,7 +24,7 @@ namespace Bookmaker
 
             AutoMap.Configure();
 
-            MiniProfilerEF.Initialize();
+            MiniProfilerEF6.Initialize();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
