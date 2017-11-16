@@ -38,10 +38,5 @@ namespace Bookmaker.Controllers
 
             // throw new System.Exception("Quelquefois une erreur survient !");
         }
-
-        public ActionResult Config()
-        {
-            return File(Server.MapPath("/web.config"), "application/xml");
-        }
     }
 }
