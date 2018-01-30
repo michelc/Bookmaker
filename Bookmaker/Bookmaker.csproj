@@ -41,8 +41,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=6.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.2.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -176,14 +176,14 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.2.1.js" />
-    <Content Include="Scripts\jquery-3.2.1.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -191,8 +191,6 @@
     <Content Include="Scripts\modernizr-3.4.0.js" />
     <Content Include="Scripts\modernizr-3.4.0.min.js" />
     <Content Include="Web.config" />
-    <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Booklets\Create.cshtml" />
     <Content Include="Views\Booklets\Delete.cshtml" />
     <Content Include="Views\Booklets\Details.cshtml" />
@@ -238,6 +236,8 @@
     <Content Include="Views\Travels\_Display.cshtml" />
     <Content Include="Views\Travels\_Editor.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

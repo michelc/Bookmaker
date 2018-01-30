@@ -26,7 +26,7 @@ namespace Bookmaker.Controllers
         // POST: /Sections/Sort?Parent_ID=1&from=5&to=10
 
         [HttpPost, ValidateAntiForgeryToken, BookletUpdatable()]
-        public ActionResult Sort(int Parent_ID, int from, int to)
+        public JsonResult Sort(int Parent_ID, int from, int to)
         {
             var success = db.SortPositions("Sections", "Travel_ID", Parent_ID, from, to);
 
