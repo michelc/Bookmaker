@@ -462,6 +462,17 @@ namespace Bookmaker.Helpers
             return !string.IsNullOrEmpty(day);
         }
 
+        public static bool StartsWithDate(string title)
+        {
+            if (!title.Contains(" : ")) return false;
+            if (title.Length > 15) title = title.Substring(0, 15);
+            title = title.ToLower();
+            var date = match(@"(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)", title);
+            if (string.IsNullOrEmpty(date)) date = match(@"(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)", title);
+
+            return !string.IsNullOrEmpty(date);
+        }
+
         public static bool StartsWithHour(string title)
         {
             title = title.ToLower();

@@ -51,12 +51,7 @@ namespace Bookmaker.Helpers
 
         private static StringBuilder HtmlTitle(StringBuilder html, string content)
         {
-            if (InputHelper.StartsWithDay(content))
-            {
-                var span = content.IndexOf(" : ");
-                content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);
-            }
-            if (InputHelper.StartsWithHour(content))
+            if (InputHelper.StartsWithDay(content) || InputHelper.StartsWithHour(content) ||InputHelper.StartsWithDate(content))
             {
                 var span = content.IndexOf(" : ");
                 content = "<span>" + content.Substring(0, span) + "</span>" + content.Substring(span + 3);

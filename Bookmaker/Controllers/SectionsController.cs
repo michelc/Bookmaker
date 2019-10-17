@@ -96,6 +96,11 @@ namespace Bookmaker.Controllers
                     string filename = Server.MapPath("~/Content/Conditions_" + section.Travel.TravelType.ToString() + ".txt");
                     section.Content = System.IO.File.ReadAllText(filename);
                 }
+                else if (section.SectionType == SectionType.Image)
+                {
+                    var book = db.Booklets.Find(section.Travel.Booklet_ID);
+                    section.Content = $"({book.Year}/{book.Year}-)";
+                }
             }
 
             return View(section);
