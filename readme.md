@@ -13,3 +13,10 @@ luminosité et le contraste de 10%.
 
 Pour transformer en PDF, il nécessaire d'imprimer dans un fichier XPS, puis
 d'imprimer le XPS en PDF pour que l'ombre du WordArt soit correcte.
+
+
+## Couleurs
+
+* 2018 : 145A32
+* 2019 : 882693
+* 2020 : 568203 (kaki avocat) => RVB = 86 130 3 => -10% = 79 123 0 => 69 113 0
